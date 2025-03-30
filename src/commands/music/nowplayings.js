@@ -48,3 +48,10 @@ module.exports = {
 
 }
     }
+
+module.exports.details = {
+  name: 'NowPlaying',
+  description: 'Displays the currently playing song',
+  author: 'Vasilew',
+  usage: '/nowplaying'
+}

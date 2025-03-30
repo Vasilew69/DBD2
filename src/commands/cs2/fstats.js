@@ -66,3 +66,10 @@ module.exports = {
         }
     }
 }
+
+module.exports.details = {
+    name: 'faceit-stats',
+    description: 'Displays Faceit stats for a given player.',
+    usage: '/fstats @username [game]',
+    author: 'Vasilew__',
+}

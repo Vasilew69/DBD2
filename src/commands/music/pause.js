@@ -28,3 +28,11 @@ module.exports = {
         )
     }
 }
+
+module.exports.details = {
+    name: 'Pause',
+    author: 'Vasilew__',
+    icon: 'https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe',
+    description: 'Pauses the queue.',
+    usage: '/pause'
+}

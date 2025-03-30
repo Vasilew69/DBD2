@@ -2,34 +2,29 @@ const express = require('express');
 const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
-var commands = require("../commands");
 const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const jsonfile = require('jsonfile')
 json = require('json-update');
 const themes = "./configs/theme.json"
-const path = require('path');
-const prths = "./configs/prth.json"
+const prth = "./configs/prth.json";
+const commands = async interaction => {interaction.client.commands.get(interaction.commandName)}
 
+console.log(commands);
 router.get('/plugins', ensureAuthenticated,(req, res) => {
-  var prth = jsonfile.readFileSync(prths);
   var theme = jsonfile.readFileSync(themes);
-  const commandsToggle = jsonfile.readFileSync('./configs/settings.json');
-  // Get an array of command names
-
-const commandName = fs.readdirSync(path.join(__dirname, '../commands'))
-    .filter(file => file.endsWith('.js') && file !== 'index.js');
-
-
-  res.render('home/plugins',{
-    profile:req.user,
-    client:discord.client,
-    commands:commands,
-    commandName: Object.keys(commands) , // Pass the array of command names
-    commandsToggle: Object.keys(commands),
-    theme:theme,
-    prth: prth
-  })
+    const commandsToggle = jsonfile.readFileSync('./configs/settings.json');
+    fs.readdir("./commands/", (err, files) => {
+    res.render('home/plugins',{
+        profile:req.user,
+        client:discord.client,
+        commands:commands,
+        commandName:Object.keys(commands),
+        commandsToggle:commandsToggle,
+        theme:theme,
+        prth:prth
+    })
+})
 });
 
 router.post('/plugins/remove/:plugin', ensureAuthenticated,function(req,res) {
@@ -45,14 +40,14 @@ router.post('/plugins/remove/:plugin', ensureAuthenticated,function(req,res) {
 router.post('/plugins/toggle', ensureAuthenticated,function(req, res) {
   // Remove plugin from settings file
   if(req.body.toggle == "true"){
-    fs.readFile('./config/settings.json', function (err, data) {
+    fs.readFile('./configs/settings.json', function (err, data) {
       var json = JSON.parse(data);
       if(!json.includes(req.body.commandName)){
         return req.flash('error', `Error`), 
         res.redirect('/plugins')
       }
       json.splice(json.indexOf(`${req.body.commandName}`),1);    
-      fs.writeFile("./config/settings.json", JSON.stringify(json), function(err){
+      fs.writeFile("./configs/settings.json", JSON.stringify(json), function(err){
         if (err) throw err;
         res.redirect('/plugins')
       });
@@ -61,14 +56,14 @@ router.post('/plugins/toggle', ensureAuthenticated,function(req, res) {
 
   // Add plugin to settings file
   if(req.body.toggle == "false"){
-    fs.readFile('./config/settings.json', function (err, data) {
+    fs.readFile('./configs/settings.json', function (err, data) {
       var json = JSON.parse(data);
       if(json.includes(req.body.commandName)){
         return req.flash('error', `Error`), 
         res.redirect('/plugins')
       }
       json.push(`${req.body.commandName}`);    
-      fs.writeFile("./config/settings.json", JSON.stringify(json), function(err){
+      fs.writeFile("./configs/settings.json", JSON.stringify(json), function(err){
         if (err) throw err;
         res.redirect('/plugins')
       });

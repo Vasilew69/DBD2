@@ -54,6 +54,7 @@ module.exports = (client) => {
                         console.error(`[ERROR] Command at ${filePath} is missing a valid description.`);
                     } else {
                         commands.push(command.data.toJSON());
+                        commands.push(command.data.f);
                     }
                 } else {
                     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);

@@ -41,3 +41,11 @@ module.exports = {
     }
 
 }
+
+module.exports.details = {
+  name: 'queue',
+  description: 'Get the current queue',
+  usage: 'queue',
+  author: 'Vasilew__',
+  icon: 'https://cdn.discordapp.com/avatars/743304456810143783/767440651641278464',
+}

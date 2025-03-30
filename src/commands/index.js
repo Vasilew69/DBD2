@@ -6,7 +6,7 @@ const commands = {};
 const commandFiles = fs.readdirSync(__dirname).filter(file => file.endsWith('.js') && file !== 'index.js');
 
 for (const file of commandFiles) {
-    const commandName = file.slice(0, -3); // Remove '.js' extension
+    const commandName = file.replace(".js", ""); // Remove '.js' extension
     commands[commandName] = require(path.join(__dirname, file));
 }
 

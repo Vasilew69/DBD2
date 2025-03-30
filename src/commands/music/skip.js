@@ -33,3 +33,11 @@ module.exports = {
         return interaction.reply({embeds: [skipEmbed] });
     }
 }
+
+module.exports.details = {
+    name: 'Skip',
+    description: 'Skip the current song in the queue.',
+    usage: '/skip',
+    author: 'Vasilew__',
+    icon: 'https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe'
+}

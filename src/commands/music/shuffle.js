@@ -31,3 +31,10 @@ module.exports = {
         return interaction.reply({ embeds: [shuffleEmbed] });
     }
 }
+
+module.exports.details = {
+    name: 'Shuffle',
+    description: 'Shuffle the songs in the current queue',
+    usage: 'shuffle',
+    author: 'Vasilew__'
+}

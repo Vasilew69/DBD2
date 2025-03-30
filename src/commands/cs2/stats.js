@@ -81,3 +81,11 @@ module.exports = {
         }
     }
 }
+
+module.exports.details = {
+    name: "cs2stats",
+    description: "Displays a player's CS2 stats from Steam.",
+    author: "Vasilew",
+    icon: "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",      
+
+}

@@ -36,7 +36,7 @@ router.get('/home', ensureAuthenticated,(req, res) => {
         } 
         catch (e) 
         {
-          console.log(chalk.red("Failed to check for updates you may continue using this version, please try again or contact LachlanDev#8014"))
+          console.log(chalk.red("Failed to check for updates you may continue using this version, please try again or contact Vasilew__"))
           verL = ver.ver
         }
     res.render('home/home',{

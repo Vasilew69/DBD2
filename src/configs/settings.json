@@ -1,6 +1,1 @@
-{
-    "clientSecret": "E3SmF650d0obDEyrTCMDzQ77nPQlVdvn",
-    "callbackURL": "http://37.143.253.150:3000/login/api",
-    "Admin": [ "558924464365240322" ],
-    "port": "3000"
-  }
+[]

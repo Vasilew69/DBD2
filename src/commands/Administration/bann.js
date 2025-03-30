@@ -47,8 +47,8 @@ module.exports = {
     }
     module.exports.details = {
         name: 'Ban',
-        author: 'LachlanDev#8014',
+        author: 'Vasilew',
         icon: 'https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe',
         description: 'Bans a user from the server.',
-        usage: `/ban {@user}`
+        usage: `/ban {@user} {@reason} {@duration`
     };

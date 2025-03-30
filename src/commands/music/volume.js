@@ -29,3 +29,11 @@ module.exports = {
         return interaction.reply({embeds: [volEmbed], ephemeral: false })
     }
 }
+
+module.exports.details = {
+    name: 'volume',
+    description: 'Set the volume of the music player',
+    usage: 'volume <volume_level>',
+    author: 'Vasiew__',
+    icon: 'https://cdn.discordapp.com/avatars/826389195618607124/529f31f0499b2d0d5304b634c16d8966',
+}

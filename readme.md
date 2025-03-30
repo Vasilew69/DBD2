@@ -65,7 +65,7 @@ If you would like to contribute to the project please open a PR (Pull Request) c
 If you have any issues feel free to open an issue or join the [Discord Server.](https://discord.com/invite/w7B5nKB)
 
 ## 🧲 Extra
-__Created by LachlanDev#8014__
+__Created by Vasilew____
 * [Website](https://lachlan-dev.com)
 * [Twitter](https://twitter.com/LachlanDev)
 * [Instagram](https://www.instagram.com/LachlanDev/)

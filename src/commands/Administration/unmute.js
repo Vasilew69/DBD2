@@ -36,3 +36,10 @@ module.exports = {
         .setColor(0x0099FF);
     }
 }
+module.exports.details = {
+    name: 'unmute',
+    description: 'unmute a user',
+    author: 'Vasilew__',
+    icon: 'https://cdn.discordapp.com/avatars/805013640399118336/007327556455792640.png?size=256',
+    usage: '/unmute @user'
+}
