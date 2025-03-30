@@ -1,0 +1,39 @@
+{
+  "name": "dbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@discord-player/extractor": "^7.1.0",
+    "@discordjs/opus": "^0.10.0",
+    "@discordjs/voice": "^0.18.0",
+    "@distube/soundcloud": "^2.0.4",
+    "@distube/spotify": "^2.0.2",
+    "@distube/yt-dlp": "^2.0.1",
+    "@noble/ciphers": "^1.2.1",
+    "axios": "^1.8.3",
+    "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
+    "discord-player": "^7.1.0",
+    "discord-player-youtubei": "^1.4.2",
+    "discord.js": "^14.18.0",
+    "distube": "^5.0.6",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "express-session": "^1.18.1",
+    "ffmpeg-static": "^5.2.0",
+    "http": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
+    "passport": "^0.7.0",
+    "socket.io": "^4.8.1",
+    "ytdl-core": "^4.11.5"
+  }
+}
