@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
-const themes = "./config/theme.json"
+const themes = "./configs/theme.json"
 const jsonfile = require('jsonfile')
 
 router.get('/support', ensureAuthenticated,(req, res) => {

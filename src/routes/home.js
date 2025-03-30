@@ -1,15 +1,17 @@
+var dateFormat = require('dateformat');
+const dotenv = require('dotenv');
 const express = require('express');
 const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
-const dateformat = require('dateformat');
-const config = require('../config/config.json')
-const ver = require('../config/version.json')
+const ver = require('../configs/version.json')
 const number = require('easy-number-formatter')
 var request = require("request");
 const jsonfile = require('jsonfile')
+var now = new Date()
+dotenv.config()
 
-const themes = "./config/theme.json"
+const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
     res.redirect('/home')
@@ -19,7 +21,7 @@ router.get('/home', ensureAuthenticated,(req, res) => {
   var theme = jsonfile.readFileSync(themes);
     var options = {
         method: 'GET',
-        url: `https://raw.githubusercontent.com/Vasilew69/DBD/main/src/config/version.json`,
+        url: `https://raw.githubusercontent.com/Vasilew69/DBD2/main/src/configs/version.json`,
         headers: {
           'User-Agent': 'Discord-Bot-Dashboard',
           useQueryString: true
@@ -40,8 +42,8 @@ router.get('/home', ensureAuthenticated,(req, res) => {
     res.render('home/home',{
         profile:req.user,
         client:discord.client,
-        joinedDate:dateformat(`${discord.client.user.createdAt}`, 'dddd, mmmm dS, yyyy, h:MM TT'),
-        prefix:config.prefix,
+        joinedDate:dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
+        prefix:"/",
         number:number,
         Latestversion:verL,
         Currentversion:ver.ver,

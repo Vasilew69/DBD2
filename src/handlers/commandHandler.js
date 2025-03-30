@@ -2,56 +2,83 @@ const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const dotenv = require('dotenv');
-dotenv.config()
+
+dotenv.config();
+
 const clientId = process.env['CLIENTID'];
 const token = process.env['DISCORD_TOKEN'];
 const commands = [];
 
-module.exports = (client) =>{
-const foldersPath = path.join(__dirname, '../commands');
-const commandFolders = fs.readdirSync(foldersPath);
+module.exports = (client) => {
+    const foldersPath = path.join(__dirname, '../commands');
 
-for (const folder of commandFolders) {
-    // Grab all the command files from the commands directory you created earlier
-    const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+    // 🔹 Load standalone command files (excluding index.js)
+    const commandFiles = fs.readdirSync(foldersPath, { withFileTypes: true })
+        .filter(dirent => dirent.isFile() && dirent.name.endsWith('.js') && dirent.name !== 'index.js') // ✅ Exclude index.js
+        .map(dirent => dirent.name);
 
-    // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
-        const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
-        
-        // Add a check to ensure `data` exists and is a valid object
-        if ('data' in command && 'execute' in command) {
-            if (!command.data.description || typeof command.data.description !== 'string') {
-                console.error(`[ERROR] Command data in ${filePath} is missing a valid description.`);
+        const filePath = path.join(foldersPath, file);
+        try {
+            const command = require(filePath);
+            if ('data' in command && 'execute' in command) {
+                if (!command.data.description || typeof command.data.description !== 'string') {
+                    console.error(`[ERROR] Command at ${filePath} is missing a valid description.`);
+                } else {
+                    commands.push(command.data.toJSON());
+                }
             } else {
-                commands.push(command.data.toJSON());
+                console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
             }
-        } else {
-            console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+        } catch (error) {
+            console.error(`[ERROR] Failed to load command ${filePath}:`, error);
         }
     }
-}
 
-// Construct and prepare an instance of the REST module
-const rest = new REST().setToken(token);
+    // 🔹 Load commands from subdirectories
+    const commandFolders = fs.readdirSync(foldersPath, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory()) // ✅ Ensures only directories are processed
+        .map(dirent => dirent.name);
 
-// and deploy your commands!
-(async () => {
-    try {
-        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+    for (const folder of commandFolders) {
+        const folderPath = path.join(foldersPath, folder);
+        const commandFiles = fs.readdirSync(folderPath)
+            .filter(file => file.endsWith('.js'));
 
-        // The put method is used to fully refresh all commands in the guild with the current set
-        const data = await rest.put(
-            Routes.applicationCommands(clientId),
-            { body: commands },
-        );
-
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-    } catch (error) {
-        // And of course, make sure you catch and log any errors!
-        console.error(error);
+        for (const file of commandFiles) {
+            const filePath = path.join(folderPath, file);
+            try {
+                const command = require(filePath);
+                if ('data' in command && 'execute' in command) {
+                    if (!command.data.description || typeof command.data.description !== 'string') {
+                        console.error(`[ERROR] Command at ${filePath} is missing a valid description.`);
+                    } else {
+                        commands.push(command.data.toJSON());
+                    }
+                } else {
+                    console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+                }
+            } catch (error) {
+                console.error(`[ERROR] Failed to load command ${filePath}:`, error);
+            }
+        }
     }
-})();
-}
+
+    // 🔹 Deploy the commands
+    const rest = new REST().setToken(token);
+
+    (async () => {
+        try {
+            console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+            const data = await rest.put(
+                Routes.applicationCommands(clientId),
+                { body: commands },
+            );
+
+            console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+        } catch (error) {
+            console.error(`[ERROR] Failed to deploy commands:`, error);
+        }
+    })();
+};

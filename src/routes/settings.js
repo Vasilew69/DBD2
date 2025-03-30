@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
-const config = require('../config/config.json')
-const version = require('../config/version.json')
+const config = require('../configs/config.json')
+const version = require('../configs/version.json')
 
 json = require('json-update');
 const jsonfile = require('jsonfile')
-const file = "./config/config.json"
-const themes = "./config/theme.json"
+const file = "./configs/config.json"
+const themes = "./configs/theme.json"
 
 const fs = require("fs");
 
@@ -28,14 +28,14 @@ router.get('/settings', ensureAuthenticated,(req, res) => {
 })
 
 router.post('/settings/config',ensureAuthenticated,(req,res) =>{
-    json.update('./config/config.json',{clientID:`${req.body.clientID}`,clientSecret:`${req.body.clientSecret}`,callbackURL:`${req.body.callbackURL}`,Admin:req.body.admin.split(','),token:`${req.body.token}`,prefix:`${req.body.prefix}`,port:`${req.body.port}`}).then(function(dat) { 
+    json.update('./configs/config.json',{clientID:`${req.body.clientID}`,clientSecret:`${req.body.clientSecret}`,callbackURL:`${req.body.callbackURL}`,Admin:req.body.admin.split(','),token:`${req.body.token}`,prefix:`${req.body.prefix}`,port:`${req.body.port}`}).then(function(dat) { 
         req.flash('success', 'Config Updated please now restart the application!')
         res.redirect('/settings')
     })
 })
 
 router.post('/settings/dashboard',ensureAuthenticated,(req,res) =>{
-    json.update('./config/theme.json',{theme:`${req.body.theme}`}).then(function(dat) { 
+    json.update('./configs/theme.json',{theme:`${req.body.theme}`}).then(function(dat) { 
         req.flash('success', 'Theme Updated!')
         res.redirect('/settings')
     })

@@ -1,18 +1,22 @@
+const path = require('node:path');
 const express = require('express')
-const discord = require('./bot.js')
+const discord = require('./bot')
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const fileUpload = require('express-fileupload');
-const config = require('./config/config.json');
+const dotenv = require('dotenv');
 const morgan = require('morgan');
-const cors = require('cors')
+const cors = require('cors');
+dotenv.config()
 
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-port = config.port;
+app.set('views', path.join(__dirname, 'views'));
+
+port = process.env.port;
 
 app.use(express.static('./public'));
 app.use(express.static('./themes'));
@@ -20,10 +24,10 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true,limit: '5mb' }));
 app.use(fileUpload());
 
-require('./auth/passport.js')(passport);
+require('./auth/passport')(passport);
 
-// Enables Logging
 app.use(morgan('dev'), cors())
+
 
 
 // Express session

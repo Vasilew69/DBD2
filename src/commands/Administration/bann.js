@@ -45,3 +45,10 @@ module.exports = {
             await interaction.reply({ embeds: [embed], ephemeral: false });
         }
     }
+module.exports.details = {
+    name: 'ban',
+    description: 'Bans a user from the server',
+    usage: '/ban [user] [reason] [duration in minutes]',
+    category: 'administration',
+    author: 'vasilew',
+}

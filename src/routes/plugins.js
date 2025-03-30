@@ -7,21 +7,29 @@ const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const jsonfile = require('jsonfile')
 json = require('json-update');
-const themes = "./config/theme.json"
+const themes = "./configs/theme.json"
+const path = require('path');
+const prths = "./configs/prth.json"
 
 router.get('/plugins', ensureAuthenticated,(req, res) => {
+  var prth = jsonfile.readFileSync(prths);
   var theme = jsonfile.readFileSync(themes);
-    const commandsToggle = jsonfile.readFileSync('./config/settings.json');
-    fs.readdir("./commands/", (err, files) => {
-    res.render('home/plugins',{
-        profile:req.user,
-        client:discord.client,
-        commands:commands,
-        commandName:files,
-        commandsToggle:commandsToggle,
-        theme:theme
-    })
-})
+  const commandsToggle = jsonfile.readFileSync('./configs/settings.json');
+  // Get an array of command names
+
+const commandName = fs.readdirSync(path.join(__dirname, '../commands'))
+    .filter(file => file.endsWith('.js') && file !== 'index.js');
+
+
+  res.render('home/plugins',{
+    profile:req.user,
+    client:discord.client,
+    commands:commands,
+    commandName: commandName, // Pass the array of command names
+    commandsToggle:commandsToggle,
+    theme:theme,
+    prth: prth
+  })
 });
 
 router.post('/plugins/remove/:plugin', ensureAuthenticated,function(req,res) {

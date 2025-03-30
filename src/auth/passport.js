@@ -1,14 +1,15 @@
+require('dotenv').config();
 const passport = require('passport');
 var DiscordStrategy = require('passport-discord').Strategy;
-const config = require('../config/config.json')
+const config = require('../configs/config.json');
 
 module.exports = function(passport) {
     var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
  
     passport.use(new DiscordStrategy({
-        clientID: config.clientID,
-        clientSecret: config.clientSecret,
-        callbackURL: config.callbackURL,
+        clientID: process.env.CLIENTID,
+        clientSecret: process.env.clientSecret,
+        callbackURL: process.env.callbackURL,
         scope: scopes
     },
     function(accessToken, refreshToken, profile, cb) {
