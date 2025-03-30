@@ -25,8 +25,8 @@ const commandName = fs.readdirSync(path.join(__dirname, '../commands'))
     profile:req.user,
     client:discord.client,
     commands:commands,
-    commandName: commandName, // Pass the array of command names
-    commandsToggle:commandsToggle,
+    commandName: Object.keys(commands) , // Pass the array of command names
+    commandsToggle: Object.keys(commands),
     theme:theme,
     prth: prth
   })
