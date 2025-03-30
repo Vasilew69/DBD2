@@ -1,0 +1,352 @@
+[
+  {
+    "name": "ban",
+    "description": {
+      "name": "Ban",
+      "author": "Vasilew",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Bans a user from the server.",
+      "usage": "/ban {@user} {@reason} {@duration"
+    },
+    "options": [
+      {
+        "name": "user",
+        "description": "The user to ban",
+        "required": true,
+        "type": 6
+      },
+      {
+        "type": 3,
+        "name": "reason",
+        "description": "The reason for the ban",
+        "required": false
+      },
+      {
+        "min_value": 0,
+        "type": 4,
+        "name": "duration",
+        "description": "The duration of the ban in minutes",
+        "required": false
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\ban.js",
+    "category": "Administration"
+  },
+  {
+    "name": "kick",
+    "description": {
+      "name": "Kick",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Kicks a user from the server.",
+      "usage": "/kick <@user> [reason]"
+    },
+    "options": [
+      {
+        "name": "user",
+        "description": "The user to kick",
+        "required": true,
+        "type": 6
+      },
+      {
+        "type": 3,
+        "name": "reason",
+        "description": "The reason for the kick",
+        "required": false
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\kick.js",
+    "category": "Administration"
+  },
+  {
+    "name": "mute",
+    "description": {
+      "name": "mute",
+      "author": "Vasilew",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Mute a user",
+      "usage": "/mute @user <reason> <duration in minutes>"
+    },
+    "options": [
+      {
+        "name": "user",
+        "description": "The user to mute",
+        "required": true,
+        "type": 6
+      },
+      {
+        "type": 3,
+        "name": "reason",
+        "description": "The reason for the mute",
+        "required": true
+      },
+      {
+        "min_value": 0,
+        "type": 4,
+        "name": "duration",
+        "description": "The duration of the mute in minutes",
+        "required": false
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\mute.js",
+    "category": "Administration"
+  },
+  {
+    "name": "timeout",
+    "description": {
+      "name": "timeout",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Set a timeout for a user.",
+      "usage": "/timeout <@user> <duration in seconds>"
+    },
+    "options": [
+      {
+        "name": "user",
+        "description": "the user to timeout",
+        "required": true,
+        "type": 6
+      },
+      {
+        "type": 4,
+        "name": "duration",
+        "description": "the duration of the timeout in seconds",
+        "required": true
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\timeout.js",
+    "category": "Administration"
+  },
+  {
+    "name": "unban",
+    "description": {
+      "name": "unban",
+      "author": "Vasilew",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Unbans a user from the server.",
+      "usage": "/unban [userid]"
+    },
+    "options": [
+      {
+        "type": 3,
+        "name": "userid",
+        "description": "The user to ban",
+        "required": false
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\unban.js",
+    "category": "Administration"
+  },
+  {
+    "name": "unmute",
+    "description": {
+      "name": "unmute",
+      "description": "unmute a user",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/805013640399118336/007327556455792640.png?size=256",
+      "usage": "/unmute @user"
+    },
+    "options": [
+      {
+        "name": "user",
+        "description": "The user to unmute",
+        "required": true,
+        "type": 6
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\Administration\\unmute.js",
+    "category": "Administration"
+  },
+  {
+    "name": "fstats",
+    "description": {
+      "name": "faceit-stats",
+      "description": "Displays Faceit stats for a given player.",
+      "usage": "/fstats @username [game]",
+      "author": "Vasilew__"
+    },
+    "options": [
+      {
+        "type": 3,
+        "name": "username",
+        "description": "faceit username",
+        "required": true
+      },
+      {
+        "type": 3,
+        "name": "game",
+        "description": "game for the stas",
+        "required": false
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\cs2\\fstats.js",
+    "category": "cs2"
+  },
+  {
+    "name": "stats",
+    "description": {
+      "name": "cs2stats",
+      "description": "Displays a player's CS2 stats from Steam.",
+      "author": "Vasilew",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe"
+    },
+    "options": [
+      {
+        "type": 3,
+        "name": "username",
+        "description": "steam user",
+        "required": true
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\cs2\\stats.js",
+    "category": "cs2"
+  },
+  {
+    "name": "loop",
+    "description": {
+      "name": "loop",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "change the loop mode",
+      "usage": "/loop [mode]"
+    },
+    "options": [
+      {
+        "type": 10,
+        "choices": [
+          {
+            "name": "Off",
+            "value": 0
+          },
+          {
+            "name": "Track",
+            "value": 1
+          },
+          {
+            "name": "queue",
+            "value": 2
+          },
+          {
+            "name": "Autoplay",
+            "value": 3
+          }
+        ],
+        "name": "mode",
+        "description": "witch to be used",
+        "required": true
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\music\\loop.js",
+    "category": "music"
+  },
+  {
+    "name": "nowplaying",
+    "description": {
+      "name": "NowPlaying",
+      "description": "Displays the currently playing song",
+      "author": "Vasilew",
+      "usage": "/nowplaying"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\music\\nowplaying.js",
+    "category": "music"
+  },
+  {
+    "name": "pause",
+    "description": {
+      "name": "Pause",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Pauses the queue.",
+      "usage": "/pause"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\music\\pause.js",
+    "category": "music"
+  },
+  {
+    "name": "play",
+    "description": "No description available",
+    "options": [
+      {
+        "type": 3,
+        "name": "url",
+        "description": "The song to play",
+        "required": true
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\music\\play.js",
+    "category": "music"
+  },
+  {
+    "name": "queue",
+    "description": {
+      "name": "queue",
+      "description": "Get the current queue",
+      "usage": "queue",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/743304456810143783/767440651641278464"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\music\\queue.js",
+    "category": "music"
+  },
+  {
+    "name": "shuffle",
+    "description": {
+      "name": "Shuffle",
+      "description": "Shuffle the songs in the current queue",
+      "usage": "shuffle",
+      "author": "Vasilew__"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\music\\shuffle.js",
+    "category": "music"
+  },
+  {
+    "name": "skip",
+    "description": {
+      "name": "Skip",
+      "description": "Skip the current song in the queue.",
+      "usage": "/skip",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\music\\skip.js",
+    "category": "music"
+  },
+  {
+    "name": "volume",
+    "description": {
+      "name": "volume",
+      "description": "Set the volume of the music player",
+      "usage": "volume <volume_level>",
+      "author": "Vasiew__",
+      "icon": "https://cdn.discordapp.com/avatars/826389195618607124/529f31f0499b2d0d5304b634c16d8966"
+    },
+    "options": [
+      {
+        "type": 10,
+        "name": "volume",
+        "description": "how much to be",
+        "required": true
+      }
+    ],
+    "location": "E:\\dbot\\src\\commands\\music\\volume.js",
+    "category": "music"
+  },
+  {
+    "name": "help",
+    "description": {
+      "name": "help",
+      "author": "Vasilew__",
+      "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe",
+      "description": "Displays a list of available commands with categories.",
+      "usage": "/help"
+    },
+    "options": [],
+    "location": "E:\\dbot\\src\\commands\\utils\\help.js",
+    "category": "utils"
+  }
+]

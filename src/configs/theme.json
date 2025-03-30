@@ -1,1 +1,4 @@
-{"theme":"default.css"}
+{
+    "theme":"default.css",
+    "pltheme":"defaultpl.css"
+}
