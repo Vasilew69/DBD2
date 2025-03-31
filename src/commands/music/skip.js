@@ -6,7 +6,7 @@ module.exports = {
     .setName('skip')
     .setDescription('skip hte current song'),
     async execute(interaction) {
-        const queue = useQueue();
+        const queue = useQueue(interaction.guild);
 
         if(!queue) {
             const noEmbed = new EmbedBuilder()

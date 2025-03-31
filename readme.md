@@ -14,16 +14,14 @@ DBNF Discord bot
 # Dashboard Preview:
 <img src="./content/dashprev.JPG">
 
-## 🚀 Installation / Setup
-Head over to the Docs to find all the instructions for setting up and running Discord BOT Dashboard V2. This can be found [here!](https://dbd.lachlan-dev.com/docs/) 
 #### ⌚ Installing Requirements
-Download the latest version from [Releases](https://github.com/LachlanDev/Discord-BOT-Dashboard-V2/releases), open up the root directory and run the following command.
+Download the latest version from [Releases](https://github.com/Vasilew69/DBD2/releases), open up the root directory and run the following command.
 ```bash
 npm install
 ```
 
 #### 🖥️ Setting up BOT
-Rename ``config.default.json`` to ``config.json`` and open up the file, this can be found found in the **config** folder and input the required fields. More info on these fields can be found on the Docs page [here!](https://dbd.lachlan-dev.com/docs/)
+Rename ``config.default.json`` to ``config.json`` and open up the file, this can be found found in the **config** folder and input the required fields. 
 ```json
 {
     "clientID":"BOTclientID",
@@ -62,13 +60,6 @@ If you would like to contribute to the project please open a PR (Pull Request) c
 * [Node.JS](https://nodejs.org/en/) (v12.3.1 or later)
 
 ## 📞 Issues
-If you have any issues feel free to open an issue or join the [Discord Server.](https://discord.com/invite/w7B5nKB)
+If you have any issues feel free to open an issue
 
-## 🧲 Extra
-__Created by Vasilew____
-* [Website](https://lachlan-dev.com)
-* [Twitter](https://twitter.com/LachlanDev)
-* [Instagram](https://www.instagram.com/LachlanDev/)
-* [Discord Server](https://discord.com/invite/w7B5nKB)
-* [Marketplace](https://github.com/LachlanDev/Discord-BOT-Dashboard-Marketplace)
 </br>

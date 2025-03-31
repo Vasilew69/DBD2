@@ -1,22 +1,17 @@
-import { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } from 'discord.js';
-import {useMainPlayer} from 'discord-player';
- 
-// Define the play command
-export const data = new SlashCommandBuilder()
-  .setName('play') // Command name
-  .setDescription('Play a song in a voice channel') // Command description
-  .addStringOption(
-    (option) =>
-      option
-        .setName('url') // Option name
-        .setDescription('The song to play') // Option description
-        .setRequired(true), // Make the option required
-  );
+const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder  } = require("discord.js");
+const { useMainPlayer } = require("discord-player");
 
-// Define the execute function for the play command
-export async function execute(interaction) {
-  // Get the player instance and song query
-  const player = useMainPlayer();
+module.exports = {
+    data: new SlashCommandBuilder()
+    .setName('play')
+    .setDescription('Play music from a URL')
+    .addStringOption(option => option
+        .setName('url')
+        .setDescription('The URL of the music to play')
+        .setRequired(true)
+    ),
+    async execute(interaction) {
+        const player = useMainPlayer();
   const query = interaction.options.getString('url', true);
  
   // Get the voice channel of the user and check permissions
@@ -89,4 +84,6 @@ export async function execute(interaction) {
      .setColor(0x0099FF);
      return interaction.reply({ embeds: [errEmbed], ephemeral: false });
   }
+    }
+
 }
