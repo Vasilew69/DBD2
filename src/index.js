@@ -58,6 +58,7 @@ app.use('/', require('./routes/settings.js'));
 app.use('/', require('./routes/guilds.js'));
 app.use('/', require('./routes/support.js'));
 app.use('/', require('./routes/plugins.js'));
+app.use('/', require('./routes/playing.js'));
 
 app.use('/login', require('./routes/login.js'));
 

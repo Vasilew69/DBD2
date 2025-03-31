@@ -271,7 +271,7 @@
       {
         "type": 3,
         "name": "url",
-        "description": "The song to play",
+        "description": "The URL of the music to play",
         "required": true
       }
     ],
