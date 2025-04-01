@@ -1,7 +1,7 @@
 const chalk = require("chalk");
 const config = require("../config/config.json");
 const vers = require("../config/version.json");
-const discord = require('../bot');
+const client = require('../bot');
 const figlet = require('figlet');
 const lolcatjs = require('lolcatjs');
 

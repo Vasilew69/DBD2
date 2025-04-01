@@ -1,6 +1,6 @@
 const path = require('node:path');
 const express = require('express')
-const discord = require('./bot')
+const client = require('./bot')
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
@@ -58,7 +58,7 @@ app.use('/', require('./routes/settings.js'));
 app.use('/', require('./routes/guilds.js'));
 app.use('/', require('./routes/support.js'));
 app.use('/', require('./routes/plugins.js'));
-app.use('/', require('./routes/playing.js'));
+app.use('/', require('./routes/player.js'));
 
 app.use('/login', require('./routes/login.js'));
 
@@ -67,10 +67,10 @@ http.listen(port)
 io.sockets.on('connection', function(sockets){
   setInterval(function(){ 
     // Uptime Count
-    let days = Math.floor(discord.client.uptime / 86400000);
-    let hours = Math.floor(discord.client.uptime / 3600000) % 24;
-    let minutes = Math.floor(discord.client.uptime / 60000) % 60;
-    let seconds = Math.floor(discord.client.uptime / 1000) % 60;
+    let days = Math.floor(client.client.uptime / 86400000);
+    let hours = Math.floor(client.client.uptime / 3600000) % 24;
+    let minutes = Math.floor(client.client.uptime / 60000) % 60;
+    let seconds = Math.floor(client.client.uptime / 1000) % 60;
   
     var BOTuptime = `${days}d ${hours}h ${minutes}m ${seconds}s` 
     

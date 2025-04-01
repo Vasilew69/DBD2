@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Player | <%=client.user.username%> </title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
+    <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
+  </head>
+  <div class="app">
+    <header class="app-header app-header-dark">
+      <div class="top-bar">
+        <div class="top-bar-brand">
+          <h5>Discord BOT Dashboard</h5>
+        </div>
+        <div class="top-bar-list">
+          <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+            <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+          </div>
+          <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+            <div class="dropdown d-none d-md-flex">
+              <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button> <!-- .dropdown-menu -->
+              <div class="dropdown-menu">
+                <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                <h6 class="dropdown-header d-none d-md-block d-lg-none"> <%= profile.username %> </h6><a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <aside class="app-aside app-aside-expand-md app-aside-light">
+      <div class="aside-content">
+        <header class="aside-header d-block d-md-none">
+          <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button> <!-- /.btn-account -->
+          <div id="dropdown-aside" class="dropdown-aside collapse">
+            <div class="pb-3">
+              <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+            </div>
+          </div>
+        </header>
+        <div class="aside-menu overflow-hidden">
+          <nav id="stacked-menu" class="stacked-menu">
+            <ul class="menu">
+              <li class="menu-item">
+                <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+              </li>
+              <li class="menu-item">
+                <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Plugins</span></a>
+              </li>
+              <li class="menu-item">
+                <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
+              </li>
+              <li class="menu-item">
+                  <a href="/support" class="menu-link"><span class="menu-icon fas fa-question-circle"></span> <span class="menu-text">Support</span></a>
+              </li>
+              <li class="menu-item">
+                  <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
+              </li>
+              <li class="menu-item has-active">
+                  <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </aside>
+    <body>
+      <main class="app-main">
+        <div class="wrapper">
+          <div class="page">
+            <div class="page-inner">
+              <div class="page-section">
+                  <div class="section-block">
+                    <% if(success != ''){ %>
+                        <div class="alert alert-success has-icon alert-dismissible fade show">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <div class="alert-icon">
+                            <span class="oi oi-flag"></span>
+                          </div>
+                          <h4 class="alert-heading"> Success! </h4>
+                          <p class="mb-0"><%=success%></p>
+                        </div>
+                    <% } %> 
+      <div class="card">
+        <div class="card-body">
+            <h2 class="card-text"><%= track %></h2>
+            <p class="acard-text"><%= artist %></p>
+            <img class="track-thumbnail" src="<%= thumbnail %>" alt="<%= track %> thumbnail">
+            <p class="card-text"><%= duration %></p>
+        </div>
+        <div class="player-controls">
+            <!-- Add your player controls here, such as play/pause buttons, volume slider, etc. -->
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </main>
+    <style>
+        .track-thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+    
+        .track-duration {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+    
+        .player-controls {
+            flex: 0 0 200px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    </style>
+    </body>
+  </div>
+</html>
