@@ -26,5 +26,10 @@ router.post('/guilds/leave/:id', ensureAuthenticated,(req,res) =>{
         res.redirect('/guilds')
     })
 })
+router.post('/guilds/player/:id', ensureAuthenticated,(req,res) =>{
+    const guildId = req.params.id
+    req.flash('success', `Succesfully selectd the guild ${guildId}`)
+    res.redirect(`/player?guildId=${guildId}`)
+})
 
 module.exports = router;

@@ -89,12 +89,14 @@
       <div class="card">
         <div class="card-body">
             <h2 class="card-text"><%= track %></h2>
-            <p class="acard-text"><%= artist %></p>
+            <p class="card-text"><%= artist %></p>
             <img class="track-thumbnail" src="<%= thumbnail %>" alt="<%= track %> thumbnail">
             <p class="card-text"><%= duration %></p>
         </div>
         <div class="player-controls">
-            <!-- Add your player controls here, such as play/pause buttons, volume slider, etc. -->
+          <button class="btn btn-primary" onclick="playSong()">Play</button>
+          <button class="btn btn-secondary" onclick="pauseSong()">Pause</button>
+          <button class="btn btn-warning" onclick="skipSong()">Skip</button>
         </div>
       </div>
       </div>
@@ -104,26 +106,85 @@
   </main>
     <style>
         .track-thumbnail {
-            width: 100px;
-            height: 100px;
+            width: 250px;
+            height: 250px;
             object-fit: cover;
             border-radius: 5px;
-            margin-right: 20px;
+            margin-right: 1px;
         }
     
         .track-duration {
-            margin: 0;
+            margin: 15;
             font-size: 14px;
             color: #666;
         }
     
         .player-controls {
+            width: 100%;
             flex: 0 0 200px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            display: inline;
+            justify-content: space-between;
         }
     </style>
+    <script>
+      function playSong() {
+        // Send a request to your server to play the song for the selected guild
+        // You can use fetch or axios to make the request
+        fetch('/play', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ guildId: '<%= guildId %>' })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            // Update the UI to reflect the current song playing
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    
+      function pauseSong() {
+        // Send a request to your server to pause the song for the selected guild
+        fetch('/pause', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ guildId: '<%= guildId %>' })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            // Update the UI to reflect the paused state
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    
+      function skipSong() {
+        // Send a request to your server to skip the song for the selected guild
+        fetch('/skip', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ guildId: '<%= guildId %>' })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            // Update the UI to reflect the skipped song
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    </script>
     </body>
   </div>
 </html>
