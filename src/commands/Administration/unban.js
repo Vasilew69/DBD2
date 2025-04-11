@@ -22,7 +22,7 @@ module.exports = {
                    .setDescription(`User with ID \`${userId}\` has been unbanned from the server.`)
                    .setColor(0x0099FF)
 
-                await interaction.reply({ embeds: [embed], ephermal: true });
+                await interaction.reply({ embeds: [embed]});
             } catch(error) {
                 console.error(error);
                 
@@ -31,7 +31,7 @@ module.exports = {
                    .setDescription(`An error occurred while unbanning user with ID \`${userId}\`.`)
                    .setColor(0x0099FF);
 
-                await interaction.reply({ embeds: [errEmbed], ephermal: true });
+                await interaction.reply({ embeds: [errEmbed] });
             }
         }
     }

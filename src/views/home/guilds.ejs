@@ -104,7 +104,14 @@
                               <p class="card-text"><strong>Region:</strong> <%=guilds.region %> </p>
                               <p class="card-text"><strong>Created:</strong> <%=dateformat(`${guilds.createdAt}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
                               <p class="card-text"><strong>Joined:</strong> <%=dateformat(`${guilds.joinedAt}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
+                              <form action="/guilds/player/<%=guilds.id%>" method="post")
+                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="submit()">
+                                Select Guild
+                            </button>
+                          </form>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
+                            </div>
                             </div>
                               <div class="card-footer-item"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalAlertDanger<%=guilds.id%>">Leave Guild</a></div>
                           </div>
