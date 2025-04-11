@@ -22113,3 +22113,108 @@ a.metric:hover {
 .message-publisher .input-group.focus {
   box-shadow: none;
 }
+
+body {
+  background-color: #1b1b2f;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 2;
+}
+
+.now-playing {
+  text-align: left;
+}
+
+.track-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.track-duration {
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #2563eb;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.queue {
+  flex: 2;
+  background-color: #252540;
+  padding: 1rem;
+  border-radius: 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.queue h3 {
+  margin-bottom: 1rem;
+  color: #f1f1f1;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.queue-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.now-playing-box, .queue-box {
+  background-color: #252540;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}

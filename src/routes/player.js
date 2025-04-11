@@ -4,8 +4,8 @@ const { ensureAuthenticated } = require('../auth/auth');
 const { client } = require('../bot');
 const jsonfile = require('jsonfile');
 const themes = "../src/configs/theme.json";
-const errth = "../src/configs/errth.json";
-const { Player } = require('discord-player');
+const { useQueue } = require("discord-player");
+const { Player, useTimeline } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
 
@@ -28,7 +28,6 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             profile: req.user,
             client: client,
             theme: theme,
-            errtheme: errth,
             error: 'Missing guildId'
         });
     }
@@ -39,13 +38,19 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             profile: req.user,
             client: client,
             theme: theme,
-            errtheme: errth,
             error: 'Player is not initialized'
         });
     }
 
     // Ensure the queue exists
     const queue = client.player.nodes.get(guildId);
+    const queuedata = queue.tracks.toArray();
+    const queuemap = queuedata.map((track, index) => ({
+        index: index + 1,
+        title: track.title,
+        author: track.author,
+        thumbnail: track.thumbnail
+    }));
 
 
     if (!queue) {
@@ -55,7 +60,6 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             profile: req.user,
             client: client,
             theme: theme,
-            errtheme: errth,
             error: 'No music queue found'
         });
     }
@@ -69,7 +73,6 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             profile: req.user,
             client: client,
             theme: theme,
-            errtheme: errth,
             error: 'No music playing'
         });
     }
@@ -85,13 +88,77 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             artist: currentTrack.author,
             thumbnail: currentTrack.thumbnail,
             duration: currentTrack.duration,
-            guildId: guildId
+            guildId: guildId,
+            queue: queuemap
         });
     } catch (error) {
         console.error("❌ Error reading theme file:", error);
         return res.status(500).json({ error: 'Failed to load theme file' });
     }
 });
+router.post('/player/pause', ensureAuthenticated, async (req, res) => {
+    const guildId = req.body.guildId;
+
+    if (!guildId) {
+        return res.status(400).json({ error: 'Missing guildId' });
+    }
+
+    const queue = client.player.nodes.get(guildId);
+
+    if (!queue) {
+        return res.status(400).json({ error: 'No queue found for this guild' });
+    }
+
+    // This is safe now – useTimeline gets the correct context from the queue
+    const timeline = useTimeline({ node: queue });
+
+    const wasPaused = timeline.paused;
+    if (wasPaused) {
+        timeline.resume();
+    } else {
+        timeline.pause();
+    }
+
+    return res.status(200).json({ status: wasPaused ? 'resumed' : 'paused' });
+});
+
+router.post('/player/play', ensureAuthenticated, async (req, res) => {
+    const guildId = req.body.guildId;
+
+    if (!guildId) {
+        return res.status(400).json({ error: 'Missing guildId' });
+    }
+
+    const queue = client.player.nodes.get(guildId);
+
+    if (!queue) {
+        return res.status(400).json({ error: 'No queue found for this guild' });
+    }
+
+    // This is safe now – useTimeline gets the correct context from the queue
+    const timeline = useTimeline({ node: queue });
+
+    const wasPaused = timeline.paused;
+    if (wasPaused) {
+        timeline.resume();
+    } else {
+        return res.status(400).json({ error: 'the queue wasnt paused'})
+    }
+
+    return res.status(200).json({ status: wasPaused ? 'resumed' : 'paused' });
+});
+
+router.post('/player/skip', ensureAuthenticated, (req, res) => {
+    const guildId = req.body.guildId;
+    const queue = client.player.nodes.get(guildId);
+    if(!queue) {
+        return res.status(400).json({ error: 'No queue runnig'})
+    }
+    const Queue = useQueue(queue)
+
+    Queue.node.skip()
+    return res.status(200).json({ error: 'Done!'})
+})
 
 
 

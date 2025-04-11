@@ -20,7 +20,7 @@ if (!allowedIPs.includes(currentIP)) {
     process.exit(1); // Force bot to stop
 }
 
-dotenv.config({ path: 'E:/dbot/src/configs/.env' });
+dotenv.config({ path: './configs/.env' });
 const token = process.env['DISCORD_TOKEN'];
 
 const client = new Client({ 
@@ -72,12 +72,13 @@ for (const folder of commandFolders) {
     }
 }
 
-require('./handlers/statusesHandler.js')(client);
 require('./handlers/commandHandler.js')(client);
 require('./handlers/playerHandler.js')(client);
 
 client.once(Events.ClientReady, readyClient => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+    require('./handlers/statusesHandler.js')(client);
+    require('./events/ready.js')(client);
 });
 
 client.on(Events.InteractionCreate, async interaction => {

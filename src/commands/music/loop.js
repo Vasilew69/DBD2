@@ -30,7 +30,7 @@ module.exports = {
             )
         ),
     async execute(interaction) {
-        const queue = useQueue();
+        const queue = useQueue(interaction.guild);
 
         if (!queue) {
             const noEmbed = new EmbedBuilder()

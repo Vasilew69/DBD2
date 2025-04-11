@@ -9,7 +9,7 @@ const number = require('easy-number-formatter')
 var request = require("request");
 const jsonfile = require('jsonfile')
 var now = new Date()
-dotenv.config()
+dotenv.config({ path: './configs/.env'})
 
 const themes = "./configs/theme.json"
 

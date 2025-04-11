@@ -105,11 +105,10 @@
                               <p class="card-text"><strong>Created:</strong> <%=dateformat(`${guilds.createdAt}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
                               <p class="card-text"><strong>Joined:</strong> <%=dateformat(`${guilds.joinedAt}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
                               <form action="/guilds/player/<%=guilds.id%>" method="post")
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="submit()">
+                              <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="submit()">
                                 Select Guild
                             </button>
                           </form>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                             </div>
                             </div>
@@ -159,7 +158,7 @@
       </main>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../../public/home/assets/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script> 
-    <script src="../../public//home/assets/javascript/theme.min.js"></script> 
+    <script src="./home/assets/javascript/theme.min.js"></script> 
 </html>

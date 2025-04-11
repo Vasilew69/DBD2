@@ -86,51 +86,54 @@
                           <p class="mb-0"><%=success%></p>
                         </div>
                     <% } %> 
-      <div class="card">
-        <div class="card-body">
-            <h2 class="card-text"><%= track %></h2>
-            <p class="card-text"><%= artist %></p>
-            <img class="track-thumbnail" src="<%= thumbnail %>" alt="<%= track %> thumbnail">
-            <p class="card-text"><%= duration %></p>
-        </div>
-        <div class="player-controls">
-          <button class="btn btn-primary" onclick="playSong()">Play</button>
-          <button class="btn btn-secondary" onclick="pauseSong()">Pause</button>
-          <button class="btn btn-warning" onclick="skipSong()">Skip</button>
-        </div>
-      </div>
+                    <div class="main-container">
+                      <!-- Now Playing + Controls inside a box -->
+                      <div class="left-section">
+                        <div class="now-playing-box">
+                          <div class="now-playing">
+                            <img src="<%= thumbnail %>" alt="Track Image" class="track-img">
+                            <h2><%= track %> - <%= artist %></h2>
+                            <p class="track-duration"><%= duration %></p>
+                          </div>
+                    
+                          <!-- Controls inside the box -->
+                          <div class="controls">
+                            <form method="POST" action="/player/play">
+                              <input type="hidden" name="guildId" value="<%= guildId %>">
+                              <button class="btn">Play</button>
+                            </form>
+                            <form method="POST" action="/player/pause">
+                              <input type="hidden" name="guildId" value="<%= guildId %>">
+                              <button class="btn">Pause</button>
+                            </form>
+                            <form method="POST" action="/player/skip">
+                              <input type="hidden" name="guildId" value="<%= guildId %>">
+                              <button class="btn btn-danger">Skip</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <!-- Queue on the right -->
+                      <div class="queue">
+                        <h3>Queue</h3>
+                        <% queue.forEach((item) => { %>
+                          <div class="queue-item">
+                            <img src="<%= item.thumbnail %>" alt="Queue Item" class="queue-img">
+                            <span><strong><%= item.title %></strong> - <%= item.author %></span>
+                          </div>
+                        <% }) %>
+                      </div>
       </div>
       </div>
       </div>
     </div>
   </main>
-    <style>
-        .track-thumbnail {
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 1px;
-        }
-    
-        .track-duration {
-            margin: 15;
-            font-size: 14px;
-            color: #666;
-        }
-    
-        .player-controls {
-            width: 100%;
-            flex: 0 0 200px;
-            display: inline;
-            justify-content: space-between;
-        }
-    </style>
     <script>
       function playSong() {
         // Send a request to your server to play the song for the selected guild
         // You can use fetch or axios to make the request
-        fetch('/play', {
+        fetch('/player/play', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -149,7 +152,7 @@
     
       function pauseSong() {
         // Send a request to your server to pause the song for the selected guild
-        fetch('/pause', {
+        fetch('/player/pause', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -168,7 +171,7 @@
     
       function skipSong() {
         // Send a request to your server to skip the song for the selected guild
-        fetch('/skip', {
+        fetch('/player/skip', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

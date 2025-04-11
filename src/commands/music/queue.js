@@ -7,7 +7,7 @@ module.exports = {
     .setDescription('Get the current queue'),
 
     async execute(interaction) {
-        const queue = useQueue()
+        const queue = useQueue(interaction.guild)
 
         if (!queue) {
           const noqEmbed = new EmbedBuilder()
@@ -19,7 +19,7 @@ module.exports = {
 
         const currentTrack = queue.currentTrack;
 
-        const upcomingTracks = queue.tracks.slice(0, 5);
+        const upcomingTracks = queue.tracks.toArray();
 
         const message = [
             `**Now Playing:** ${currentTrack.title} - ${currentTrack.author}`,

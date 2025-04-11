@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cors = require('cors');
-dotenv.config()
+dotenv.config({ path: './configs/.env'})
 
 const app = express();
 const http = require('http').Server(app);
@@ -23,6 +23,7 @@ app.use(express.static('./themes'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true,limit: '5mb' }));
 app.use(fileUpload());
+app.use(express.json())
 
 require('./auth/passport')(passport);
 

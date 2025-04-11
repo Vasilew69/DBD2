@@ -4,9 +4,9 @@ const { useTimeline } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pause')
-        .setDescription('Pause the queue'),
+        .setDescription('Pause or continue the queue'),
     async execute(interaction) {
-        const timeline = useTimeline()
+        const timeline = useTimeline({ node: interaction.guildId })
     
         if(!timeline) {
             const tmeEmbed = new EmbedBuilder()
@@ -24,7 +24,7 @@ module.exports = {
         wasPaused ? timeline.resume() : timeline.pause();
 
         await interaction.reply(
-            `The player is now ${wasPaused ? 'playing' : 'paused'}.`,
+            `The player is now ${wasPaused ? 'playing' : 'paused'} on time ${timeline.timestamp.progress}.`,
         )
     }
 }
