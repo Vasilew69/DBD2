@@ -9,13 +9,12 @@
         <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
         <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
-        <link rel="stylesheet" href="../<%=errtheme.errth%>">
       </head>
     <div class="app">
         <header class="app-header app-header-dark">
             <div class="top-bar">
               <div class="top-bar-brand">
-                <h5>Discord BOT Dashboard</h5>
+                <h5>Dashboard</h5>
               </div>
               <div class="top-bar-list">
                 <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
@@ -43,6 +42,90 @@
                     <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
                   </div>
                 </div>
+                <footer class="app-footer">
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
+                    </li>
+                  </ul>
+                  <div class="copyright">Dashboard - Vasilew__ </div>
+                </footer>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script> 
+<script src="./home/assets/javascript/theme.min.js"></script>
+                <style>
+                  .center {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      min-height: 70vh;
+                  }
+                  
+                  .error-page {
+                      text-align: center;
+                      background-color: #1e1e2f;
+                      padding: 40px;
+                      border-radius: 16px;
+                      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+                      color: #fff;
+                      max-width: 600px;
+                      width: 100%;
+                      margin: auto;
+                      animation: fadeIn 0.6s ease-in-out;
+                  }
+                  
+                  .error-code {
+                      font-size: 3rem;
+                      font-weight: 700;
+                      color: #ff5c5c;
+                      margin-bottom: 10px;
+                  }
+                  
+                  .error-message {
+                      font-size: 1.8rem;
+                      margin-bottom: 15px;
+                  }
+                  
+                  .error-description {
+                      font-size: 1rem;
+                      margin-bottom: 30px;
+                      color: #ccc;
+                  }
+                  
+                  .btn {
+                      margin: 0 10px;
+                      padding: 10px 18px;
+                      font-size: 1rem;
+                      border-radius: 8px;
+                      transition: 0.2s ease-in-out;
+                  }
+                  
+                  .btn-primary {
+                      background-color: #3b82f6;
+                      border: none;
+                      color: white;
+                  }
+                  
+                  .btn-primary:hover {
+                      background-color: #2563eb;
+                      transform: scale(1.05);
+                  }
+                  
+                  @keyframes fadeIn {
+                      from { opacity: 0; transform: translateY(20px); }
+                      to { opacity: 1; transform: translateY(0); }
+                  }
+                  </style>                  
               </header>
               <div class="aside-menu overflow-hidden">
                 <nav id="stacked-menu" class="stacked-menu">
@@ -51,7 +134,7 @@
                       <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                     </li>
                     <li class="menu-item">
-                      <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Plugins</span></a>
+                      <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                     </li>
                     <li class="menu-item">
                       <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -88,7 +171,8 @@
                                         No music playing. Please play a song from the queue and try again.
                                     <% } %>
                                 </p>
-                                <a href="/player" class="btn btn-primary">Back to Player</a>
+                                <a href="/" class="btn btn-primary">Back to Home</a>
+                                <a href="/guilds" class="btn btn-primary">Go to guilds</a>
                             </div>
                             </div>
                         </div>

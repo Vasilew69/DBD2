@@ -44,14 +44,6 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
 
     // Ensure the queue exists
     const queue = client.player.nodes.get(guildId);
-    const queuedata = queue.tracks.toArray();
-    const queuemap = queuedata.map((track, index) => ({
-        index: index + 1,
-        title: track.title,
-        author: track.author,
-        thumbnail: track.thumbnail
-    }));
-
 
     if (!queue) {
         const theme = jsonfile.readFileSync(themes);
@@ -63,6 +55,13 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             error: 'No music queue found'
         });
     }
+    const queuedata = queue.tracks.toArray();
+    const queuemap = queuedata.map((track, index) => ({
+        index: index + 1,
+        title: track.title,
+        author: track.author,
+        thumbnail: track.thumbnail
+    }));
 
     // Check if there is a current track in the queue
     const currentTrack = queue.currentTrack;

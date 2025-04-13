@@ -21,7 +21,7 @@ if (!allowedIPs.includes(currentIP)) {
 }
 
 dotenv.config({ path: './configs/.env' });
-const token = process.env['DISCORD_TOKEN'];
+const token = process.env['token'];
 
 const client = new Client({ 
     intents: [

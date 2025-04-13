@@ -8,7 +8,7 @@ const jsonfile = require('jsonfile');
 dotenv.config({ path: './configs/.env'})
 
 const clientId = process.env.clientId;
-const token = process.env.DISCORD_TOKEN;
+const token = process.env.token;
 const commands = [];
 
 module.exports = (client) => {

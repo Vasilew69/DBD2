@@ -2,18 +2,16 @@ const express = require('express');
 const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
-const config = require('../configs/config.json')
 const version = require('../configs/version.json')
-
-json = require('json-update');
+const path = require('path')
+const ENV_PATH = path.join(__dirname, '..', '/configs/.env');
 const jsonfile = require('jsonfile')
-const file = "./configs/config.json"
 const themes = "./configs/theme.json"
 
 const fs = require("fs");
 
 router.get('/settings', ensureAuthenticated,(req, res) => {
-    var config = jsonfile.readFileSync(file);
+    var config = process.loadEnvFile('./configs/.env')
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
     res.render('home/settings',{
@@ -27,12 +25,38 @@ router.get('/settings', ensureAuthenticated,(req, res) => {
     })
 })
 
-router.post('/settings/config',ensureAuthenticated,(req,res) =>{
-    json.update('./configs/config.json',{clientID:`${req.body.clientID}`,clientSecret:`${req.body.clientSecret}`,callbackURL:`${req.body.callbackURL}`,Admin:req.body.admin.split(','),token:`${req.body.token}`,prefix:`${req.body.prefix}`,port:`${req.body.port}`}).then(function(dat) { 
-        req.flash('success', 'Config Updated please now restart the application!')
-        res.redirect('/settings')
-    })
-})
+router.post('/settings/config', ensureAuthenticated, (req, res) => {
+  const keys = ['clientID', 'clientSecret', 'callbackURL', 'admin', 'token', 'prefix', 'port'];
+  const updates = req.body; // { KEY: 'value', ... }
+
+    // Load current .env as key-value pairs
+    const currentEnv = fs.existsSync(ENV_PATH)
+        ? fs.readFileSync(ENV_PATH, 'utf-8')
+              .split('\n')
+              .filter(Boolean)
+              .reduce((acc, line) => {
+                  const [key, ...valParts] = line.split('=');
+                  acc[key] = valParts.join('=');
+                  return acc;
+              }, {})
+        : {};
+
+    // Apply updates
+    Object.entries(updates).forEach(([key, value]) => {
+        currentEnv[key] = value;
+    });
+
+    // Convert back to .env format
+    const newEnvContent = Object.entries(currentEnv)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('\n');
+
+    // Save to .env file
+    fs.writeFileSync(ENV_PATH, newEnvContent);
+
+  req.flash('success', 'Config updated successfully. Please restart the app!');
+  res.redirect('/settings');
+});
 
 router.post('/settings/dashboard',ensureAuthenticated,(req,res) =>{
     json.update('./configs/theme.json',{theme:`${req.body.theme}`}).then(function(dat) { 

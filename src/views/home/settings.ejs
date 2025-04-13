@@ -15,7 +15,7 @@
       <header class="app-header app-header-dark">
         <div class="top-bar">
           <div class="top-bar-brand">
-            <h5>Discord BOT Dashboard</h5>
+            <h5>Dashboard</h5>
           </div>
           <div class="top-bar-list">
             <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
@@ -51,7 +51,7 @@
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
                 <li class="menu-item">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Plugins</span></a>
+                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                 </li>
                 <li class="menu-item">
                   <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -105,20 +105,20 @@
                             </p>       
                             <form id="config-form" action="/settings/config" method="POST">
                               <label for="clientID"><strong>Client ID:</strong></label><br>
-                              <input type="text" id="clientID" name="clientID" class="form-control" value="<%=config.clientID%>"><br>
+                              <input type="text" id="clientID" name="clientID" class="form-control" value="<%=process.env.clientID%>"><br>
                               <label for="clientSecret"><strong>Client Secret:</strong></label> <a href="#clientSecret" data-toggle="password"><i class="fa fa-fw fa-eye-slash"></i> <span>Hide</span></a><br>
-                              <input type="password" id="clientSecret" name="clientSecret" class="form-control" value="<%=config.clientSecret%>"><br>
+                              <input type="password" id="clientSecret" name="clientSecret" class="form-control" value="<%=process.env.clientSecret%>"><br>
                               <label for="callbackURL"><strong>Callback URL:</strong></label><br>
-                              <input type="text" id="callbackURL" name="callbackURL" class="form-control" value="<%=config.callbackURL%>"><br>
+                              <input type="text" id="callbackURL" name="callbackURL" class="form-control" value="<%=process.env.callbackURL%>"><br>
                               <label for="admin"><strong>Admin:</strong></label><br>
                               <p>* Adding multiple Admins can be done by spliting their id's with commas (Example: <strong>1234,5678</strong>)</p>
-                              <input type="text" id="admin" name="admin" class="form-control" value="<%=config.Admin%>"><br>
+                              <input type="text" id="admin" name="Admin" class="form-control" value="<%=process.env.Admin%>"><br>
                               <label for="token"><strong>Token:</strong></label> <a href="#token" data-toggle="password"><i class="fa fa-fw fa-eye-slash"></i> <span>Hide</span></a><br>
-                              <input type="password" id="token" name="token" class="form-control" value="<%=config.token%>"><br>
+                              <input type="password" id="token" name="token" class="form-control" value="<%=process.env.token%>"><br>
                               <label for="prefix"><strong>Prefix:</strong></label><br>
-                              <input type="text" id="prefix" name="prefix" class="form-control" value="<%=config.prefix%>"><br>
+                              <input type="text" id="prefix" name="prefix" class="form-control" value="<%=process.env.prefix%>"><br>
                               <label for="prefix"><strong>Port:</strong></label><br>
-                              <input type="text" id="port" name="port" class="form-control" value="<%=config.port%>"><br>
+                              <input type="text" id="port" name="port" class="form-control" value="<%=process.env.port%>"><br>
                               <input type="submit" class="btn btn-primary btn-lg btn-block" value="Save">
                             </form>      
                         </div>
@@ -152,7 +152,7 @@
                   <div class="card bg-secondary">
                     <div class="card-header"> ⚙️ Build Info</div>
                     <div class="card-body">
-                      <p class="card-text"> Important information about the Discord BOT Dashboard V2 version you are running!<br>
+                      <p class="card-text"> Important information about the Dashboard version you are running!<br>
                       </p>       
                       <p><strong>Version:</strong> <%=version.ver%></p>
                       <p><strong>Created By:</strong> Vasilew__</p>
@@ -207,7 +207,7 @@
               <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
             </li>
           </ul>
-          <div class="copyright">Discord BOT Dashboard V2 - Vasilew__ </div>
+          <div class="copyright">Dashboard - Vasilew__ </div>
         </footer>
       </main>
     </div>
