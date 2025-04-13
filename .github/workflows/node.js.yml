@@ -26,7 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: cd /src
     - run: npm i
     - run: npm i bgutils-js
     - run: npm i jsonfile
-    - run: node /src/index.js
+    - run: node index.js
