@@ -14,7 +14,7 @@ module.exports = {
           .setTitle('No Queue')
           .setDescription('No active music queue on this server.')
           .setColor('#FF0000')
-          return interaction.reply({ embeds: [noqEmbed], ephemeral: false });
+          return interaction.reply({ embeds: [noqEmbed],   });
         }
 
         const currentTrack = queue.currentTrack;
@@ -37,7 +37,7 @@ module.exports = {
          .setTimestamp();
 
 
-          interaction.reply({ embeds: [queEmbed], ephemeral: false });
+          interaction.reply({ embeds: [queEmbed],   });
     }
 
 }

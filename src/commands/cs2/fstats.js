@@ -23,7 +23,7 @@ module.exports = {
         const apiKey = process.env.FKEY;
 
         if (!apiKey) {
-            return interaction.reply({ content: '⚠️ Faceit API key is missing!', ephemeral: false });
+            return interaction.reply({ content: '⚠️ Faceit API key is missing!'});
         }
         
         try {
@@ -62,7 +62,7 @@ module.exports = {
                .setTitle('Error Fetching Faceit Stats')
                .setDescription(`An error occurred while fetching Faceit stats for \`${nickname}\`.`)
                .setColor(0x0099FF);
-               await interaction.reply({ embeds: [errEmbed], ephemeral: true });
+               await interaction.reply({ embeds: [errEmbed]});
         }
     }
 }

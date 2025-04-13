@@ -60,6 +60,7 @@ app.use('/', require('./routes/guilds.js'));
 app.use('/', require('./routes/support.js'));
 app.use('/', require('./routes/plugins.js'));
 app.use('/', require('./routes/player.js'));
+app.use('/', require('./routes/history.js'));
 
 app.use('/login', require('./routes/login.js'));
 

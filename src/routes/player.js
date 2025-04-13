@@ -159,6 +159,10 @@ router.post('/player/skip', ensureAuthenticated, (req, res) => {
     return res.status(200).json({ error: 'Done!'})
 })
 
-
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success', 'Logged out');
+    res.redirect('/login');
+  });
 
 module.exports = router;

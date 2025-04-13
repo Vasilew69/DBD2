@@ -5,6 +5,7 @@ const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require(
 const cors = require('cors');
 const morgan = require('morgan');
 const Enmap = require('enmap');
+const { logEvent } = require('./modules/logger.js');
 
 const allowedIPs = ['37.143.253.150']; // Replace with your IP or server IP
 const execSync = require('child_process').execSync;
@@ -28,7 +29,8 @@ const client = new Client({
         GatewayIntentBits.Guilds, 
         GatewayIntentBits.GuildMembers, 
         GatewayIntentBits.GuildMessages, 
-        GatewayIntentBits.GuildVoiceStates
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.MessageContent
     ] 
 });
 
@@ -100,7 +102,28 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
         }
     }
+
+    const input = `/${interaction.commandName} ${interaction.options._hoistedOptions?.map(o => `${o.name}: ${o.value}`).join(' ') || ''}`;
+  
+  await logEvent({
+    userId: interaction.user.id,
+    username: interaction.user.username,
+    content: input,
+    type: 'command'
+  });
 });
+
+client.on('messageCreate', async (msg) => {
+    if (msg.author.bot) return;
+  
+    await logEvent({
+      userId: msg.author.id,
+      username: msg.author.username,
+      content,
+      type: 'message'
+    });
+  });
+  
 
 client.login(token);
 exports.client = client;

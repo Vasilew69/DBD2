@@ -22,7 +22,7 @@ module.exports = {
             const steamid = await axios.get(steamId)
 
             if (steamid.data.response.success !== 1) {
-                return interaction.reply({ content: "Invalid Steam username.", ephemeral: false });
+                return interaction.reply({ content: "Invalid Steam username."});
             }
 
             const Id = steamid.data.response.steamid;
@@ -36,7 +36,7 @@ module.exports = {
                     .setColor(0x0099FF)
                     .setTitle("Error")
                     .setDescription("Could not retrieve player ID.");
-                    interaction.reply({ embeds: [idEmbed], ephemeral: false });
+                    interaction.reply({ embeds: [idEmbed]});
             }
 
             const cs2Response = await axios.get(`http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=${SKEY}&steamid=${Id}`,);
@@ -47,7 +47,7 @@ module.exports = {
                     .setColor(0x0099FF)
                     .setTitle("Error")
                     .setDescription("Could not find player stats.");
-                    interaction.reply({ embeds: [nfstatsEmbed], ephemeral: false });
+                    interaction.reply({ embeds: [nfstatsEmbed]});
             }
             console.log(steamName)
 
@@ -77,7 +77,7 @@ module.exports = {
                .setTitle('Error Fetching CS2 Stats')
                .setDescription(`An error occurred while fetching CS2 stats for user \`${steamUsername}\`.`)
                .setColor(0x0099FF);
-               interaction.reply({ embeds: [errEmbed], ephemeral: false });
+               interaction.reply({ embeds: [errEmbed],});
         }
     }
 }

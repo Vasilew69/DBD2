@@ -22,7 +22,7 @@ module.exports = {
      .setTitle('Error')
      .setDescription('You need to be in a voice channel to play music!')
      .setColor(0x0099FF);
-     return interaction.reply({ embeds: [voiceEmbed], ephemeral: false });
+     return interaction.reply({ embeds: [voiceEmbed],   });
 
   }
  
@@ -34,7 +34,7 @@ module.exports = {
      .setTitle('Error')
      .setDescription('I am already playing in a different voice channel!')
      .setColor(0x0099FF);
-     return interaction.reply({ embeds: [alEmbed], ephemeral: false });
+     return interaction.reply({ embeds: [alEmbed],   });
   }
  
   if (
@@ -46,7 +46,7 @@ module.exports = {
      .setTitle('Error')
      .setDescription('I do not have permission to join your voice channel!')
      .setColor(0x0099FF);
-     return interaction.reply({ embeds: [permEmbed], ephemeral: false });
+     return interaction.reply({ embeds: [permEmbed],   });
   }
  
   if (
@@ -58,7 +58,7 @@ module.exports = {
      .setTitle('Error')
      .setDescription('I do not have permission to speak in your voice channel!')
      .setColor(0x0099FF);
-     return interaction.reply({ embeds: [spEmbed], ephemeral: false });
+     return interaction.reply({ embeds: [spEmbed],   });
   }
  
   try {
@@ -74,7 +74,7 @@ module.exports = {
      .setTitle('Song Added')
      .setDescription(`Added: ${result.track.title}`)
      .setColor(0x0099FF);
-    return interaction.reply({ embeds: [addEmbed], ephemeral: false });
+    return interaction.reply({ embeds: [addEmbed],   });
   } catch (error) {
     // Handle any errors that occur
     console.error(error);
@@ -82,7 +82,7 @@ module.exports = {
      .setTitle('Error Playing Song')
      .setDescription(`An error occurred while playing the song: ${error.message}`)
      .setColor(0x0099FF);
-     return interaction.reply({ embeds: [errEmbed], ephemeral: false });
+     return interaction.reply({ embeds: [errEmbed],   });
   }
     }
 

@@ -38,7 +38,7 @@ module.exports = {
                .setColor(0x0099FF)
                .setDescription('There is no active queue.')
                .setTimestamp();
-               await interaction.reply({ embeds: [noEmbed], ephemeral: false });
+               await interaction.reply({ embeds: [noEmbed]});
         }
 
         const loopMode = interaction.options.getNumber('mode');
@@ -50,7 +50,7 @@ module.exports = {
            .setDescription(`Loop mode has been changed to ${QueueRepeatMode[loopMode]}.`)
            .setColor(0x0099FF)
            .setTimestamp();
-           await interaction.reply({ embeds: [loopEmbed], ephemeral: false });
+           await interaction.reply({ embeds: [loopEmbed]});
     }
 }
 

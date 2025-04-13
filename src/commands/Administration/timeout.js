@@ -17,14 +17,14 @@ module.exports = {
     ),
     async execute(interaction) {
         if (!interaction.guild) {
-            return interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
+            return interaction.reply({ content: 'This command can only be used in a server.',});
         }
     
         const member = interaction.options.getMember('user');
         const duration = interaction.options.getInteger('duration');
     
         if (!member) {
-            return interaction.reply({ content: 'User is not in the server.', ephemeral: true });
+            return interaction.reply({ content: 'User is not in the server.', });
         }
     
         let timeoutRole = interaction.guild.roles.cache.find(role => role.name === 'Timeouted');
@@ -37,20 +37,20 @@ module.exports = {
                 });
             } catch (error) {
                 console.error(error);
-                return interaction.reply({ content: 'An error occurred while creating the timeout role.', ephemeral: true });
+                return interaction.reply({ content: 'An error occurred while creating the timeout role.',  });
             }
         }
     
         if (member.roles.cache.has(timeoutRole.id)) {
-            return interaction.reply({ content: 'The user is already timed out.', ephemeral: true });
+            return interaction.reply({ content: 'The user is already timed out.',});
         }
     
         if (interaction.guild.ownerId === member.id) {
-            return interaction.reply({ content: 'You cannot timeout the server owner.', ephemeral: true });
+            return interaction.reply({ content: 'You cannot timeout the server owner.',});
         }
     
         if (member.user.bot) {
-            return interaction.reply({ content: 'You cannot timeout a bot.', ephemeral: true });
+            return interaction.reply({ content: 'You cannot timeout a bot.', });
         }
     
         await member.roles.add(timeoutRole.id);
@@ -65,7 +65,7 @@ module.exports = {
             .setColor(0x0099FF)
             .setTimestamp();
     
-        await interaction.reply({ embeds: [embed], ephemeral: false });
+        await interaction.reply({ embeds: [embed], });
     }
 }
 
