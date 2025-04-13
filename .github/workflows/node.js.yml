@@ -1,11 +1,7 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+ [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +17,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          # Remove cache here, it causes error without package-lock.json in root
+
+      - name: Set up Node.js cache in /src
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: src/package-lock.json  # Make sure this file exists!
 
       - name: Install dependencies
         working-directory: ./src
@@ -32,3 +35,7 @@ jobs:
       - name: Build the project
         working-directory: ./src
         run: npm run build
+
+      - name: Run tests
+        working-directory: ./src
+        run: npm test
