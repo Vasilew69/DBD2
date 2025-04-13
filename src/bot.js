@@ -5,6 +5,7 @@ const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require(
 const cors = require('cors');
 const morgan = require('morgan');
 const Enmap = require('enmap');
+const { logEvent } = require('./modules/logger.js');
 
 const allowedIPs = ['37.143.253.150']; // Replace with your IP or server IP
 const execSync = require('child_process').execSync;
@@ -20,15 +21,16 @@ if (!allowedIPs.includes(currentIP)) {
     process.exit(1); // Force bot to stop
 }
 
-dotenv.config({ path: 'E:/dbot/src/configs/.env' });
-const token = process.env['DISCORD_TOKEN'];
+dotenv.config({ path: './configs/.env' });
+const token = process.env['token'];
 
 const client = new Client({ 
     intents: [
         GatewayIntentBits.Guilds, 
         GatewayIntentBits.GuildMembers, 
         GatewayIntentBits.GuildMessages, 
-        GatewayIntentBits.GuildVoiceStates
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.MessageContent
     ] 
 });
 
@@ -72,12 +74,13 @@ for (const folder of commandFolders) {
     }
 }
 
-require('./handlers/statusesHandler.js')(client);
 require('./handlers/commandHandler.js')(client);
 require('./handlers/playerHandler.js')(client);
 
 client.once(Events.ClientReady, readyClient => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+    require('./handlers/statusesHandler.js')(client);
+    require('./events/ready.js')(client);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
@@ -99,7 +102,28 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
         }
     }
+
+    const input = `/${interaction.commandName} ${interaction.options._hoistedOptions?.map(o => `${o.name}: ${o.value}`).join(' ') || ''}`;
+  
+  await logEvent({
+    userId: interaction.user.id,
+    username: interaction.user.username,
+    content: input,
+    type: 'command'
+  });
 });
+
+client.on('messageCreate', async (msg) => {
+    if (msg.author.bot) return;
+  
+    await logEvent({
+      userId: msg.author.id,
+      username: msg.author.username,
+      content,
+      type: 'message'
+    });
+  });
+  
 
 client.login(token);
 exports.client = client;

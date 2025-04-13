@@ -18,7 +18,7 @@ module.exports = {
             const noqEmbed = new EmbedBuilder()
             noqEmbed.setTitle('No Queue')
             noqEmbed.setColor(0x0099FF)
-            return interaction.reply({embeds: [noqEmbed], ephemeral: false })
+            return interaction.reply({embeds: [noqEmbed],   })
         }
 
         queue.node.setVolume(volume)
@@ -26,7 +26,7 @@ module.exports = {
         volEmbed.setTitle('Volume Set')
         volEmbed.setColor(0x0099FF)
         volEmbed.setDescription(`Volume set to ${volume}`)
-        return interaction.reply({embeds: [volEmbed], ephemeral: false })
+        return interaction.reply({embeds: [volEmbed],   })
     }
 }
 

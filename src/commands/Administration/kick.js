@@ -25,7 +25,7 @@ module.exports = {
                .setTitle("Permission Denied")
                .setDescription("You don't have permission to kick members.")
                .setColor(0x0099FF);
-               return interaction.reply({ embeds: [permEmbed], ephemeral: false });
+               return interaction.reply({ embeds: [permEmbed]});
         }
 
         await member.kick(reason);
@@ -35,7 +35,7 @@ module.exports = {
            .setColor(0x0099FF)
            .setTimestamp();
         
-           await interaction.reply({ embeds: [embed], ephemeral: false });
+           await interaction.reply({ embeds: [embed]});
     }
 }
 module.exports.details = {

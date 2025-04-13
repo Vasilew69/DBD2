@@ -26,7 +26,7 @@ module.exports = {
             .setTitle("Unmute")
             .setDescription(`User ${user.username} is not muted.`)
             .setColor(0x0099FF);
-            return interaction.reply({ embeds: [nomutEmbed], ephemeral: false });
+            return interaction.reply({ embeds: [nomutEmbed]});
         }
         // Remove the muted role from the user
         user.roles.remove(mutedRole.id);

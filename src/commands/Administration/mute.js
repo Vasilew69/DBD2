@@ -36,12 +36,12 @@ module.exports = {
                 });
             } catch (error) {
                 console.error(error);
-                return interaction.reply({ content: 'An error occurred while creating the timeout role.', ephemeral: true });
+                return interaction.reply({ content: 'An error occurred while creating the timeout role.'});
             }
         }
     
             if (member.roles.cache.has(mutedRole)) {
-                    return interaction.reply({ content: 'The user is already timed out.', ephemeral: false });
+                    return interaction.reply({ content: 'The user is already timed out.'});
             }
             
                 // Add the timeout role to the user
@@ -57,7 +57,7 @@ module.exports = {
                 .setDescription(`User with ID \`${member.id}\` has been set to Muted for ${duration} seconds. The reason for this is ${reason}`)
                 .setColor(0x0099FF)
                 .setTimestamp();
-                await interaction.reply({ embeds: [embed], ephemeral: false });
+                await interaction.reply({ embeds: [embed]});
             }
     }
 module.exports.details = {

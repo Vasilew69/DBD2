@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon --config nodemon.json"
   },
   "author": "",
   "license": "ISC",
@@ -34,10 +34,13 @@
     "express-fileupload": "^1.5.1",
     "express-session": "^1.18.1",
     "ffmpeg-static": "^5.2.0",
+    "figlet": "^1.8.0",
     "http": "^0.0.1-security",
     "json-update": "^5.3.0",
     "jsonfile": "^6.1.0",
+    "lolcatjs": "^2.4.3",
     "morgan": "^1.10.0",
+    "mysql2": "^3.14.0",
     "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",

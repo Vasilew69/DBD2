@@ -3,8 +3,12 @@ const { Player, GuildQueueEvent } = require("discord-player");
 const { YoutubeiExtractor } = require("discord-player-youtubei");
 
 module.exports = (client) => {
-    const player = new Player(client)
-
+    const player = new Player(client, {
+		ytdlOptions: {
+			quality: 'highestaudio',
+			highWaterMark: 1 << 25
+		}
+	}); // Set the default volume to 50%
     player.extractors.loadMulti(DefaultExtractors)
 	player.extractors.register(YoutubeiExtractor, {})
     player.events.on('playerStart', (queue, track) => {

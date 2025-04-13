@@ -1,20 +1,21 @@
 module.exports = (client) => {
+  const { ActivityType } = require('discord.js');
     const statuses = [
         {
           name: 'Getoto',
-          type: "STREAMING",
+          type: ActivityType.Streaming,
         },
         {
           name: 'Getoto',
-          type: "PLAYING",
+          type: ActivityType.Playing,
         },
         {
           name: 'Getoto',
-          type: "WATCHING",
+          type: ActivityType.Watching,
         },
         {
           name: 'Getoto',
-          type: "LISTENING",
+          type: ActivityType.Listening,
         },
     ];    
     setInterval(() => {

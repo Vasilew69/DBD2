@@ -5,10 +5,10 @@ const dotenv = require('dotenv');
 const jsonfile = require('jsonfile');
 
 
-dotenv.config();
+dotenv.config({ path: './configs/.env'})
 
-const clientId = process.env['CLIENTID'];
-const token = process.env['DISCORD_TOKEN'];
+const clientId = process.env.clientId;
+const token = process.env.token;
 const commands = [];
 
 module.exports = (client) => {
@@ -120,7 +120,6 @@ module.exports = (client) => {
 
                         jsonfile.writeFileSync(commandsFilePath, commandsList, { spaces: 2 });
 
-                        console.log("✅ Commands saved with categories!");
                     } catch (err) {
                         console.error(`❌ Error loading command "${commandName}":`, err);
                     }

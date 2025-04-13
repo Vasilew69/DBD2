@@ -32,7 +32,7 @@ module.exports = {
                .setColor(0x0099FF);
 
             if (member.roles.highest.position >= interaction.member.roles.highest.position) {
-                return interaction.reply({ embeds: [errEmbed], ephemeral: false });
+                return interaction.reply({ embeds: [errEmbed]});
             }
 
             await member.ban({reason, duration})
@@ -42,7 +42,7 @@ module.exports = {
                .setDescription(`Banned ${user.username} for ${duration === 0? "indefinitely" : `${duration / 60000} minutes`} with the reason: "${reason}" /n with userId: "${user.id}`)
                .setColor(0x0099FF);
 
-            await interaction.reply({ embeds: [embed], ephemeral: false });
+            await interaction.reply({ embeds: [embed] });
         }
     }
     module.exports.details = {

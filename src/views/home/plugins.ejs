@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Plugins | <%=client.user.username%> </title>
+    <title> Commands | <%=client.user.username%> </title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -16,7 +16,7 @@
       <header class="app-header app-header-dark">
         <div class="top-bar">
           <div class="top-bar-brand">
-            <h5>Discord BOT Dashboard</h5>
+            <h5>Dashboard</h5>
           </div>
           <div class="top-bar-list">
             <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
@@ -52,7 +52,7 @@
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
                 <li class="menu-item has-active">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Plugins</span></a>
+                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                 </li>
                 <li class="menu-item">
                   <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -63,6 +63,12 @@
                 <li class="menu-item">
                     <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
                 </li>
+                <li class="menu-item">
+                  <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
+              </li>
+              <li class="menu-item">
+                <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
+              </li>
               </ul>
             </nav>
           </div>
@@ -94,9 +100,9 @@
                         <p class="mb-0"><%=error%></p>
                       </div>
                   <% } %> 
-                    <h4>Plugins</h4>
-                    <p class="text-muted"> Configure and enable plugins that you would like to use!</p>
-                    <p class="text-muted"><strong>NOTE: When importing/removing or enabling/disabling plugins you will require to restart Discord BOT Dashboard for changes to take effect!</strong></p>
+                    <h4>Commands</h4>
+                    <p class="text-muted"> Configure and enable commands that you would like to use!</p>
+                    <p class="text-muted"><strong>NOTE: When importing/removing or enabling/disabling a command you will require to restart the Dashboard for changes to take effect!</strong></p>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#upload">Import</button>
                     </div>
                     <div class="row">
@@ -160,10 +166,10 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 id="<%= command.name %>Label" class="modal-title">
-                                  <i class="far fa-trash-alt text-warning mr-1"></i> Remove Plugin</h5>
+                                  <i class="far fa-trash-alt text-warning mr-1"></i> Remove Command</h5>
                               </div>
                               <div class="modal-body">
-                                <p> Are you sure you want to remove the plugin <strong><%= command.name %></strong>? This cannot be undone!</p>
+                                <p> Are you sure you want to remove that command <strong><%= command.name %></strong>? This cannot be undone!</p>
                               </div>
                               <div class="modal-footer">
                                 <form action="/plugins/remove/<%= command.name %>" method="POST">
@@ -182,10 +188,10 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 id="uploadLabel" class="modal-title">
-                                  <i class="fa fa-file-import text-success mr-1"></i> Plugin Import</h5>
+                                  <i class="fa fa-file-import text-success mr-1"></i> Command Importer</h5>
                               </div>
                               <div class="modal-body">
-                                <p> Keep in mind after importing the plugin make sure to restart your application for changes to take effect.</p>
+                                <p> Keep in mind after importing the command make sure to restart your application for changes to take effect.</p>
                                 <form ref='uploadForm' 
                                   id='uploadForm' 
                                 action='/plugins/upload' 
@@ -197,9 +203,11 @@
     
                               <!-- Category dropdown -->
                               <select name="category" required>
+                                  <option value="cs2">CS</option>
                                   <option value="misc">Misc</option>
-                                  <option value="utils">Utils 1</option>
-                                  <option value="administration">administration</option>
+                                  <option value="music">Music</option>
+                                  <option value="utils">Utils</option>
+                                  <option value="administration">Administration</option>
                               </select>
     
                               <button type="submit"  class="btn btn-warning">Upload</button>
@@ -224,7 +232,7 @@
               <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
             </li>
           </ul>
-          <div class="copyright">Discord BOT Dashboard V2 - Vasilew__ </div>
+          <div class="copyright">Dashboard - Vasilew__ </div>
         </footer>
       </main>
     </div>

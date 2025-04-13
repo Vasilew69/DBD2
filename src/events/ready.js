@@ -1,9 +1,10 @@
 const chalk = require("chalk");
-const config = require("../config/config.json");
-const vers = require("../config/version.json");
-const discord = require('../bot');
+const vers = require("../configs/version.json");
+const client = require('../bot');
 const figlet = require('figlet');
 const lolcatjs = require('lolcatjs');
+const dotenv = require('dotenv')
+dotenv.config({ path: './configs/.env'})
 
 module.exports = (client) => {
     console.clear();
@@ -20,8 +21,8 @@ module.exports = (client) => {
     // Логирование информации о запуске
     console.log(chalk.bold.green('Launched Successfully...'));
     console.log(chalk.magenta('Version:'), chalk.cyan(`${vers.ver}`));
-    console.log(chalk.magenta('Made by:'), chalk.cyan('LachlanDev#8014'));
-    console.log(chalk.magenta('Prefix:'), chalk.cyan(`${config.prefix}\n`));
+    console.log(chalk.magenta('Made by:'), chalk.cyan('Vasilew'));
+    console.log(chalk.magenta('Prefix:'), chalk.cyan(`${process.env['prefix']}\n`));
 
     // Проверка, что клиент и user определены
     if (client.user) {
@@ -30,5 +31,6 @@ module.exports = (client) => {
         console.error(chalk.red('Error: Client user is undefined.'));
     }
 
-    console.log(chalk.green(chalk.bold(`Dashboard:`), `http://localhost:` + config.port));
+    console.log(chalk.green(chalk.bold(`Dashboard:`), `http://localhost:` + process.env['port']));
+    console.log(chalk.green(chalk.bold("✅ Commands saved with categories!")));
 }
