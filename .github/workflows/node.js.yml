@@ -35,11 +35,6 @@ jobs:
       - name: Build the project
         working-directory: ./src
         run: npm run build
-        env:
-        clientId: ${{ secrets.CLIENID }},
-        token: ${{ secrets.TOKEN}},
-        clientSecret: ${{secrets.CLIENTSECRET}}
-        callbackUrl: ${{secrets.CALLBACKURL}}
 
       - name: Run tests
         working-directory: ./src
