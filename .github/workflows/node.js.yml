@@ -36,7 +36,7 @@ jobs:
         working-directory: ./src
         run: npm run build
         env:
-        clientId: ${{ secrets.CLIENTID }},
+        clientId: ${{ secrets.CLIENID }},
         token: ${{ secrets.TOKEN}},
         clientSecret: ${{secrets.CLIENTSECRET}}
         callbackUrl: ${{secrets.CALLBACKURL}}
