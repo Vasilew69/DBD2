@@ -34,6 +34,7 @@ jobs:
 
       - name: Build the project
         working-directory: ./src
+        env: token: ${{ secrets.TOKEN}}
         run: npm run build
 
       - name: Run tests
