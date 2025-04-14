@@ -1,8 +1,7 @@
 name: Test Discord Bot and Dashboard
 
 on:
-  push:
-    branches: [ main ]
+  {push}
 
 jobs:
   test:
