@@ -2,11 +2,11 @@ name: Test Discord Bot and Dashboard
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: [self-hosted]
 
     steps:
     - uses: actions/checkout@v2
@@ -23,6 +23,7 @@ jobs:
       run: |
         node index.js &
         sleep 10
-        curl http://localhost:3000 || echo "Started"
+        IP_ADDRESS=$(hostname -I | cut -d' ' -f1)
+        curl http://$IP_ADDRESS:3000 || echo "Started"
       env:
         TOKEN: ${{ secrets.TOKEN }}
