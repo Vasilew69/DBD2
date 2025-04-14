@@ -1,7 +1,7 @@
 name: Test Discord Bot and Dashboard
 
 on:
-  {push}
+  { push}
 
 jobs:
   test:
@@ -15,8 +15,8 @@ jobs:
     - name: Installing...
       run: |
         cd ./src
-        npm install
-        npm install bgutils-js jsonfile express
+        npm install --ignore-scripts
+        npm install bgutils-js jsonfile express --ignore-scripts
     - name: starting
       run: |
         cd ./src
