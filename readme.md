@@ -3,13 +3,13 @@
     <p>Discord BOT Dashboard - V2</p>
 <img src="./content/headerimage.png">
     
-[![Github all releases](https://img.shields.io/github/downloads/LachlanDev/Discord-BOT-Dashboard-V2/total.svg?style=for-the-badge)](https://GitHub.com/LachlanDev/Discord-BOT-Dashboard-V2/releases/) [![GitHub release](https://img.shields.io/github/release/LachlanDev/Discord-BOT-Dashboard-V2.svg?style=for-the-badge)](https://GitHub.com/LachlanDev/Discord-BOT-Dashboard-V2/releases/) [![GitHub issues](https://img.shields.io/github/issues/LachlanDev/Discord-BOT-Dashboard-V2.svg?style=for-the-badge)](https://GitHub.com/LachlanDev/Discord-BOT-Dashboard-V2/issues/) [![DiscordServer](https://img.shields.io/discord/587842272167723028?label=Discord%20Server&logo=Discord&colorB=5865F2&style=for-the-badge&logoColor=white)](https://discord.com/invite/w7B5nKB)
+[![Github all releases](https://img.shields.io/github/downloads/Vasilew69/DBD/total.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub release](https://img.shields.io/github/release/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub issues](https://img.shields.io/github/issues/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/issues/) [![DiscordServer](https://img.shields.io/discord/587842272167723028?label=Discord%20Server&logo=Discord&colorB=5865F2&style=for-the-badge&logoColor=white)](https://discord.com/invite/w7B5nKB)
 
 
 </h1>
 
 # 📚 About
-DBNF Discord bot
+Discord bot
 
 # Dashboard Preview:
 <img src="./content/dashprev.JPG">
@@ -21,19 +21,26 @@ npm install
 ```
 
 #### 🖥️ Setting up BOT
-Rename ``config.default.json`` to ``config.json`` and open up the file, this can be found found in the **config** folder and input the required fields. 
-```json
-{
-    "clientID":"BOTclientID",
-    "clientSecret":"BOTclientSecret",
-    "callbackURL":"BOTcallbackURL",
-    "Admin":["userAdminID"],
-    "token":"BOTtoken",
-    "prefix":"-",
-    "port":"3000"
-}
+Rename ``.env.default`` to ``.env`` and open up the file, this can be found found in the **configs** folder and input the required fields. 
+```env
+token=BOTToken
+clientId=BOTClientID
+API=STEAMAPI
+KEY=STEAMKEY
+FKEY=FACEIT DEV KEY
+YTT=access_token=ytt package token; scope=https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube-paid-content; token_type=Bearer; expiry_date=2025-03-24T16:07:45.430Z
+clientSecret=BotSecret
+callbackURL=yourcallback url
+Admin=AdminID
+port=Port
+prefix=/
+host=DBHOST
+user=DBUSER
+password=DBPASS
+database=DBASE
+
 ```
-Make sure to enable both "Privileged Gateway Intents" on the [**Discord Developer Dashboard**](https://discord.com/developers). This is to fix errors  with "Kick / Ban" Commands!
+Make sure to enable both "Privileged Intents" on the [**Discord Developer Dashboard**](https://discord.com/developers). This is to fix errors  with "Kick / Ban" Commands!
 
 #### 📡 Starting the application 
 Open up the root directory and run the following command.
