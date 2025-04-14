@@ -15,6 +15,7 @@ jobs:
     - name: Installing...
       working-directory: /home/vasilew/actions-runner/_work/DBD2/src
       run: |
+       cd /home/vasilew/actions-runner/_work/DBD2/src &
         npm install &
         npm install bgutils-js jsonfile express
     - name: starting
