@@ -13,12 +13,12 @@ jobs:
       with:
         node-version: '14.x'
     - name: Installing...
-      working-directory: /src
+      working-directory: /home/vasilew/actions-runner/_work/DBD2/src
       run: |
         npm install &
         npm install bgutils-js jsonfile express
     - name: starting
-      working-directory: /src
+      working-directory: /home/vasilew/actions-runner/_work/DBD2/src
       run: |
         node index.js &
         sleep 10
