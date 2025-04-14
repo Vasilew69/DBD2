@@ -16,7 +16,7 @@ jobs:
       working-directory: ./src
       run: |
         npm install &
-        npm install bgutils-js jsonfile
+        npm install bgutils-js jsonfile express
     - name: starting
       working-directory: ./src
       run: |
