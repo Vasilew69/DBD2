@@ -1,7 +1,9 @@
 name: Test Discord Bot and Dashboard
 
 on:
-  {push}
+  push:
+    branches: [ dev ]
+
 jobs:
   test:
     runs-on: windows-latest
@@ -18,8 +20,9 @@ jobs:
         npm install bgutils-js jsonfile
     - name: starting
       working-directory: ./src
-      env: token: ${{ secrets.TOKEN}}
       run: |
         node index.js &
         sleep 10
         curl http://localhost:3000 || echo "Started"
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
