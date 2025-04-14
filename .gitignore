@@ -4,3 +4,5 @@ config.json
 .prettierrc
 src/configs/commands.json
 actions-runner
+act.exe
+license
