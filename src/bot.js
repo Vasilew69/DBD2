@@ -7,20 +7,6 @@ const morgan = require('morgan');
 const Enmap = require('enmap');
 const { logEvent } = require('./modules/logger.js');
 
-const allowedIPs = ['37.143.253.150']; // Replace with your IP or server IP
-const execSync = require('child_process').execSync;
-
-// Function to get external IP (for VPS users)
-function getIP() {
-    return execSync('curl -s https://api64.ipify.org').toString().trim();
-}
-
-const currentIP = getIP();
-if (!allowedIPs.includes(currentIP)) {
-    console.log(`Unauthorized login detected from ${currentIP}. Shutting down bot.`);
-    process.exit(1); // Force bot to stop
-}
-
 dotenv.config({ path: './configs/.env' });
 const token = process.env['token'];
 
