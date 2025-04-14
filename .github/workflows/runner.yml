@@ -1,0 +1,25 @@
+name: Test Discord Bot and Dashboard
+
+on:
+  {push}
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - name: Installing...
+      working-directory: ./src
+      run: |
+        npm install &
+        npm install bgutils-js jsonfile
+    - name: starting
+      working-directory: ./src
+      env: token: ${{ secrets.TOKEN}}
+      run: |
+        node index.js &
+        sleep 10
+        curl http://localhost:3000 || echo "Started"
