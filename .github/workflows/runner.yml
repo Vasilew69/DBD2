@@ -19,9 +19,10 @@ jobs:
         npm install bgutils-js jsonfile express --ignore-scripts
     - name: starting
       run: |
+       cd src
         node index.js
         sleep 10
-        IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
+        IP_ADDRESS=$(get-ipv4)
         curl http://$IP_ADDRESS:3000
       env:
         TOKEN: ${{ secrets.TOKEN }}
