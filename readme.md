@@ -1,9 +1,10 @@
 <h1 align="center">
     <br>
     <p>Discord BOT Dashboard - V2</p>
-<img src="./content/headerimage.png">
     
-[![Github all releases](https://img.shields.io/github/downloads/Vasilew69/DBD/total.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub release](https://img.shields.io/github/release/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub issues](https://img.shields.io/github/issues/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/issues/) [![DiscordServer](https://img.shields.io/discord/587842272167723028?label=Discord%20Server&logo=Discord&colorB=5865F2&style=for-the-badge&logoColor=white)](https://discord.com/invite/w7B5nKB)
+[![Github all releases](https://img.shields.io/github/downloads/Vasilew69/DBD2/total.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub release](https://img.shields.io/github/release/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/releases/) [![GitHub issues](https://img.shields.io/github/issues/Vasilew69/DBD2.svg?style=for-the-badge)](https://GitHub.com/Vasilew69/DBD2/issues/) [![DiscordServer](https://img.shields.io/discord/587842272167723028?label=Discord%20Server&logo=Discord&colorB=5865F2&style=for-the-badge&logoColor=white)](https://discord.com/invite/w7B5nKB) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vasilew69/DBD2/runner.yml?branch=main&style=for-the-badge)
+
+
 
 
 </h1>
@@ -38,7 +39,6 @@ host=DBHOST
 user=DBUSER
 password=DBPASS
 database=DBASE
-
 ```
 Make sure to enable both "Privileged Intents" on the [**Discord Developer Dashboard**](https://discord.com/developers). This is to fix errors  with "Kick / Ban" Commands!
 
