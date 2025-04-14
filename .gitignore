@@ -6,4 +6,6 @@ src/configs/commands.json
 actions-runner
 act.exe
 license
+<<<<<<< HEAD
 *.zip
+actions-runner
