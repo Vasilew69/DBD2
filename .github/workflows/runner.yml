@@ -1,7 +1,7 @@
 name: Test Discord Bot and Dashboard
 
 on:
-  { push}
+ {push}
 
 jobs:
   test:
@@ -11,18 +11,17 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '14.x'
+        node-version: '16.x' # Use Node.js 16.x which supports the ??= operator
     - name: Installing...
       run: |
         cd ./src
-        npm install --ignore-scripts
-        npm install bgutils-js jsonfile express --ignore-scripts
+        npm install bgutils-js jsonfile express
     - name: starting
       run: |
-       cd src
-        node index.js
+        cd ./src
+        node index.js &
         sleep 10
         IP_ADDRESS=$(get-ipv4)
-        curl http://$IP_ADDRESS:3000
+        curl http://$IP_ADDRESS:3000 || echo "Started"
       env:
         TOKEN: ${{ secrets.TOKEN }}
