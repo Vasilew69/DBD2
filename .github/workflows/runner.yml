@@ -5,7 +5,7 @@ on:
 
 jobs:
   test:
-    runs-on: Linux
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
@@ -13,14 +13,12 @@ jobs:
       with:
         node-version: '14.x'
     - name: Installing...
-      working-directory: /home/vasilew/actions-runner/_work/DBD2/src
       run: |
-       cd /home/vasilew/actions-runner/_work/DBD2/src &
-        npm install &
+        cd /home/vasilew/actions-runner/_work/DBD2/src
         npm install bgutils-js jsonfile express
     - name: starting
-      working-directory: /home/vasilew/actions-runner/_work/DBD2/src
       run: |
+        cd /home/vasilew/actions-runner/_work/DBD2/src
         node index.js &
         sleep 10
         IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
