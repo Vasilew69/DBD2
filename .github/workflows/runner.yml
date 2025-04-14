@@ -1,11 +1,11 @@
 name: Test Discord Bot and Dashboard
 
 on:
- {push}
+  {push}
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: Linux
 
     steps:
     - uses: actions/checkout@v2
@@ -15,12 +15,12 @@ jobs:
     - name: Installing...
       working-directory: ./src
       run: |
-        "npm install" &
-        "npm install bgutils-js jsonfile"
+        npm install &
+        npm install bgutils-js jsonfile
     - name: starting
       working-directory: ./src
       run: |
-        "node index.js" &
+        node index.js &
         sleep 10
         IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
         curl http://$IP_ADDRESS:3000 || echo "Started"
