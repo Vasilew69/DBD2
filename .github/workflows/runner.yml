@@ -19,7 +19,6 @@ jobs:
         npm install bgutils-js jsonfile express --ignore-scripts
     - name: starting
       run: |
-        cd ./src
         node index.js
         sleep 10
         IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
