@@ -14,11 +14,12 @@ jobs:
         node-version: '14.x'
     - name: Installing...
       run: |
-        cd /home/vasilew/actions-runner/_work/DBD2/src
+        cd ./src
+        npm install
         npm install bgutils-js jsonfile express
     - name: starting
       run: |
-        cd /home/vasilew/actions-runner/_work/DBD2/src
+        cd ./src
         node index.js &
         sleep 10
         IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
