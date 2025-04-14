@@ -1,7 +1,6 @@
 node_modules
 .env
 config.json
-package-lock.json
 .prettierrc
 src/configs/commands.json
 actions-runner
