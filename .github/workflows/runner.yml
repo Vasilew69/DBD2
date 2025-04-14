@@ -20,7 +20,6 @@ jobs:
         npm install bgutils-js jsonfile express
     - name: starting
       run: |
-        cd ./src
         node index.js
         sleep 10
         IP_ADDRESS=$(hostname -I)
