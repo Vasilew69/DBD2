@@ -23,6 +23,6 @@ jobs:
         node index.js &
         sleep 10
         IP_ADDRESS=$(echo %HOSTNAME% | get-ipv4)
-        curl http://$IP_ADDRESS:3000 || echo "Started"
+        curl http://$IP_ADDRESS:3000
       env:
         TOKEN: ${{ secrets.TOKEN }}
