@@ -1,5 +1,5 @@
 node_modules
-.env
+src/configs/.env
 config.json
 .prettierrc
 src/configs/commands.json
@@ -9,3 +9,4 @@ license
 <<<<<<< HEAD
 *.zip
 actions-runner
+*.todo
