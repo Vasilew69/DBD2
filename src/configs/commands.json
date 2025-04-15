@@ -337,6 +337,13 @@
     "category": "music"
   },
   {
+    "name": "guild",
+    "description": "No description available",
+    "options": [],
+    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\utils\\guild.js",
+    "category": "utils"
+  },
+  {
     "name": "help",
     "description": {
       "name": "help",
