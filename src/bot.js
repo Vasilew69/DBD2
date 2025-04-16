@@ -6,6 +6,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const Enmap = require('enmap');
 const { logEvent } = require('./modules/logger.js');
+const syncHandler = require('./handlers/guildHandler.js');
+
 
 dotenv.config({ path: './configs/.env' });
 const token = process.env['token'];
@@ -62,9 +64,8 @@ for (const folder of commandFolders) {
 
 require('./handlers/commandHandler.js')(client);
 require('./handlers/playerHandler.js')(client);
-
-client.once(Events.ClientReady, readyClient => {
-    console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+client.once('ready', async() => {
+    console.log(`Ready! Logged in as ${client.user.tag}`);
     require('./handlers/statusesHandler.js')(client);
     require('./events/ready.js')(client);
 });
@@ -79,7 +80,7 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 
     try {
-        await command.execute(interaction);
+        await command.execute(interaction, client);
     } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
@@ -95,21 +96,31 @@ client.on(Events.InteractionCreate, async interaction => {
     userId: interaction.user.id,
     username: interaction.user.username,
     content: input,
-    type: 'command'
+    type: 'command',  
+    guildname: interaction.guild.name
   });
 });
 
 client.on('messageCreate', async (msg) => {
     if (msg.author.bot) return;
+
+    let content = msg.content?.trim();
+    if (!content && msg.attachments.size > 0) {
+        content = '[Attachment]';
+      } else if (!content) {
+        content = '[Empty or non-text message]';
+      }
   
     await logEvent({
       userId: msg.author.id,
       username: msg.author.username,
       content,
-      type: 'message'
+      type: 'message',
+      guildname: msg.guild.name
     });
   });
   
+syncHandler(client);
 
 client.login(token);
 exports.client = client;

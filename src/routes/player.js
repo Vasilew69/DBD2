@@ -156,7 +156,7 @@ router.post('/player/skip', ensureAuthenticated, (req, res) => {
     const Queue = useQueue(queue)
 
     Queue.node.skip()
-    return res.status(200).json({ error: 'Done!'})
+    return res.status(200).redirect('/player')
 })
 
 router.get('/logout', (req, res) => {

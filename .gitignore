@@ -1,10 +1,11 @@
 node_modules
-.env
 config.json
 .prettierrc
 src/configs/commands.json
 actions-runner
 act.exe
 license
-actions-runner
 *.zip
+actions-runner
+*.todo
+src/configs/.env

@@ -21,6 +21,19 @@ router.get('/history', ensureAuthenticated, async (req, res) => {
     }
 })
 
+router.post('/clear', ensureAuthenticated, async (req, res) => {
+  await db.execute('DELETE FROM logs');
+  res.redirect('/history')
+})
+
+router.post('/add', ensureAuthenticated, async (req,res) => {
+    const {id, username, userId, content, type, guildname} = req.body
+    const timestamp = new Date();
+    await db.execute('INSERT INTO logs (userId, username, content, type, guildname) VALUES (?, ?, ?, ?, ?)',
+      [userId, username, content, type, guildname]);
+    res.redirect('/history');
+})
+
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash('success', 'Logged out');
