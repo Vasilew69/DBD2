@@ -6,6 +6,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const Enmap = require('enmap');
 const { logEvent } = require('./modules/logger.js');
+const syncHandler = require('./handlers/guildHandler.js');
 
 
 dotenv.config({ path: './configs/.env' });
@@ -95,7 +96,8 @@ client.on(Events.InteractionCreate, async interaction => {
     userId: interaction.user.id,
     username: interaction.user.username,
     content: input,
-    type: 'command'
+    type: 'command',  
+    guildname: interaction.guild.name
   });
 });
 
@@ -113,10 +115,12 @@ client.on('messageCreate', async (msg) => {
       userId: msg.author.id,
       username: msg.author.username,
       content,
-      type: 'message'
+      type: 'message',
+      guildname: msg.guild.name
     });
   });
   
+syncHandler(client);
 
 client.login(token);
 exports.client = client;

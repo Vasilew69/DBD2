@@ -27,10 +27,10 @@ router.post('/clear', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/add', ensureAuthenticated, async (req,res) => {
-    const {id, username, userId, content, type} = req.body
+    const {id, username, userId, content, type, guildname} = req.body
     const timestamp = new Date();
-    await db.execute('INSERT INTO logs (userId, username, content, type) VALUES (?, ?, ?, ?)',
-      [userId, username, content, type]);
+    await db.execute('INSERT INTO logs (userId, username, content, type, guildname) VALUES (?, ?, ?, ?, ?)',
+      [userId, username, content, type, guildname]);
     res.redirect('/history');
 })
 

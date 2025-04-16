@@ -76,12 +76,32 @@
                   </header>
               <h2 class="mb-4">Chat & Command History</h2>
               <table class="table table-dark table-bordered">
+                <div class="mb-4">
+                  <button class="btn-custom" onclick="filterType('command')">Commands</button>
+                  <button class="btn-custom" onclick="filterType('chat')">Chats</button>
+                  <button class="btn-custom" onclick="filterType('all')">Show All</button>
+                </div>
+                <form action="/clear" method="POST" onsubmit="return confirm('Clear all logs?')" class="mb-3">
+                  <button class="btn-custom btn-clear">Clear All Logs</button>
+                </form>
+                <form action="/add" method="POST" class="form-inline mb-3">
+                  <input name="username" class="form-control mr-2 mb-2" placeholder="Username" required>
+                  <input name="userId" class="form-control mr-2 mb-2" placeholder="User ID" required>
+                  <input name="content" class="form-control mr-2 mb-2" placeholder="Content" required>
+                  <select name="type" class="form-control mr-2 mb-2">
+                    <option value="message">Chat</option>
+                    <option value="command">Command</option>
+                  </select>
+                  <input name="guildname" class="form-control mr-2 mb-2" placeholder="Guild name" required>
+                  <button class="btn-custom btn-add mb-2">Add Log</button>
+                </form> 
                 <thead>
                   <tr>
                     <th>Timestamp</th>
                     <th>User</th>
                     <th>Content</th>
                     <th>Type</th>
+                    <th>Server</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -91,6 +111,7 @@
                       <td><%= log.username %> (<%= log.userId %>)</td>
                       <td><%= log.content %></td>
                       <td><%= log.type %></td>
+                      <td><%= log.guildname %></td>
                     </tr>
                   <% }) %>
                 </tbody>
@@ -115,6 +136,22 @@
               </footer>
           </main>
     </body>
+    <script>
+      function filterType(type) {
+        const rows = document.querySelectorAll("table tbody tr");
+        rows.forEach(row => {
+          const cell = row.children[3].textContent.trim().toLowerCase();
+          row.style.display = (type === 'all' || cell === type) ? '' : 'none';
+        });
+      }
+      function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied!");
+    }).catch(err => {
+      alert("Failed to copy.");
+    });
+  }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script> 
