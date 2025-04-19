@@ -5,11 +5,13 @@ const discord = require('../bot')
 const dateformat = require('dateformat')
 const number = require('easy-number-formatter')
 const themes = "./configs/theme.json"
-const jsonfile = require('jsonfile')
+const jsonfile = require('jsonfile');
+const db = require('../database/db');
 
-router.get('/guilds',ensureAuthenticated,(req,res) =>{
+router.get('/guilds',ensureAuthenticated,async (req,res) =>{
     var theme = jsonfile.readFileSync(themes);
-    let guilds = discord.client.guilds.cache.values()
+    const name = discord.client.user.username
+    const [guilds] = await db.execute(`SELECT * FROM guilds WHERE bybot = '${name}'`)
     res.render('home/guilds',{
         guilds:guilds,
         profile:req.user,

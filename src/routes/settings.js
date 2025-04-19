@@ -7,11 +7,13 @@ const path = require('path')
 const ENV_PATH = path.join(__dirname, '..', '/configs/.env');
 const jsonfile = require('jsonfile')
 const themes = "./configs/theme.json"
+const dotenv = require('dotenv')
+dotenv.config({ path: './configs/.env' })
 
 const fs = require("fs");
 
 router.get('/settings', ensureAuthenticated,(req, res) => {
-    var config = process.loadEnvFile('./configs/.env')
+    var config = process.loadEnvFile
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
     res.render('home/settings',{

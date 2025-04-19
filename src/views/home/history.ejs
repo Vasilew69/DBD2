@@ -1,159 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title> Guilds | <%=client.user.username%> </title>
-        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
-        <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
-      </head>
-    <body>
-        <aside class="app-aside app-aside-expand-md app-aside-light">
-            <div class="aside-content">
-              <header class="aside-header d-block d-md-none">
-                <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button> <!-- /.btn-account -->
-                <div id="dropdown-aside" class="dropdown-aside collapse">
-                  <div class="pb-3">
-                    <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Guilds | <%=client.user.username%></title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"
+    />
+    <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default" />
+  </head>
+  <body>
+    <aside class="app-aside app-aside-expand-md app-aside-light">
+      <div class="aside-content">
+        <header class="aside-header d-block d-md-none">
+          <button
+            class="btn-account"
+            type="button"
+            data-toggle="collapse"
+            data-target="#dropdown-aside"
+          >
+            <span class="user-avatar user-avatar-lg"
+              ><img
+                src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>"
+                alt=""
+            /></span>
+            <span class="account-icon"
+              ><span class="fa fa-caret-down fa-lg"></span
+            ></span>
+            <span class="account-summary"
+              ><span class="account-name"><%= profile.username %></span>
+              <span class="account-description">Admin</span></span
+            >
+          </button>
+          <!-- /.btn-account -->
+          <div id="dropdown-aside" class="dropdown-aside collapse">
+            <div class="pb-3">
+              <a class="dropdown-item" href="/logout"
+                ><span class="dropdown-icon oi oi-account-logout"></span>
+                Logout</a
+              >
+            </div>
+          </div>
+        </header>
+        <div class="aside-menu overflow-hidden">
+          <nav id="stacked-menu" class="stacked-menu">
+            <ul class="menu">
+              <li class="menu-item">
+                <a href="/" class="menu-link"
+                  ><span class="menu-icon fas fa-home"></span>
+                  <span class="menu-text">Dashboard</span></a
+                >
+              </li>
+              <li class="menu-item">
+                <a href="/plugins" class="menu-link"
+                  ><span class="menu-icon fas fa-rocket"></span>
+                  <span class="menu-text">Commands</span></a
+                >
+              </li>
+              <li class="menu-item">
+                <a href="/guilds" class="menu-link"
+                  ><span class="menu-icon fas fa-server"></span>
+                  <span class="menu-text">Guilds</span></a
+                >
+              </li>
+              <li class="menu-item">
+                <a href="/support" class="menu-link"
+                  ><span class="menu-icon fas fa-question-circle"></span>
+                  <span class="menu-text">Support</span></a
+                >
+              </li>
+              <li class="menu-item">
+                <a href="/settings" class="menu-link"
+                  ><span class="menu-icon fas fa-cog"></span>
+                  <span class="menu-text">Settings</span></a
+                >
+              </li>
+              <li class="menu-item">
+                <a href="/player" class="menu-link"
+                  ><span class="menu-icon fas fa-file-alt"></span>
+                  <span class="menu-text">Player</span></a
+                >
+              </li>
+              <li class="menu-item has-active">
+                <a href="/history" class="menu-link"
+                  ><span class="menu-icon fas fa-bars"></span>
+                  <span class="menu-text">History</span></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </aside>
+    <main class="app-main">
+      <div class="container-fluid p-4">
+        <header class="app-header app-header-dark">
+          <div class="top-bar">
+            <div class="top-bar-brand">
+              <h5>Dashboard</h5>
+            </div>
+            <div class="top-bar-list">
+              <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+                <button
+                  class="hamburger hamburger-squeeze"
+                  type="button"
+                  data-toggle="aside"
+                  aria-label="toggle menu"
+                >
+                  <span class="hamburger-box"
+                    ><span class="hamburger-inner"></span
+                  ></span>
+                </button>
+                <!-- /toggle menu -->
+              </div>
+              <div
+                class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex"
+              >
+                <div class="dropdown d-none d-md-flex">
+                  <button
+                    class="btn-account"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <span class="user-avatar user-avatar-md"
+                      ><img
+                        src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>"
+                        alt=""
+                    /></span>
+                    <span class="account-summary pr-lg-4 d-none d-lg-block"
+                      ><span class="account-name"><%= profile.username %></span>
+                      <span class="account-description">Admin</span></span
+                    >
+                  </button>
+                  <!-- .dropdown-menu -->
+                  <div class="dropdown-menu">
+                    <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                    <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                    <h6 class="dropdown-header d-none d-md-block d-lg-none">
+                      <%= profile.username %>
+                    </h6>
+                    <a class="dropdown-item" href="/logout"
+                      ><span class="dropdown-icon oi oi-account-logout"></span>
+                      Logout</a
+                    >
                   </div>
                 </div>
-              </header>
-              <div class="aside-menu overflow-hidden">
-                <nav id="stacked-menu" class="stacked-menu">
-                  <ul class="menu">
-                    <li class="menu-item">
-                      <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/support" class="menu-link"><span class="menu-icon fas fa-question-circle"></span> <span class="menu-text">Support</span></a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
-                  </li>
-                  <li class="menu-item has-active">
-                    <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
-                  </li>
-                  </ul>
-                </nav>
               </div>
             </div>
-          </aside>
-        <main class="app-main">
-            <div class="container-fluid p-4">
-                <header class="app-header app-header-dark">
-                    <div class="top-bar">
-                      <div class="top-bar-brand">
-                        <h5>Dashboard</h5>
-                      </div>
-                      <div class="top-bar-list">
-                        <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
-                          <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
-                        </div>
-                        <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
-                          <div class="dropdown d-none d-md-flex">
-                            <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button> <!-- .dropdown-menu -->
-                            <div class="dropdown-menu">
-                              <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
-                              <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
-                              <h6 class="dropdown-header d-none d-md-block d-lg-none"> <%= profile.username %> </h6><a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </header>
-              <h2 class="mb-4">Chat & Command History</h2>
-              <table class="table table-dark table-bordered">
-                <div class="mb-4">
-                  <button class="btn-custom" onclick="filterType('command')">Commands</button>
-                  <button class="btn-custom" onclick="filterType('chat')">Chats</button>
-                  <button class="btn-custom" onclick="filterType('all')">Show All</button>
+          </div>
+        </header>
+        <h2 class="mb-4">Chat & Command History</h2>
+        <table id="logTable" class="table table-dark table-bordered">
+          <div class="mb-4">
+            <button class="btn-custom" onclick="sortTableByGuild()">
+              Filter by server
+            </button>
+            <button class="btn-custom" onclick="filterType('command')">
+              Commands
+            </button>
+            <button class="btn-custom" onclick="filterType('chat')">
+              Chats
+            </button>
+            <button class="btn-custom" onclick="filterType('all')">
+              Show All
+            </button>
+          </div>
+          <form
+            action="/clear"
+            method="POST"
+            onsubmit="return confirm('Clear all logs?')"
+            class="mb-3"
+          >
+            <button class="btn-custom btn-clear">Clear All Logs</button>
+          </form>
+          <form action="/add" method="POST" class="form-inline mb-3">
+            <input
+              name="username"
+              class="form-control mr-2 mb-2"
+              placeholder="Username"
+              required
+            />
+            <input
+              name="userId"
+              class="form-control mr-2 mb-2"
+              placeholder="User ID"
+              required
+            />
+            <input
+              name="content"
+              class="form-control mr-2 mb-2"
+              placeholder="Content"
+              required
+            />
+            <select name="type" class="form-control mr-2 mb-2">
+              <option value="message">Chat</option>
+              <option value="command">Command</option>
+            </select>
+            <input
+              name="guildname"
+              class="form-control mr-2 mb-2"
+              placeholder="Guild name"
+              required
+            />
+            <button class="btn-custom btn-add mb-2">Add Log</button>
+          </form>
+          <% if (logs.length === 0) { %>
+            <p>No logs found.</p>
+          <% } else { %>
+            <% logs.forEach(log => { %>
+              <div class="log-entry mb-3 p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="log-type badge <%= log.type === 'command' ? 'badge-info' : 'badge-secondary' %> text-uppercase">
+                    <%= log.type %>
+                  </span>
+                  <span class="log-guild badge <%= log.Guild %> badge-guilds text-uppercase">
+                    <%= log.guildname %>
+                  </span>
+                  <small class="log-timestamp badge badge-timestamp"><%= new Date(log.timestamp).toLocaleString('en-GB') %></small>
                 </div>
-                <form action="/clear" method="POST" onsubmit="return confirm('Clear all logs?')" class="mb-3">
-                  <button class="btn-custom btn-clear">Clear All Logs</button>
-                </form>
-                <form action="/add" method="POST" class="form-inline mb-3">
-                  <input name="username" class="form-control mr-2 mb-2" placeholder="Username" required>
-                  <input name="userId" class="form-control mr-2 mb-2" placeholder="User ID" required>
-                  <input name="content" class="form-control mr-2 mb-2" placeholder="Content" required>
-                  <select name="type" class="form-control mr-2 mb-2">
-                    <option value="message">Chat</option>
-                    <option value="command">Command</option>
-                  </select>
-                  <input name="guildname" class="form-control mr-2 mb-2" placeholder="Guild name" required>
-                  <button class="btn-custom btn-add mb-2">Add Log</button>
-                </form> 
-                <thead>
-                  <tr>
-                    <th>Timestamp</th>
-                    <th>User</th>
-                    <th>Content</th>
-                    <th>Type</th>
-                    <th>Server</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% logs.forEach(log => { %>
-                    <tr>
-                      <td><%= new Date(log.timestamp).toLocaleString() %></td>
-                      <td><%= log.username %> (<%= log.userId %>)</td>
-                      <td><%= log.content %></td>
-                      <td><%= log.type %></td>
-                      <td><%= log.guildname %></td>
-                    </tr>
-                  <% }) %>
-                </tbody>
-              </table>
-            </div>
-            <footer class="app-footer">
-                <ul class="list-inline">
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
-                  </li>
-                </ul>
-                <div class="copyright">Dashboard - Vasilew__ </div>
-              </footer>
-          </main>
-    </body>
-    <script>
-      function filterType(type) {
-        const rows = document.querySelectorAll("table tbody tr");
-        rows.forEach(row => {
-          const cell = row.children[3].textContent.trim().toLowerCase();
-          row.style.display = (type === 'all' || cell === type) ? '' : 'none';
+                <div class="log-user font-weight-bold mb-1"><%= log.username %> (<%= log.userId %>)</div>
+                <div class="log-content"><%= log.content %></div>
+              </div>
+            <% }) %>
+          <% } %>
+          <div class="pagination">
+            <% if (currentPage > 1) { %>
+              <a href="?type=<%= selectedType %>&page=<%= currentPage - 1 %>">Prev</a>
+            <% } %>
+          
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <a href="?type=<%= selectedType %>&page=<%= i %>" 
+                 class="<%= currentPage === i ? 'active' : '' %>">
+                <%= i %>
+              </a>
+            <% } %>>
+          
+            <% if (currentPage < totalPages) { %>
+              <a href="?type=<%= selectedType %>&page=<%= currentPage + 1 %>">Next</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+      <footer class="app-footer">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a
+              class="text-muted"
+              href="https://twitter.com/LachlanDev"
+              target="_blank"
+              >Twitter</a
+            >
+          </li>
+          <li class="list-inline-item">
+            <a
+              class="text-muted"
+              href="https://github.com/LachlanDev"
+              target="_blank"
+              >GitHub</a
+            >
+          </li>
+          <li class="list-inline-item">
+            <a
+              class="text-muted"
+              href="https://www.instagram.com/lachlanDev/"
+              target="_blank"
+              >Instagram</a
+            >
+          </li>
+          <li class="list-inline-item">
+            <a
+              class="text-muted"
+              href="https://discord.com/invite/w7B5nKB"
+              target="_blank"
+              >Discord Server</a
+            >
+          </li>
+        </ul>
+        <div class="copyright">Dashboard - Vasilew__</div>
+      </footer>
+    </main>
+  </body>
+  <script>
+    function filterType(type) {
+      const rows = document.querySelectorAll("table tbody tr");
+      rows.forEach((row) => {
+        const cell = row.children[3].textContent.trim().toLowerCase();
+        row.style.display = type === "all" || cell === type ? "" : "none";
+      });
+    }
+    function sortTableByGuild() {
+      const table = document.getElementById("logTable");
+      const rows = Array.from(table.rows).slice(1); // exclude header
+      const sortedRows = rows.sort((a, b) => {
+        const nameA = a.cells[4].textContent.toLowerCase();
+        const nameB = b.cells[4].textContent.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+
+      const tbody = table.querySelector("tbody");
+      sortedRows.forEach((row) => tbody.appendChild(row)); // re-append in sorted order
+    }
+    function copyToClipboard(text) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          alert("Copied!");
+        })
+        .catch((err) => {
+          alert("Failed to copy.");
         });
-      }
-      function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Copied!");
-    }).catch(err => {
-      alert("Failed to copy.");
-    });
-  }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script> 
-    <script src="./home/assets/javascript/theme.min.js"></script> 
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <script src="./home/assets/javascript/theme.min.js"></script>
 </html>
