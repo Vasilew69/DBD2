@@ -107,8 +107,8 @@
                             <p class="card-text"> Configure your BOT's config file directly from the dashboard, any changes made requires a restart to apply!<br>
                             </p>       
                             <form id="config-form" action="/settings/config" method="POST">
-                              <label for="clientID"><strong>Client ID:</strong></label><br>
-                              <input type="text" id="clientID" name="clientID" class="form-control" value="<%=process.env.clientID%>"><br>
+                              <label for="clientId"><strong>Client ID:</strong></label><br>
+                              <input type="text" id="clientId" name="clientId" class="form-control" value="<%=process.env.clientId%>"><br>
                               <label for="clientSecret"><strong>Client Secret:</strong></label> <a href="#clientSecret" data-toggle="password"><i class="fa fa-fw fa-eye-slash"></i> <span>Hide</span></a><br>
                               <input type="password" id="clientSecret" name="clientSecret" class="form-control" value="<%=process.env.clientSecret%>"><br>
                               <label for="callbackURL"><strong>Callback URL:</strong></label><br>

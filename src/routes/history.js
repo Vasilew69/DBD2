@@ -8,12 +8,37 @@ const { ensureAuthenticated } = require('../auth/auth');
 
 router.get('/history', ensureAuthenticated, async (req, res) => {
     const theme = jsonfile.readFileSync(themes);
-    const [rows] = await db.execute('SELECT * FROM logs ORDER BY timestamp DESC LIMIT 1000') || 'nothing';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 25;
+    const offset = (page - 1) * limit;
+    const type = req.query.type || 'all';
+  
+    let baseQuery = 'SELECT * FROM logs';
+    let countQuery = 'SELECT COUNT(*) as count FROM logs';
+    const params = [];
+  
+    if (type !== 'all') {
+      baseQuery += ' WHERE type = ?';
+      countQuery += ' WHERE type = ?';
+      params.push(type);
+    }
+  
+    baseQuery += ' ORDER BY timestamp DESC LIMIT ? OFFSET ?';
+    params.push(limit, offset);
+  
+    const [results] = await db.query(baseQuery, params);
+    const [[{ count }]] = await db.query(countQuery, type !== 'all' ? [type] : []);
+  
+    const totalPages = Math.ceil(count / limit);
+  
     try { res.render('home/history', {
                 profile: req.user,
                 client: client,
                 theme: theme,
-                logs: rows,
+                logs: results,
+                currentPage: page,
+                totalPages,
+                selectedType: type
     });
      } catch (error) {
         console.error("❌ Something Happened:", error);

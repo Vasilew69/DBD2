@@ -29,7 +29,7 @@
         "required": false
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\ban.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/ban.js",
     "category": "Administration"
   },
   {
@@ -55,7 +55,7 @@
         "required": false
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\kick.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/kick.js",
     "category": "Administration"
   },
   {
@@ -88,7 +88,7 @@
         "required": false
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\mute.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/mute.js",
     "category": "Administration"
   },
   {
@@ -114,7 +114,7 @@
         "required": true
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\timeout.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/timeout.js",
     "category": "Administration"
   },
   {
@@ -134,7 +134,7 @@
         "required": false
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\unban.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/unban.js",
     "category": "Administration"
   },
   {
@@ -154,7 +154,7 @@
         "type": 6
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\Administration\\unmute.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/Administration/unmute.js",
     "category": "Administration"
   },
   {
@@ -179,7 +179,7 @@
         "required": false
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\cs2\\fstats.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/cs2/fstats.js",
     "category": "cs2"
   },
   {
@@ -198,7 +198,7 @@
         "required": true
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\cs2\\stats.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/cs2/stats.js",
     "category": "cs2"
   },
   {
@@ -236,7 +236,7 @@
         "required": true
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\loop.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/loop.js",
     "category": "music"
   },
   {
@@ -248,7 +248,7 @@
       "usage": "/nowplaying"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\nowplaying.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/nowplaying.js",
     "category": "music"
   },
   {
@@ -261,7 +261,7 @@
       "usage": "/pause"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\pause.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/pause.js",
     "category": "music"
   },
   {
@@ -275,7 +275,7 @@
         "required": true
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\play.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/play.js",
     "category": "music"
   },
   {
@@ -288,7 +288,7 @@
       "icon": "https://cdn.discordapp.com/avatars/743304456810143783/767440651641278464"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\queue.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/queue.js",
     "category": "music"
   },
   {
@@ -300,7 +300,7 @@
       "author": "Vasilew__"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\shuffle.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/shuffle.js",
     "category": "music"
   },
   {
@@ -313,7 +313,7 @@
       "icon": "https://cdn.discordapp.com/avatars/365350852967399454/ce6e6e91fa887aa86e23ef356c9878fe"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\skip.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/skip.js",
     "category": "music"
   },
   {
@@ -333,7 +333,7 @@
         "required": true
       }
     ],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\music\\volume.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/music/volume.js",
     "category": "music"
   },
   {
@@ -353,7 +353,7 @@
       "usage": "/help"
     },
     "options": [],
-    "location": "C:\\Users\\Vasilew\\Desktop\\d\\dbot\\src\\commands\\utils\\help.js",
+    "location": "/home/vasilew/Documents/DBD2/src/commands/utils/help.js",
     "category": "utils"
   }
 ]

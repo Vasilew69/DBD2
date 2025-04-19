@@ -4,12 +4,15 @@ module.exports = async function(client) {
     // Initial sync of all guilds and members
     async function syncGuildsAndMembers() {
       for (const [guildId, guild] of client.guilds.cache) {
+        const bot = client.user.username;
+        const created = guild.createdAt;
+        const membercount = guild.memberCount;
         await db.query(`
-          INSERT INTO guilds (id, name, icon, joined_at, ownerId)
-          VALUES (?, ?, ?, NOW(), ?)
-          ON DUPLICATE KEY UPDATE name = VALUES(name), icon = VALUES(icon), ownerId = VALUES(ownerId)
-        `, [guild.id, guild.name, guild.icon, guild.ownerId]);
-  
+          INSERT INTO guilds (id, name, icon, joined_at, ownerId, bybot, created_at, membercount)
+          VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE name = VALUES(name), icon = VALUES(icon), ownerId = VALUES(ownerId), bybot = VALUES(bybot), created_at = VALUES(created_at), membercount = VALUES(membercount)
+        `, [guild.id, guild.name, guild.icon, guild.ownerId, bot, created, membercount]);
+ 
         try {
           await guild.members.fetch(); // Ensure full cache
           for (const [memberId, member] of guild.members.cache) {
