@@ -12,7 +12,7 @@ module.exports = async function(client) {
           VALUES (?, ?, ?, NOW(), ?, ?, ?, ?)
           ON DUPLICATE KEY UPDATE name = VALUES(name), icon = VALUES(icon), ownerId = VALUES(ownerId), bybot = VALUES(bybot), created_at = VALUES(created_at), membercount = VALUES(membercount)
         `, [guild.id, guild.name, guild.icon, guild.ownerId, bot, created, membercount]);
-  
+ 
         try {
           await guild.members.fetch(); // Ensure full cache
           for (const [memberId, member] of guild.members.cache) {

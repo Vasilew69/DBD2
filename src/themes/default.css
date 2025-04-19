@@ -4469,6 +4469,7 @@ a.badge-success:focus {
 .badge-info {
   color: #ffffff;
   background-color: #01abee;
+
 }
 .badge-guilds {
   color: #ffffff;
@@ -4477,6 +4478,7 @@ a.badge-success:focus {
 .badge-timestamp {
   color: white;
   background-color: rgb(110, 110, 110);
+
 }
 a.badge-info:focus,
 a.badge-info:hover {
@@ -22249,6 +22251,7 @@ body {
   font-size: 0.75rem;
   border-radius: 0.5rem;
 }
+
 .log-timestamp.badge{
   padding: 0.4rem 0.75rem;
   font-size: 0.80rem;
@@ -22260,6 +22263,7 @@ body {
   font-size: 0.80rem;
   border-radius: 0.5rem;
 }
+
 
 .log-user {
   font-size: 1rem;
@@ -22318,6 +22322,7 @@ body {
 .btn-clear:hover {
   background-color: #d63c3c;
   border-color: #d63c3c;
+
 }
 
 .pagination {
@@ -22347,4 +22352,5 @@ body {
   background-color: #0d6efd;
   border-color: #0a58ca;
   color: #fff;
+
 }
