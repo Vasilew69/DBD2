@@ -87,6 +87,7 @@
                     <p class="text-muted"> See all the Guilds (Servers) that your BOT is in, returns information about each guild and the option to leave!</p>
                     <div class="row">
                         <% guilds.forEach(function(guilds) { %>
+                          <% guildsic.forEach(function(guildsic) { %>
                         <div class="col-lg-4">
                           <div class="card">
                             <% const icon = guildIcons[guilds.id]; %>
@@ -129,6 +130,7 @@
                           </div>
                         </div>
                       </div>
+                        <% }); %>
                         <% }); %>
                       </div>
                 </div>
