@@ -5,8 +5,10 @@ const themes = "../src/configs/theme.json";
 const jsonfile = require('jsonfile');
 const { client } = require('../bot');
 const { ensureAuthenticated } = require('../auth/auth');
+const limiter = require('../index')
 
 router.get('/history', ensureAuthenticated, async (req, res) => {
+  router.use(limiter)
     const theme = jsonfile.readFileSync(themes);
     const page = parseInt(req.query.page) || 1;
     const limit = 25;
@@ -47,11 +49,13 @@ router.get('/history', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/clear', ensureAuthenticated, async (req, res) => {
+  router.use(limiter)
   await db.execute('DELETE FROM logs');
   res.redirect('/history')
 })
 
 router.post('/add', ensureAuthenticated, async (req,res) => {
+  router.use(limiter)
     const {id, username, userId, content, type, guildname} = req.body
     const timestamp = new Date();
     await db.execute('INSERT INTO logs (userId, username, content, type, guildname) VALUES (?, ?, ?, ?, ?)',

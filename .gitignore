@@ -9,3 +9,4 @@ license
 actions-runner
 *.todo
 src/configs/.env
+secret.js

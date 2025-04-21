@@ -16,8 +16,14 @@ const io = require('socket.io')(http);
 
 app.set('views', path.join(__dirname, 'views'));
 
-port = process.env.port;
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
 
+port = process.env.port;
+app.use(limiter)
 app.use(express.static('./public'));
 app.use(express.static('./themes'));
 app.set('view engine', 'ejs');
@@ -30,13 +36,14 @@ require('./auth/passport')(passport);
 app.use(morgan('dev'), cors())
 
 
-
 // Express session
 app.use(
     session({
-      secret: '4135231b7f33c66406cdb2a78420fa76',
+      secret: process.env.secret,
       resave: true,
-      saveUninitialized: true
+      saveUninitialized: true,
+      secure: true,
+      httpOnly: true
     })
 );
   
@@ -84,3 +91,5 @@ io.sockets.on('connection', function(sockets){
 app.use(function(req,res){
   res.status(404).render('error_pages/404');
 });
+
+exports = limiter;

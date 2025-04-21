@@ -8,6 +8,7 @@ const { useQueue } = require("discord-player");
 const { Player, useTimeline } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
+const limiter = require('../index');
 
 // Initialize the client.player
 client.player = new Player(client, {
@@ -19,6 +20,7 @@ client.player = new Player(client, {
 client.player.extractors.loadMulti(DefaultExtractors)
 client.player.extractors.register(YoutubeiExtractor, {})
 router.get('/player', ensureAuthenticated, async (req, res) => {
+    router.use(limiter)
     const guildId = req.query.guildId; // Get guildId from query
 
     if (!guildId) {
@@ -96,6 +98,7 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
     }
 });
 router.post('/player/pause', ensureAuthenticated, async (req, res) => {
+    router.use(limiter)
     const guildId = req.body.guildId;
 
     if (!guildId) {
@@ -122,6 +125,7 @@ router.post('/player/pause', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/player/play', ensureAuthenticated, async (req, res) => {
+    router.use(limiter)
     const guildId = req.body.guildId;
 
     if (!guildId) {
@@ -148,6 +152,7 @@ router.post('/player/play', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/player/skip', ensureAuthenticated, (req, res) => {
+    router.use(limiter)
     const guildId = req.body.guildId;
     const queue = client.player.nodes.get(guildId);
     if(!queue) {

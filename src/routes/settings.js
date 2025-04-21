@@ -9,10 +9,12 @@ const jsonfile = require('jsonfile')
 const themes = "./configs/theme.json"
 const dotenv = require('dotenv')
 dotenv.config({ path: './configs/.env' })
+const limiter = require('../index')
 
 const fs = require("fs");
 
 router.get('/settings', ensureAuthenticated,(req, res) => {
+    router.use(limiter)
     var config = process.loadEnvFile
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
@@ -28,6 +30,7 @@ router.get('/settings', ensureAuthenticated,(req, res) => {
 })
 
 router.post('/settings/config', ensureAuthenticated, (req, res) => {
+  router.use(limiter)
   const keys = ['clientID', 'clientSecret', 'callbackURL', 'admin', 'token', 'prefix', 'port'];
   const updates = req.body; // { KEY: 'value', ... }
 
@@ -61,6 +64,7 @@ router.post('/settings/config', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/settings/dashboard',ensureAuthenticated,(req,res) =>{
+  router.use(limiter)
     json.update('./configs/theme.json',{theme:`${req.body.theme}`}).then(function(dat) { 
         req.flash('success', 'Theme Updated!')
         res.redirect('/settings')

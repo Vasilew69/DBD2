@@ -10,14 +10,16 @@ var request = require("request");
 const jsonfile = require('jsonfile')
 var now = new Date()
 dotenv.config({ path: './configs/.env'})
-
+const limiter = require('../index')
 const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
+  router.use(limiter)
     res.redirect('/home')
 })
 
 router.get('/home', ensureAuthenticated,(req, res) => {
+  router.use(limiter)
   var theme = jsonfile.readFileSync(themes);
     var options = {
         method: 'GET',

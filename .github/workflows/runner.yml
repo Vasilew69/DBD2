@@ -2,7 +2,8 @@ name: Test Discord Bot and Dashboard
 
 on:
  {push}
-
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: Linux

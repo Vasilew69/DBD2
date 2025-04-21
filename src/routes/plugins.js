@@ -8,8 +8,10 @@ const themes = "./configs/theme.json"
 const prth = "./configs/prth.json";
 const commandsJsonFile = "./configs/commands.json";
 const path = require('path');
+const limiter = require('../index')
 
 router.get('/plugins', ensureAuthenticated, (req, res) => {
+    router.use(limiter)
     const commands = jsonfile.readFileSync(commandsJsonFile);  // Read commands from JSON file  // Log the commands to check the format
 
     var theme = jsonfile.readFileSync(themes);  // Read theme settings
@@ -27,6 +29,7 @@ router.get('/plugins', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/plugins/remove/:plugin', ensureAuthenticated, function (req, res) {
+    router.use(limiter)
     try {
         const commandName = req.params.plugin;
         const commands = jsonfile.readFileSync(commandsJsonFile);
@@ -62,6 +65,7 @@ router.post('/plugins/remove/:plugin', ensureAuthenticated, function (req, res) 
 });
 
 router.post('/plugins/toggle', ensureAuthenticated, function (req, res) {
+    router.use(limiter)
     // Remove plugin from settings file
     if (req.body.toggle == "true") {
         fs.readFile('./configs/settings.json', function (err, data) {
@@ -71,10 +75,15 @@ router.post('/plugins/toggle', ensureAuthenticated, function (req, res) {
                 res.redirect('/plugins');
             }
             json.splice(json.indexOf(`${req.body.commandName}`), 1);
+            try {
             fs.writeFile("./configs/settings.json", JSON.stringify(json), function (err) {
-                if (err) throw err;
                 res.redirect('/plugins');
             });
+        } catch (err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        }
         });
     }
 
@@ -87,15 +96,21 @@ router.post('/plugins/toggle', ensureAuthenticated, function (req, res) {
                 res.redirect('/plugins');
             }
             json.push(`${req.body.commandName}`);
+            try {
             fs.writeFile("./configs/settings.json", JSON.stringify(json), function (err) {
-                if (err) throw err;
                 res.redirect('/plugins');
             });
+        } catch (err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        }
         });
     }
 });
 
 router.post('/plugins/upload', ensureAuthenticated, function (req, res) {
+    router.use(limiter)
     if (!req.files || Object.keys(req.files).length === 0) {
         req.flash('error', 'No file uploaded!');
         return res.redirect('/plugins');
