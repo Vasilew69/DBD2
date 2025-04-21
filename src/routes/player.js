@@ -20,7 +20,6 @@ client.player = new Player(client, {
 client.player.extractors.loadMulti(DefaultExtractors)
 client.player.extractors.register(YoutubeiExtractor, {})
 router.get('/player', ensureAuthenticated, async (req, res) => {
-    router.use(limiter)
     const guildId = req.query.guildId; // Get guildId from query
 
     if (!guildId) {
@@ -98,7 +97,6 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
     }
 });
 router.post('/player/pause', ensureAuthenticated, async (req, res) => {
-    router.use(limiter)
     const guildId = req.body.guildId;
 
     if (!guildId) {
@@ -125,7 +123,6 @@ router.post('/player/pause', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/player/play', ensureAuthenticated, async (req, res) => {
-    router.use(limiter)
     const guildId = req.body.guildId;
 
     if (!guildId) {
@@ -152,7 +149,6 @@ router.post('/player/play', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/player/skip', ensureAuthenticated, (req, res) => {
-    router.use(limiter)
     const guildId = req.body.guildId;
     const queue = client.player.nodes.get(guildId);
     if(!queue) {

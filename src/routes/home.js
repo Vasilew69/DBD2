@@ -14,12 +14,10 @@ const limiter = require('../index')
 const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
-  router.use(limiter)
     res.redirect('/home')
 })
 
 router.get('/home', ensureAuthenticated,(req, res) => {
-  router.use(limiter)
   var theme = jsonfile.readFileSync(themes);
     var options = {
         method: 'GET',

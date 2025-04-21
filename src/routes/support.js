@@ -7,7 +7,6 @@ const jsonfile = require('jsonfile')
 const limiter = require('../index')
 
 router.get('/support', ensureAuthenticated,(req, res) => {
-    router.use(limiter)
     var theme = jsonfile.readFileSync(themes);
     res.render('home/support',{
         profile:req.user,
