@@ -36,7 +36,6 @@ router.get('/settings', ensureAuthenticated, async(req, res, next) => {
 })
 
 router.post('/settings/config', ensureAuthenticated, (req, res) => {
-  router.use(limiter)
   const keys = ['clientID', 'clientSecret', 'callbackURL', 'admin', 'token', 'prefix', 'port'];
   const updates = req.body; // { KEY: 'value', ... }
 
@@ -70,7 +69,6 @@ router.post('/settings/config', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/settings/dashboard',ensureAuthenticated,(req,res) =>{
-  router.use(limiter)
     json.update('./configs/theme.json',{theme:`${req.body.theme}`}).then(function(dat) { 
         req.flash('success', 'Theme Updated!')
         res.redirect('/settings')

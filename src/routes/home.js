@@ -14,7 +14,6 @@ const limiter = require('../index')
 const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
-  router.use(limiter)
     res.redirect('/home')
 })
 

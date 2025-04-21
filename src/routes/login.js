@@ -14,7 +14,6 @@ router.get('/', forwardAuthenticated, (req, res) => {
 })
 
 router.get('/api', forwardAuthenticated,(req,res, next)=>{
-    router.use(limiter)
     passport.authenticate('discord', {
         successRedirect: '/home',
         failureRedirect: '/login',
