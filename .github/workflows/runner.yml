@@ -1,11 +1,12 @@
 name: Test Discord Bot and Dashboard
 
 on:
- {push}
+ push:
+  branches: [ "main","dev" ]
 permissions:
   contents: read
 jobs:
-  test:
+  Dashboard-Setup:
     runs-on: Linux
 
     steps:
@@ -23,7 +24,13 @@ jobs:
         node index.js &
         sleep 10
         IP_ADDRESS=$(hostname -I)
-        curl http://$IP_ADDRESS:3000 || echo "Started"
+        curl --resolve http://$IP_ADDRESS:3000 || echo "Started"
       env:
-        TOKEN: ${{ secrets.TOKEN }}
-        CLIENTID: ${{  secrets.CLIENTID}}
+        token: ${{ secrets.TOKEN }}
+        clientId: ${{  secrets.CLIENTID}}
+        clientSecret: ${{ secrets.CLIENTSECRET}}
+        database: ${{secrets.DATABASE}}
+        host: ${{secrets.HOST}}
+        user: ${{secrets.USER}}
+        password: ${{secrets.PASSWORD}}
+        secret: ${{secrets.SECRET}}
