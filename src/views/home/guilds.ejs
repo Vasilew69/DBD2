@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js" integrity="sha512-+ruHlyki4CepPr07VklkX/KM5NXdD16K1xVwSva5VqOVbsotyCQVKEwdQ1tAeo3UkHCXfSMtKU/mZpKjYqkxZA==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
   </head>
   <body>
@@ -95,24 +95,23 @@
                         <% guilds.forEach(function(guilds) { %>
                         <div class="col-lg-4">
                           <div class="card">
-                            <% if (guilds.icon) { %>
-                            <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="<%=guilds.icon %>" alt=""></figure> <%=guilds.name%></div>
-                            <% } %>
-                            <% if (!guilds.icon) { %>
-                                <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" alt=""></figure> <%=guilds.name%></div>
-                                <% } %>
+                            <% const icon = guildIcons[guilds.id]; %>
+                            <div class="card-header">
+                                <figure class="user-avatar user-avatar-lg">
+                                    <img src="<%= icon ? icon : 'https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg' %>" alt="">
+                                </figure>
+                                <%=guilds.name%>
+                            </div>
                             <div class="card-body">
                               <p class="card-text"><strong>Member Count:</strong> <%=number.formatNumber(guilds.membercount) %> </p>
                               <p class="card-text"><strong>Server ID:</strong> <%=guilds.id %> </p>
                               <p class="card-text"><strong>Created:</strong> <%=dateformat(`${guilds.created_at}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
                               <p class="card-text"><strong>Joined:</strong> <%=dateformat(`${guilds.joined_at}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
-                              <form action="/guilds/player/<%=guilds.id%>" method="post")
-                              <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="submit()">
-                                Select Guild
-                            </button>
-                          </form>
+			      <form action="/guilds/player/<%=guilds.id%>" method="post">
+                                <button class="btn btn-secondary" type="submit">
+                                  Select Guild
+                                </button>
 
-                            </div>
                             </div>
                               <div class="card-footer-item"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalAlertDanger<%=guilds.id%>">Leave Guild</a></div>
                           </div>
@@ -159,8 +158,18 @@
         </footer>
       </main>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script> 
     <script src="./home/assets/javascript/theme.min.js"></script> 
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const toggle = document.querySelector(".dropdown-toggle");
+          const menu = document.querySelector(".dropdown-menu");
+      
+          toggle?.addEventListener("click", () => {
+            menu?.classList.toggle("show");
+          });
+        });
+      </script>
 </html>

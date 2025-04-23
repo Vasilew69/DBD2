@@ -8,9 +8,13 @@ const themes = "./configs/theme.json"
 const prth = "./configs/prth.json";
 const commandsJsonFile = "./configs/commands.json";
 const path = require('path');
+const limiter = require('../index');
+const { console } = require('inspector');
 
-router.get('/plugins', ensureAuthenticated, (req, res) => {
+router.get('/plugins', ensureAuthenticated, async (req, res) => {
+    try{
     const commands = jsonfile.readFileSync(commandsJsonFile);  // Read commands from JSON file  // Log the commands to check the format
+    console.log(commands)
 
     var theme = jsonfile.readFileSync(themes);  // Read theme settings
     const commandsToggle = jsonfile.readFileSync('./configs/settings.json');  // Read settings for toggles
@@ -24,6 +28,11 @@ router.get('/plugins', ensureAuthenticated, (req, res) => {
         theme: theme,  // Pass the theme to the template
         prth: prth  // Path to prth config
     });
+        } catch (error) {
+        console.error("❌ Route error:", error.message);
+        error.status = 500;
+        next(error);
+        }
 });
 
 router.post('/plugins/remove/:plugin', ensureAuthenticated, function (req, res) {
@@ -71,10 +80,15 @@ router.post('/plugins/toggle', ensureAuthenticated, function (req, res) {
                 res.redirect('/plugins');
             }
             json.splice(json.indexOf(`${req.body.commandName}`), 1);
+            try {
             fs.writeFile("./configs/settings.json", JSON.stringify(json), function (err) {
-                if (err) throw err;
                 res.redirect('/plugins');
             });
+        } catch (err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        }
         });
     }
 
@@ -87,10 +101,15 @@ router.post('/plugins/toggle', ensureAuthenticated, function (req, res) {
                 res.redirect('/plugins');
             }
             json.push(`${req.body.commandName}`);
+            try {
             fs.writeFile("./configs/settings.json", JSON.stringify(json), function (err) {
-                if (err) throw err;
                 res.redirect('/plugins');
             });
+        } catch (err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        }
         });
     }
 });

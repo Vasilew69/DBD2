@@ -46,7 +46,7 @@ module.exports = (client) => {
     for (const folder of commandFolders) {
         const folderPath = path.join(foldersPath, folder);
         const commandFiles = fs.readdirSync(folderPath)
-            .filter(file => file.endsWith('.js'));
+            .filter(file => file.endsWith('.js') && file !== 'index.js' );
 
         for (const file of commandFiles) {
             const filePath = path.join(folderPath, file);

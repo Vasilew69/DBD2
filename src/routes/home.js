@@ -10,7 +10,7 @@ var request = require("request");
 const jsonfile = require('jsonfile')
 var now = new Date()
 dotenv.config({ path: './configs/.env'})
-
+const limiter = require('../index')
 const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
@@ -53,10 +53,12 @@ router.get('/home', ensureAuthenticated,(req, res) => {
 })
 
 // Logout
-router.get('/logout', (req, res) => {
-    req.logout();
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
     req.flash('success', 'Logged out');
     res.redirect('/login');
   });
+});
   
 module.exports = router;
