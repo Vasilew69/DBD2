@@ -35,6 +35,7 @@ module.exports = {
 module.exports.details = {
     name: 'Shuffle',
     description: 'Shuffle the songs in the current queue',
-    usage: 'shuffle',
+    icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
+    usage: '/shuffle',
     author: 'Vasilew__'
 }

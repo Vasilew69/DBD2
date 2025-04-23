@@ -38,3 +38,11 @@ module.exports = {
     });
   }
 };
+
+module.exports.details = {
+  name: 'Guild',
+  author: 'Vasilew__',
+  icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
+  description: 'Displays the info for the quild.',
+  usage: '/guild'
+}

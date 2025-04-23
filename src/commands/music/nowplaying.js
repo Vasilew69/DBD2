@@ -52,6 +52,7 @@ module.exports = {
 module.exports.details = {
   name: 'NowPlaying',
   description: 'Displays the currently playing song',
+  icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
   author: 'Vasilew',
   usage: '/nowplaying'
 }

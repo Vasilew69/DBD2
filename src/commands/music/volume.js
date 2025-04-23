@@ -31,9 +31,9 @@ module.exports = {
 }
 
 module.exports.details = {
-    name: 'volume',
+    name: 'Volume',
     description: 'Set the volume of the music player',
-    usage: 'volume <volume_level>',
+    usage: '/volume <volume_level>',
     author: 'Vasiew__',
-    icon: 'https://cdn.discordapp.com/avatars/826389195618607124/529f31f0499b2d0d5304b634c16d8966',
+    icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
 }

@@ -10,3 +10,5 @@ actions-runner
 *.todo
 src/configs/.env
 secret.js
+.github/workflows/static.yml
+.github/workflows/node.js.yml

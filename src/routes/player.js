@@ -19,66 +19,38 @@ client.player = new Player(client, {
 });
 client.player.extractors.loadMulti(DefaultExtractors)
 client.player.extractors.register(YoutubeiExtractor, {})
-router.get('/player', ensureAuthenticated, async (req, res) => {
-    const guildId = req.query.guildId; // Get guildId from query
-
-    if (!guildId) {
-        console.error("❌ Missing guildId parameter");
-        const theme = jsonfile.readFileSync(themes);
-        return res.status(500).render('home/playererror', {
-            profile: req.user,
-            client: client,
-            theme: theme,
-            error: 'Missing guildId'
-        });
-    }
-    if (!client.player) {
-        console.error("❌ Player is not initialized");
-        const theme = jsonfile.readFileSync(themes);
-        return res.status(500).render('home/playererror', {
-            profile: req.user,
-            client: client,
-            theme: theme,
-            error: 'Player is not initialized'
-        });
-    }
-
-    // Ensure the queue exists
-    const queue = client.player.nodes.get(guildId);
-
-    if (!queue) {
-        const theme = jsonfile.readFileSync(themes);
-        console.error("❌ No music queue found");
-        return res.status(500).render('home/playererror',{
-            profile: req.user,
-            client: client,
-            theme: theme,
-            error: 'No music queue found'
-        });
-    }
-    const queuedata = queue.tracks.toArray();
-    const queuemap = queuedata.map((track, index) => ({
-        index: index + 1,
-        title: track.title,
-        author: track.author,
-        thumbnail: track.thumbnail
-    }));
-
-    // Check if there is a current track in the queue
-    const currentTrack = queue.currentTrack;
-    if (!currentTrack) {
-        const theme = jsonfile.readFileSync(themes);
-        console.error("❌ No music playing");
-        return res.status(500).render('home/playererror',{
-            profile: req.user,
-            client: client,
-            theme: theme,
-            error: 'No music playing'
-        });
-    }
-
+router.get('/player', ensureAuthenticated, async (req, res, next) => {
     try {
+        const guildId = req.query.guildId;
         const theme = jsonfile.readFileSync(themes);
+
+        if (!guildId) {
+            throw new Error("Missing guildId");
+        }
+
+        if (!client.player) {
+            throw new Error("Player is not initialized");
+        }
+
+        const queue = client.player.nodes.get(guildId);
+
+        if (!queue) {
+            throw new Error("No music queue found");
+        }
+
+        const currentTrack = queue.currentTrack;
+        if (!currentTrack) {
+            throw new Error("No music playing");
+        }
+
+        const queuedata = queue.tracks.toArray();
+        const queuemap = queuedata.map((track, index) => ({
+            index: index + 1,
+            title: track.title,
+            author: track.author,
+            thumbnail: track.thumbnail
+        }));
+
         res.render('home/player', {
             profile: req.user,
             client: client,
@@ -91,22 +63,26 @@ router.get('/player', ensureAuthenticated, async (req, res) => {
             guildId: guildId,
             queue: queuemap
         });
+
     } catch (error) {
-        console.error("❌ Error reading theme file:", error);
-        return res.status(500).json({ error: 'Failed to load theme file' });
+        console.error("❌ Route error:", error.message);
+        error.status = 500;
+        next(error); // Forward to your global 500 handler
     }
 });
+
 router.post('/player/pause', ensureAuthenticated, async (req, res) => {
+    try {
     const guildId = req.body.guildId;
 
     if (!guildId) {
-        return res.status(400).json({ error: 'Missing guildId' });
+        throw new Error("Missing guildId");
     }
 
     const queue = client.player.nodes.get(guildId);
 
     if (!queue) {
-        return res.status(400).json({ error: 'No queue found for this guild' });
+        throw new Error("No queue found for this guild");
     }
 
     // This is safe now – useTimeline gets the correct context from the queue
@@ -120,19 +96,25 @@ router.post('/player/pause', ensureAuthenticated, async (req, res) => {
     }
 
     return res.status(200).json({ status: wasPaused ? 'resumed' : 'paused' });
+    } catch (error) {
+        console.error("❌ Route error:", error.message);
+        error.status = 500;
+        next(error); // Forward to your global 500 handler
+    }
 });
 
 router.post('/player/play', ensureAuthenticated, async (req, res) => {
+    try {
     const guildId = req.body.guildId;
 
     if (!guildId) {
-        return res.status(400).json({ error: 'Missing guildId' });
+        throw new Error('Missing guildId');
     }
 
     const queue = client.player.nodes.get(guildId);
 
     if (!queue) {
-        return res.status(400).json({ error: 'No queue found for this guild' });
+        throw new Error('No queue found for this guild');
     }
 
     // This is safe now – useTimeline gets the correct context from the queue
@@ -142,28 +124,93 @@ router.post('/player/play', ensureAuthenticated, async (req, res) => {
     if (wasPaused) {
         timeline.resume();
     } else {
-        return res.status(400).json({ error: 'the queue wasnt paused'})
+        throw new Error('the queue wasnt paused')
     }
 
     return res.status(200).json({ status: wasPaused ? 'resumed' : 'paused' });
+} catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error); // Forward to your global 500 handler
+}
 });
 
 router.post('/player/skip', ensureAuthenticated, (req, res) => {
+    try {
     const guildId = req.body.guildId;
     const queue = client.player.nodes.get(guildId);
     if(!queue) {
-        return res.status(400).json({ error: 'No queue runnig'})
+        throw new Error('No queue runnig')
     }
     const Queue = useQueue(queue)
 
     Queue.node.skip()
     return res.status(200).redirect('/player')
+} catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error); // Forward to your global 500 handler
+}
 })
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success', 'Logged out');
-    res.redirect('/login');
-  });
+router.post('/player/play-selected', ensureAuthenticated, async (req, res, next) => {
+    try {
+        const { guildId, index } = req.body;
+        
+        if (!guildId || index === undefined) {
+            throw new Error('Missing guildId or index');
+        }
+
+        const queue = client.player.nodes.get(guildId);
+        if (!queue) {
+            throw new Error('No queue found for this guild');
+        }
+
+        const trackIndex = Number(index);
+        if (isNaN(trackIndex)) {
+            throw new Error('Index must be a number');
+        }
+
+        // Get all tracks as an array
+        const tracks = queue.tracks.toArray();
+        
+        if (trackIndex < 0 || trackIndex >= tracks.length) {
+            throw new Error('Invalid track index');
+        }
+
+        // Remove tracks before the selected index using node.remove()
+        for (let i = 0; i < trackIndex; i++) {
+            queue.node.remove(tracks[i]);
+        }
+
+        // Skip to the now-first track (our selected track)
+        queue.node.skip();
+
+        // Get updated queue data
+        const currentTrack = queue.currentTrack;
+        const updatedQueue = queue.tracks.toArray().map((track, idx) => ({
+            index: idx + 1,
+            title: track.title,
+            author: track.author,
+            thumbnail: track.thumbnail
+        }));
+
+        res.status(200).json({ 
+            success: true,
+            nowPlaying: {
+                title: currentTrack.title,
+                author: currentTrack.author,
+                thumbnail: currentTrack.thumbnail,
+                duration: currentTrack.duration
+            },
+            queue: updatedQueue
+        })
+
+    } catch (error) {
+        console.error("❌ Route error:", error.message);
+        error.status = 500;
+        next(error);
+    }
+});
 
 module.exports = router;

@@ -7,9 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
-    <link rel="stylesheet" href="../<%=theme.pltheme%>" data-skin="default">
-    <link rel="stylesheet" href="../<%=prth.prth%>">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
   </head>
   <body>
     <div class="app">
@@ -47,7 +46,7 @@
           </header>
           <div class="aside-menu overflow-hidden">
             <nav id="stacked-menu" class="stacked-menu">
-              <ul class="menu">
+                 <ul class="menu">
                 <li class="menu-item">
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
@@ -100,118 +99,122 @@
                         <p class="mb-0"><%=error%></p>
                       </div>
                   <% } %> 
-                    <h4>Commands</h4>
-                    <p class="text-muted"> Configure and enable commands that you would like to use!</p>
-                    <p class="text-muted"><strong>NOTE: When importing/removing or enabling/disabling a command you will require to restart the Dashboard for changes to take effect!</strong></p>
+                    <h4>Plugins</h4>
+                    <p class="text-muted"> Configure and enable plugins that you would like to use!</p>
+                    <p class="text-muted"><strong>NOTE: When importing/removing or enabling/disabling plugins you will require to restart Discord BOT Dashboard for changes to take effect!</strong></p>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#upload">Import</button>
                     </div>
-                    <div class="row">
-                      <% commands.forEach(function(command) { %>
-                        <div class="command-card">
-                          <h3><%= command.name %></h3>
-                          <p><%= command.description.options %></p>
-                      
-                          <div class="col-lg-4">
-                            <div class="card">
-                              <div class="card-body">
-                                <!-- Check if details exists before accessing its properties -->
-                                <p class="card-text">
-                                  <strong>Developer:</strong> 
-                                  <%= command.description?.author || 'Unknown' %>
-                                </p>
-                                <p class="card-text">
-                                  <strong>Description:</strong> 
-                                  <%= command.description?.description || 'No description available' %>
-                                </p>
-                                <p class="card-text">
-                                  <strong>Usage:</strong> 
-                                  <%= command.description?.usage || 'No usage information' %>
-                                </p>
-                      
-                                <% if (commandsToggle.includes(command.name)) { %>
-                                  <div class="blocktext">
+                    <div class="row g-4">
+                        <% commands.forEach(function(commandName) { %>
+                        <div class="col-lg-4">
+                          <div class="card">
+                            <% if (commandName.description?.icon) { %>
+                                <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="<%=commandName.description?.icon%>" alt=""></figure> <%=commandName.description?.name%></div>
+                                <% } %>
+                            <% if (!commandName.description?.icon) { %>
+                                    <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" alt=""></figure> <%=commandName.description?.name%></div>
+                            <% } %>
+                            <div class="card-body">
+                              <p class="card-text"><strong>Developer:</strong> <%=commandName.description?.author %> </p>
+                              <p class="card-text"><strong>Description:</strong> <%=commandName.description?.description %> </p>
+                              <p class="card-text"><strong>Usage:</strong> <%=commandName.description?.usage %></p>
+                              <% if (commandsToggle.includes(commandName.name)) { %>
+                              <div class="blocktext">
+                                <form id="myForm" action="/plugins/toggle" method="post">
+                                  <input type="hidden" name="toggle" value="true">
+                                  <input type="hidden" name='commandName' value=<%=commandName.name%>>
+                                  <label class="switch">
+                                    <input type="checkbox" value="false" name="toggles" onclick="submit()" id="toggles">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </form>
+                              </div>
+                              <% } %>
+                              <% if (!commandsToggle.includes(commandName.name)) { %>
+                                <div class="blocktext">
+                                  <form id="myForm" action="/plugins/toggle" method="post">
+                                    <input type="hidden" name="toggle" value="false">
+                                    <input type="hidden" name='commandName' value=<%=commandName.name%>>
+                                    <label class="switch">
+                                      <input type="checkbox" value="true" name="toggles" onclick="submit()" id="toggles" checked>
+                                      <span class="slider round"></span>
+                                    </label>
+                                  </form>
+                                </div>
+                                <% } %>
+                            </div>
+                              <div class="card-footer-item"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#<%=commandName.name%>">Remove</a></div>
+                          </div>
+                        </div>
+                        <!-- Remove Modal -->
+                        <div class="modal modal-alert fade" id="<%=commandName.name%>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="<%=commandName.name%>Label" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 id="<%=commandName.name%>Label" class="modal-title">
+                                  <i class="far fa-trash-alt text-warning mr-1"></i> Remove Plugin</h5>
+                              </div>
+                              <div class="modal-body">
+                                <p> Are you sure you want to remove the plugin <strong><%=commandName.name%></strong>? This cannot be undone!</p>
+                              <div class="modal-footer">
+                                <% if (commandsToggle.includes(commandName.name)) { %>
+                                  <div class="form-check mt-2">
                                     <form id="myForm" action="/plugins/toggle" method="post">
                                       <input type="hidden" name="toggle" value="true">
-                                      <input type="hidden" name="commandName" value="<%= command.name %>">
+                                      <input type="hidden" name='commandName' value=<%=commandName.name%>>
                                       <label class="switch">
                                         <input type="checkbox" value="false" name="toggles" onclick="submit()" id="toggles">
                                         <span class="slider round"></span>
                                       </label>
                                     </form>
                                   </div>
-                                <% } else { %>
-                                  <div class="blocktext">
-                                    <form id="myForm" action="/plugins/toggle" method="post">
-                                      <input type="hidden" name="toggle" value="false">
-                                      <input type="hidden" name="commandName" value="<%= command.name %>">
-                                      <label class="switch">
-                                        <input type="checkbox" value="true" name="toggles" onclick="submit()" id="toggles" checked>
-                                        <span class="slider round"></span>
-                                      </label>
-                                    </form>
-                                  </div>
-                                <% } %>
-                              </div>
-                            </div>
-                      
-                            <div class="card-footer-item">
-                              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#<%= command.name %>">Remove</button>
-                            </div>
-                          </div>
-                        </div>
-                      
-                        <!-- Remove Modal -->
-                        <div class="modal modal-alert fade" id="<%= command.name %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="<%= command.name %>Label" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 id="<%= command.name %>Label" class="modal-title">
-                                  <i class="far fa-trash-alt text-warning mr-1"></i> Remove Command</h5>
-                              </div>
-                              <div class="modal-body">
-                                <p> Are you sure you want to remove that command <strong><%= command.name %></strong>? This cannot be undone!</p>
-                              </div>
-                              <div class="modal-footer">
-                                <form action="/plugins/remove/<%= command.name %>" method="POST">
+                                  <% } %>
+                                  <% if (!commandsToggle.includes(commandName.name)) { %>
+                                    <div class="blocktext">
+                                      <form id="myForm" action="/plugins/toggle" method="post">
+                                        <input type="hidden" name="toggle" value="false">
+                                        <input type="hidden" name='commandName' value=<%=commandName.name%>>
+                                        <label class="switch">
+                                          <input type="checkbox" value="true" name="toggles" onclick="submit()" id="toggles" checked>
+                                          <span class="slider round"></span>
+                                        </label>
+                                      </form>
+                                    </div>
+                                    <% } %>
+                                <form action="/plugins/remove/<%=commandName%>" method="POST">
                                   <button type="button" class="btn btn-warning" onclick="submit()">Remove</button>                               
-                                </form>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                              </form>
+                              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
                               </div>
                             </div>
                           </div>
                         </div>
                         <!-- Modal End -->
-                      <% }); %>
+                      </div>
+                        <% }); %>
                         <!-- Import Modal -->
                         <div class="modal modal-alert fade" id="upload" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="uploadLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5 id="uploadLabel" class="modal-title">
-                                  <i class="fa fa-file-import text-success mr-1"></i> Command Importer</h5>
+                                  <i class="fa fa-file-import text-success mr-1"></i> Plugin Import</h5>
                               </div>
                               <div class="modal-body">
-                                <p> Keep in mind after importing the command make sure to restart your application for changes to take effect.</p>
+                                <p> Keep in mind after importing the plugin make sure to restart your application for changes to take effect.</p>
                                 <form ref='uploadForm' 
-                                  id='uploadForm' 
-                                action='/plugins/upload' 
+                                id='uploadForm' 
+                                action='plugins/upload' 
                                 method='post' 
                                 encType="multipart/form-data">
-    
-                              <!-- File input -->
-                              <input id="file-upload" type="file" name="sampleFile" required />
-    
-                              <!-- Category dropdown -->
-                              <select name="category" required>
-                                  <option value="cs2">CS</option>
-                                  <option value="misc">Misc</option>
-                                  <option value="music">Music</option>
-                                  <option value="utils">Utils</option>
-                                  <option value="administration">Administration</option>
-                              </select>
-    
-                              <button type="submit"  class="btn btn-warning">Upload</button>
-                          </form>
+                                <div class="d-flex justify-content-center">
+                                  <label class="btn btn-warning">
+                                    <input id="file-upload" type="file" name="sampleFile" hidden accept=".js" />
+                                    <span><i class="fas fa-upload"></i> Upload File</span>
+                                  </label>
+                                </div>
+                                <p class="text-center" id="file-name"></p>
+                              </form
                               </div>
                               <div class="modal-footer">
                                   <button id="uploadButton" type="submit" form="uploadForm" value="Submit" class="btn btn-warning" hidden>Upload</button>                               
@@ -226,21 +229,37 @@
         <footer class="app-footer">
           <ul class="list-inline">
             <li class="list-inline-item">
-              <a class="text-muted" href="https://github.com/Vasilew69" target="_blank">GitHub</a>
+              <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
             </li>
             <li class="list-inline-item">
               <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
             </li>
           </ul>
-          <div class="copyright">Dashboard - Vasilew__ </div>
+          <div class="copyright">Discord BOT Dashboard V2 - LachlanDev#8014 </div>
         </footer>
       </main>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script src="../home/assets/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg=="></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script> 
     <script src="../home/assets/javascript/theme.min.js"></script> 
     <script src="../home/assets/javascript/prth.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggle = document.querySelector(".dropdown-toggle");
+        const menu = document.querySelector(".dropdown-menu");
+    
+        toggle?.addEventListener("click", () => {
+          menu?.classList.toggle("show");
+        });
+      });
+    </script>
     <script>
       document.querySelector("#file-upload").onchange = function(){
         document.querySelector("#file-name").textContent = this.files[0].name + " is ready for upload!";

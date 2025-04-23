@@ -13,7 +13,8 @@ const limiter = require('../index')
 
 const fs = require("fs");
 
-router.get('/settings', ensureAuthenticated,(req, res) => {
+router.get('/settings', ensureAuthenticated, async(req, res) => {
+  try {
     var config = process.loadEnvFile
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
@@ -26,6 +27,11 @@ router.get('/settings', ensureAuthenticated,(req, res) => {
         theme:theme
     })
     })
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
 })
 
 router.post('/settings/config', ensureAuthenticated, (req, res) => {
@@ -97,5 +103,5 @@ router.post('/settings/upload/theme', ensureAuthenticated,function(req, res) {
         res.redirect('/settings')
     });
 });
-  
+ 
 module.exports = router;

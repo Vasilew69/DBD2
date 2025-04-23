@@ -7,9 +7,41 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
     <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
+    <style>
+      /* Add this CSS to make queue items clickable and highlight on hover */
+      .queue-item {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      .queue-item:hover {
+        background-color: rgba(0,0,0,0.1);
+      }
+      
+      .queue-item.selected {
+        background-color: rgba(0,123,255,0.2);
+      }
+      
+      /* Fix footer positioning */
+      .app-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 1rem;
+      }
+      
+      /* Adjust main content to prevent footer overlap */
+      .page-inner {
+        padding-bottom: 100px; /* Adjust this value based on your footer height */
+      }
+    </style>
   </head>
+  <body>
   <div class="app">
     <header class="app-header app-header-dark">
       <div class="top-bar">
@@ -72,7 +104,6 @@
         </div>
       </div>
     </aside>
-    <body>
       <main class="app-main">
         <div class="wrapper">
           <div class="page">
@@ -120,99 +151,143 @@
                       <!-- Queue on the right -->
                       <div class="queue">
                         <h3>Queue</h3>
-                        <% queue.forEach((item) => { %>
-                          <div class="queue-item">
+                        <% queue.forEach((item, index) => { %>
+                          <div class="queue-item" data-index="<%= index %>">
                             <img src="<%= item.thumbnail %>" alt="Queue Item" class="queue-img">
                             <span><strong><%= item.title %></strong> - <%= item.author %></span>
                           </div>
                         <% }) %>
                       </div>
-                      <footer class="app-footer">
-                        <ul class="list-inline">
-                          <li class="list-inline-item">
-                            <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
-                          </li>
-                          <li class="list-inline-item">
-                            <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
-                          </li>
-                          <li class="list-inline-item">
-                            <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
-                          </li>
-                          <li class="list-inline-item">
-                            <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
-                          </li>
-                        </ul>
-                        <div class="copyright">Dashboard - Vasilew__ </div>
-                      </footer>
-                      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="></script>
-    <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg=="></script> 
-    <script src="./home/assets/javascript/theme.min.js"></script> 
-      </div>
-      </div>
-      </div>
-    </div>
-    
-  </main>
-    <script>
-      function playSong() {
-        // Send a request to your server to play the song for the selected guild
-        // You can use fetch or axios to make the request
-        fetch('/player/play', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ guildId: '<%= guildId %>' })
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            // Update the UI to reflect the current song playing
-          })
-          .catch(error => {
-            console.error(error);
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        
+        <footer class="app-footer">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
+            </li>
+          </ul>
+          <div class="copyright">Dashboard - Vasilew__ </div>
+        </footer>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+        <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script> 
+        <script src="./home/assets/javascript/theme.min.js"></script> 
+        
+        <script>
+          // Make queue items clickable
+          $(document).ready(function() {
+            $('.queue-item').click(function() {
+              // Remove selected class from all items
+              $('.queue-item').removeClass('selected');
+              // Add selected class to clicked item
+              $(this).addClass('selected');
+              
+              // Get the index of the clicked item
+              const index = $(this).data('index');
+              
+              // You can now use this index to play the selected song
+              // For example:
+              playSelectedSong(index);
+            });
           });
-      }
-    
-      function pauseSong() {
-        // Send a request to your server to pause the song for the selected guild
-        fetch('/player/pause', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ guildId: '<%= guildId %>' })
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            // Update the UI to reflect the paused state
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    
-      function skipSong() {
-        // Send a request to your server to skip the song for the selected guild
-        fetch('/player/skip', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ guildId: '<%= guildId %>' })
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            // Update the UI to reflect the skipped song
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    </script>
+          
+          function playSelectedSong(index) {
+            // Send a request to your server to play the selected song
+            fetch('/player/play-selected', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ 
+                guildId: '<%= guildId %>',
+                index: index
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              // You might want to refresh the page or update the UI
+              window.location.reload();
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          }
+          
+          function playSong() {
+            // Send a request to your server to play the song for the selected guild
+            // You can use fetch or axios to make the request
+            fetch('/player/play', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ guildId: '<%= guildId %>' })
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                // Update the UI to reflect the current song playing
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }
+        
+          function pauseSong() {
+            // Send a request to your server to pause the song for the selected guild
+            fetch('/player/pause', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ guildId: '<%= guildId %>' })
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                // Update the UI to reflect the paused state
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }
+        
+          function skipSong() {
+            // Send a request to your server to skip the song for the selected guild
+            fetch('/player/skip', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ guildId: '<%= guildId %>' })
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                // Update the UI to reflect the skipped song
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }
+        </script>
     </body>
   </div>
 </html>

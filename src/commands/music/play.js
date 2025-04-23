@@ -87,3 +87,10 @@ module.exports = {
     }
 
 }
+module.exports.details = {
+  name: 'Play',
+  description: 'Play song',
+  usage: '/play',
+  author: 'Vasilew__',
+  icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
+}

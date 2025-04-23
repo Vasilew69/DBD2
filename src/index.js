@@ -8,6 +8,7 @@ const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cors = require('cors');
+const favicon = require('serve-favicon')
 dotenv.config({ path: './configs/.env'})
 
 const app = express();
@@ -30,6 +31,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true,limit: '5mb' }));
 app.use(fileUpload());
 app.use(express.json())
+app.use(favicon(path.join(__dirname, 'public','images','favicon.png'))); 
 
 require('./auth/passport')(passport);
 
@@ -40,7 +42,7 @@ app.use(morgan('dev'), cors())
 app.use(
     session({
       secret: process.env.secret,
-      resave: true,
+      resave: false,
       saveUninitialized: true,
       secure: true,
       httpOnly: true
@@ -88,8 +90,20 @@ io.sockets.on('connection', function(sockets){
 })
 
 // Error Pages
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).render('error_pages/500', {
+    message: err.message,
+    error: err,
+    status: err.status || 500
+  });
+});
+
 app.use(function(req,res){
-  res.status(404).render('error_pages/404');
+  res.status(404).render('error_pages/404', {
+    url: req.originalUrl,
+    method: req.method
+  });
 });
 
 exports = limiter;

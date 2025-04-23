@@ -68,8 +68,9 @@ module.exports = {
 }
 
 module.exports.details = {
-    name: 'faceit-stats',
+    name: 'FaceIt Stats',
     description: 'Displays Faceit stats for a given player.',
+    icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
     usage: '/fstats @username [game]',
     author: 'Vasilew__',
 }

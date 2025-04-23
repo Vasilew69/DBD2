@@ -37,9 +37,9 @@ module.exports = {
     }
 }
 module.exports.details = {
-    name: 'unmute',
+    name: 'Unmute',
     description: 'unmute a user',
     author: 'Vasilew__',
-    icon: 'https://cdn.discordapp.com/avatars/805013640399118336/007327556455792640.png?size=256',
+    icon: 'https://cdn.discordapp.com/avatars/1161409662269272135/1ac51b5bbca693172e69336bb35d77b0',
     usage: '/unmute @user'
 }
