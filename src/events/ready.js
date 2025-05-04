@@ -7,7 +7,6 @@ const dotenv = require('dotenv')
 dotenv.config({ path: './configs/.env'})
 
 module.exports = (client) => {
-    console.clear();
 
     // Создание баннера
     const banner = figlet.textSync('Discord BOT Dashboard V2', {

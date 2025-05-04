@@ -6,7 +6,7 @@ module.exports = {
     .setName('volume')
     .setDescription('set the volume')
     .addNumberOption(option => option
-        .setName('volume')
+        .setName('strenght')
         .setDescription('how much to be')
         .setRequired(true)
     ),

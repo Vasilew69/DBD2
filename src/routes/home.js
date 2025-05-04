@@ -2,7 +2,7 @@ var dateFormat = require('dateformat');
 const dotenv = require('dotenv');
 const express = require('express');
 const router = express.Router();
-const discord = require('../bot')
+const {getClient, shutdownClient, restartClient, createClient} = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const ver = require('../configs/version.json')
 const number = require('easy-number-formatter')
@@ -18,6 +18,14 @@ router.get('/', ensureAuthenticated,(req,res) =>{
 })
 
 router.get('/home', ensureAuthenticated,(req, res) => {
+  let client = getClient() || {};
+  let username = client.user?.username || "Bot Offline";
+
+  const profile = req.user; // Assuming the user profile is stored in req.user after successful authentication
+
+  if (!profile) {
+    return res.render('error', { message: 'Profile is not available.' });
+  }
   var theme = jsonfile.readFileSync(themes);
     var options = {
         method: 'GET',
@@ -40,8 +48,8 @@ router.get('/home', ensureAuthenticated,(req, res) => {
           verL = ver.ver
         }
     res.render('home/home',{
-        profile:req.user,
-        client:discord.client,
+        profile:profile,
+        client:client,
         joinedDate:dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
         prefix:"/",
         number:number,
@@ -59,6 +67,44 @@ router.get('/logout', (req, res, next) => {
     req.flash('success', 'Logged out');
     res.redirect('/login');
   });
+});
+
+router.post('/api/power/shutdown', ensureAuthenticated, async (req, res, next) => {
+  try {
+    shutdownClient();
+    req.flash('success', 'Bot has been shutdown');
+    res.redirect('/home');
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
+});
+
+router.post("/api/power/restart", ensureAuthenticated, async (req, res, next) => {
+  try{
+    restartClient();
+    setTimeout(() => {
+    req.flash('success', 'Bot has been shutdown');
+    res.redirect('/home'), 10000
+    })
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
+});
+
+router.post("/api/power/start", ensureAuthenticated, async (req, res, next) => {
+  try{
+    createClient();
+    req.flash('success', 'Bot has been restarted');
+    res.redirect('/home');
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
 });
   
 module.exports = router;

@@ -74,6 +74,14 @@ module.exports = (client) => {
         try {
             console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
+            const commandNames = commands.map(cmd => cmd.name);
+            const duplicates = commandNames.filter((name, index) => commandNames.indexOf(name) !== index);
+
+            if (duplicates.length > 0) {
+            console.error(`[ERROR] Duplicate command names detected: ${[...new Set(duplicates)].join(', ')}`);
+            return;
+            }
+
             const data = await rest.put(
                 Routes.applicationCommands(clientId),
                 { body: commands },

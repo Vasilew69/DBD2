@@ -1,4 +1,5 @@
 const db = require('../database/db.js');
+const chalk = require("chalk");
 
 module.exports = async function(client) {
     // Initial sync of all guilds and members
@@ -34,7 +35,7 @@ module.exports = async function(client) {
         }
       }
   
-      console.log("✅ Synced all guilds and members");
+      console.log(chalk.green(chalk.bold("✅ Synced all guilds and members")));
     }
   
     // Event: New guild
@@ -72,7 +73,7 @@ module.exports = async function(client) {
     });
   
     client.once("ready", async () => {
-      console.log("🔄 Running full sync...");
+      console.log(chalk.blue(chalk.bold("🔄 Running full sync...")));
       await syncGuildsAndMembers();
     });
   }

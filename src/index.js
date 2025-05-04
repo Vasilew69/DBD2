@@ -1,6 +1,6 @@
 const path = require('node:path');
 const express = require('express')
-const client = require('./bot')
+const {createClient, getClient} = require('./bot')
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
@@ -10,10 +10,34 @@ const morgan = require('morgan');
 const cors = require('cors');
 const favicon = require('serve-favicon')
 dotenv.config({ path: './configs/.env'})
+const client = getClient();
 
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const createDbAndTables = require('./database/checkdb.js');
+
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
+// Trust proxy for secure cookies
+app.set('trust proxy', 1);
+
+app.use(function(req, res, next) {
+  if (req.session && req.session.passport && req.session.passport.user) {
+      User.findById(req.session.passport.user, function(err, user) {
+          if (err) return next(err);
+          req.user = user;
+          next();
+      });
+  } else {
+      next();
+  }
+});
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -37,6 +61,22 @@ require('./auth/passport')(passport);
 
 app.use(morgan('dev'), cors())
 
+createClient().then((loggedInClient) => {
+  // Now it's safe to access client.uptime
+  io.sockets.on('connection', function(sockets){
+    setInterval(function(){ 
+      // Uptime Count
+      let days = Math.floor(loggedInClient.uptime / 86400000);
+      let hours = Math.floor(loggedInClient.uptime / 3600000) % 24;
+      let minutes = Math.floor(loggedInClient.uptime / 60000) % 60;
+      let seconds = Math.floor(loggedInClient.uptime / 1000) % 60;
+    
+      var BOTuptime = `${days}d ${hours}h ${minutes}m ${seconds}s` 
+      
+      // Emit count to browser 
+      sockets.emit('uptime',{uptime:BOTuptime}); }, 1000);
+  })
+});
 
 // Express session
 app.use(
@@ -67,27 +107,18 @@ app.use('/', require('./routes/home.js'));
 app.use('/', require('./routes/settings.js'));
 app.use('/', require('./routes/guilds.js'));
 app.use('/', require('./routes/support.js'));
-app.use('/', require('./routes/plugins.js'));
+app.use('/', require('./routes/commands.js'));
 app.use('/', require('./routes/player.js'));
 app.use('/', require('./routes/history.js'));
+app.use("/", require("./routes/members.js"));
+app.use("/", require("./routes/welcome.js"));
+app.use("/", require("./routes/plugins.js"));
+app.use("/", require("./routes/reactionRoles.js"));
+app.use("/", require("./routes/automod.js"));
 
 app.use('/login', require('./routes/login.js'));
 
 http.listen(port)
-
-io.sockets.on('connection', function(sockets){
-  setInterval(function(){ 
-    // Uptime Count
-    let days = Math.floor(client.client.uptime / 86400000);
-    let hours = Math.floor(client.client.uptime / 3600000) % 24;
-    let minutes = Math.floor(client.client.uptime / 60000) % 60;
-    let seconds = Math.floor(client.client.uptime / 1000) % 60;
-  
-    var BOTuptime = `${days}d ${hours}h ${minutes}m ${seconds}s` 
-    
-    // Emit count to browser 
-    sockets.emit('uptime',{uptime:BOTuptime}); }, 1000);
-})
 
 // Error Pages
 app.use((err, req, res, next) => {
@@ -105,5 +136,15 @@ app.use(function(req,res){
     method: req.method
   });
 });
+
+
+createDbAndTables()
+  .then(() => {
+    console.log("Database and tables are set up.");
+    // Proceed with starting your application
+  })
+  .catch((err) => {
+    console.error("Error setting up database:", err);
+  });
 
 exports = limiter;

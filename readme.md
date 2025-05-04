@@ -23,13 +23,24 @@ npm install
 
 #### 🖥️ Setting up BOT
 Rename ``.env.default`` to ``.env`` and open up the file, this can be found found in the **configs** folder and input the required fields. 
+
+You need to aquire the YTT Token using npx --no discord-player-youtubei command in the /src folder. For the
+Google Oauth2.0 you need to create a new project in the [Google Developer Console](https://console.developers.google.com/).
+After you have created the project, you need to create a new OAuth2.0 client in the [OAuth2.0](https://console.developers.google.com/apis/credentials) section. 
+You can use the following information to configure your OAuth2.0 client:
+- **Application type**: Web Application
+- **Authorized redirect URIs**: `http://localhost:3000/auth/callback`.
+
+For the Github OAuth2.0 you need to create a new application in the [GitHub Developer Settings](https://github.com/settings/developers). 
+After you have created the application, you need to create a new OAuth2.0 client in the [OAuth2.0](https://github.com/settings/applications) section. 
+Than you need to Generate a new OAuth2.0 client secret
 ```env
 token=BOTToken
 clientId=BOTClientID
 API=STEAMAPI
 KEY=STEAMKEY
 FKEY=FACEIT DEV KEY
-YTT=access_token=ytt package token; scope=https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube-paid-content; token_type=Bearer; expiry_date=2025-03-24T16:07:45.430Z
+YTT= YTT
 clientSecret=BotSecret
 callbackURL=yourcallback url
 Admin=AdminID
@@ -39,6 +50,12 @@ host=DBHOST
 user=DBUSER
 password=DBPASS
 database=DBASE
+googleClientId=Google Client ID
+googleSecret=Google Client Secret
+googleCallbackURL=Google Callback URL
+githubClientId=GitHub Client ID
+githubSecret=GitHub Client Secret
+githubCallbackURL=GitHub Callback URL
 ```
 Make sure to enable both "Privileged Intents" on the [**Discord Developer Dashboard**](https://discord.com/developers). This is to fix errors  with "Kick / Ban" Commands!
 

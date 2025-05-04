@@ -3,22 +3,21 @@ const db = require('../database/db')
 const router = express.Router();
 const themes = "../src/configs/theme.json";
 const jsonfile = require('jsonfile');
-const { client } = require('../bot');
+const { getClient } = require('../bot');
 const { ensureAuthenticated } = require('../auth/auth');
-const limiter = require('../index');
-const passport = require('../auth/passport');
-const { deserializeUser } = require('passport');
 
-router.get('/history', ensureAuthenticated, async (req, res) => {
+router.get('/history', ensureAuthenticated, async (req, res, next) => {
   try {
+    const client = getClient();
+    const guildId = req.query.guildId;
     const theme = jsonfile.readFileSync(themes);
     const page = parseInt(req.query.page) || 1;
     const limit = 25;
     const offset = (page - 1) * limit;
     const type = req.query.type || 'all';
   
-    let baseQuery = 'SELECT * FROM logs';
-    let countQuery = 'SELECT COUNT(*) as count FROM logs';
+    let baseQuery = `SELECT * FROM logs WHERE guildid = ${guildId}`;
+    let countQuery = `SELECT COUNT(*) as count FROM logs WHERE guildid = ${guildId}`;
     const params = [];
   
     if (type !== 'all') {
@@ -39,20 +38,16 @@ router.get('/history', ensureAuthenticated, async (req, res) => {
       throw new Error("❌ Route error: No logs found.");
     }
   
-    try { res.render('home/history', {
+   res.render('home/history', {
                 profile: req.user,
                 client: client,
                 theme: theme,
                 logs: results,
                 currentPage: page,
                 totalPages,
-                selectedType: type
+                selectedType: type.Date,
+                guild: guildId
     });
-     } catch (error) {
-      console.error("❌ Route error:", error.message);
-      error.status = 500;
-      next(error); // Forward to your global 500 handler
-      }
     } catch (error) {
       console.error("❌ Route error:", error.message);
       error.status = 500;
@@ -60,10 +55,11 @@ router.get('/history', ensureAuthenticated, async (req, res) => {
     }
 })
 
-router.post('/clear', ensureAuthenticated, async (req, res) => {
+router.post('/clear/:id', ensureAuthenticated, async (req, res, next) => {
   try {
-  await db.execute('DELETE FROM logs');
-  res.redirect('/history')
+  const guildId = req.params.id;
+  await db.execute(`DELETE FROM logs WHERE guildId = ${guildId}`);
+  res.redirect(`/history?guildId=${guildId}`);
   } catch (error) {
     console.error("❌ Route error:", error.message);
     error.status = 500;
@@ -71,13 +67,14 @@ router.post('/clear', ensureAuthenticated, async (req, res) => {
   }
 })
 
-router.post('/add', ensureAuthenticated, async (req,res) => {
+router.post('/add/:id', ensureAuthenticated, async (req, res, next) => {
   try {
+    const guildId = req.params.id;
     const {id, username, userId, content, type, guildname} = req.body
     const timestamp = new Date();
-    await db.execute('INSERT INTO logs (userId, username, content, type, guildname) VALUES (?, ?, ?, ?, ?)',
-      [userId, username, content, type, guildname]);
-    res.redirect('/history');
+    await db.execute('INSERT INTO logs (userId, username, content, type, guildname, guildId) VALUES (?, ?, ?, ?, ?, ?)',
+      [userId, username, content, type, guildname, guildId]);
+    res.redirect(`/history?guildId=${guildId}`);
     } catch (error) {
       console.error("❌ Route error:", error.message);
       error.status = 500;
