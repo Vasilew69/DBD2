@@ -19,6 +19,7 @@ module.exports = (client) => {
         },
     ];    
     setInterval(() => {
+      if (!client || !client.isReady()) return;
         let random = Math.floor(Math.random() * statuses.length);
         client.user.setActivity(statuses[random]);
       }, 10000);

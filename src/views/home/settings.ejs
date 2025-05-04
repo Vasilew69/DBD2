@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Settings | <%=client.user.username%> </title>
+    <title> Settings | <%= client && client.user ? client.user.username : 'Bot Offline' %> </title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -51,7 +51,7 @@
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
                 <li class="menu-item">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
+                  <a href="/commands" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                 </li>
                 <li class="menu-item">
                   <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -61,13 +61,6 @@
                 </li>
                 <li class="menu-item has-active">
                     <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
-                </li>
-                <li class="menu-item">
-                  <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
-              </li>
-              <li class="menu-item">
-                <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
-              </li>
               </ul>
             </nav>
           </div>
@@ -122,6 +115,37 @@
                               <input type="text" id="prefix" name="prefix" class="form-control" value="<%=process.env.prefix%>"><br>
                               <label for="prefix"><strong>Port:</strong></label><br>
                               <input type="text" id="port" name="port" class="form-control" value="<%=process.env.port%>"><br>
+                              <label for="prefix"><strong>Database User:</strong></label><br>
+                              <input type="text" id="dbname" name="dbname" class="form-control" value="<%=process.env.user%>"><br>
+                              <label for="prefix"><strong>Database password:</strong></label><br>
+                              <input type="text" id="dbpass" name="dbpass" class="form-control" value="<%=process.env.password%>"><br>
+                              <label for="prefix"><strong>Database:</strong></label><br>
+                              <input type="text" id="db" name="db" class="form-control" value="<%=process.env.database%>"><br>
+                              <label for="prefix"><strong>Database Host:</strong></label><br>
+                              <input type="text" id="dbhost" name="dbhost" class="form-control" value="<%=process.env.host%>"><br>
+                              <label for="prefix"><strong>Session Secret:</strong></label><br>
+                              <input type="text" id="dbsecret" name="dbsecret" class="form-control" value="<%=process.env.secret%>"><br>
+                              <label for="prefix"><strong>Google Client ID:</strong></label><br>
+                              <input type="text" id="gclientid" name="gclientid" class="form-control" value="<%=process.env.googleClientId%>"><br>
+                              <label for="prefix"><strong>Google Client Secret:</strong></label><br>
+                              <input type="text" id="gclientsecret" name="gclientsecret" class="form-control" value="<%=process.env.googleClientSecret%>"><br>
+                              <label for="prefix"><strong>Google Callback URL:</strong></label><br>
+                              <input type="text" id="gclientCallbackURL" name="gclientCallbackURL" class="form-control" value="<%=process.env.googleCallbackUrl%>"><br>
+                              <label for="prefix"><strong>Github Client ID:</strong></label><br>
+                              <input type="text" id="ghClintId" name="ghClintId" class="form-control" value="<%=process.env.githubClientId%>"><br>
+                              <label for="prefix"><strong>Github Client Secret:</strong></label><br>
+                              <input type="text" id="ghClientSecret" name="ghClientSecret" class="form-control" value="<%=process.env.githubClientSecret%>"><br>
+                              <label for="prefix"><strong>Github Callback URL:</strong></label><br>
+                              <input type="text" id="ghCallbackURL" name="ghCallbackURL" class="form-control" value="<%=process.env.githubCallbackURL%>"><br>
+                              <label for="prefix"><strong>Steam Web Api:</strong></label><br>
+                              <input type="text" id="SAPI" name="SAPI" class="form-control" value="<%=process.env.API%>"><br>
+                              <label for="prefix"><strong>Steam Web Api Key:</strong></label><br>
+                              <input type="text" id="SKEY" name="SKEY" class="form-control" value="<%=process.env.KEY%>"><br>
+                              <label for="prefix"><strong>Faceit Key:</strong></label><br>
+                              <input type="text" id="FKEY" name="FKEY" class="form-control" value="<%=process.env.FKEY%>"><br>
+                              <label for="prefix"><strong>Youtube Key:</strong></label><br>
+                              <p>* GENERATED BY <strong>npx --no discord-player-youtubei</strong></p>
+                              <input type="text" id="YTT" name="YTT" class="form-control" value="<%=process.env.YTT%>"><br>
                               <input type="submit" class="btn btn-primary btn-lg btn-block" value="Save">
                             </form>      
                         </div>

@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Commands | <%=client.user.username%> </title>
+    <title> Plugins | <%= client && client.user ? client.user.username : 'Bot Offline' %> </title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js" integrity="sha512-+ruHlyki4CepPr07VklkX/KM5NXdD16K1xVwSva5VqOVbsotyCQVKEwdQ1tAeo3UkHCXfSMtKU/mZpKjYqkxZA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js" integrity="sha512-+ruHlyki4CepPr07VklkX/KM5NXdD16K1xVwSva5VqOVbsotyCQVKEwdQ1tAeo3UkHCXfSMtKU/mZpKjYqkxZA==" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../<%=theme.theme%>" data-skin="default">
   </head>
   <body>
@@ -46,28 +46,76 @@
           </header>
           <div class="aside-menu overflow-hidden">
             <nav id="stacked-menu" class="stacked-menu">
-                 <ul class="menu">
+              <ul class="menu">
                 <li class="menu-item">
-                  <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
-                </li>
-                <li class="menu-item has-active">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
-                </li>
-                <li class="menu-item">
-                  <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
+                  <a href="/" class="menu-link">
+                    <span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span>
+                  </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/support" class="menu-link"><span class="menu-icon fas fa-question-circle"></span> <span class="menu-text">Support</span></a>
+                  <a href="/commands" class="menu-link">
+                    <span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span>
+                  </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
+                  <a href="/guilds" class="menu-link">
+                    <span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span>
+                  </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
-              </li>
-              <li class="menu-item">
-                <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
-              </li>
+                  <a href="/support" class="menu-link">
+                    <span class="menu-icon fas fa-question-circle"></span> <span class="menu-text">Support</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="/settings" class="menu-link">
+                    <span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span>
+                  </a>
+                </li>
+          
+                <!-- Dropdown starts here -->
+                <li class="menu-item dropdown  has-active">
+                  <button class="menu-link dropdown-toggle" data-toggle="dropdown" style="width: 100%; text-align: left; background: none; border: none;">
+                    <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Server Plugins</span>
+                  </button>
+                  <ul class="dropdown-menu" style="display: none; list-style: none; padding-left: 20px;">
+                    <li class="menu-item has-active">
+                      <a href="/plugins?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Plugins</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/player?guildId=<%=guild.id%> " class="menu-link">
+                        <span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/history?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fa-history"></span> <span class="menu-text">History</span>
+                      </a>
+                    </li>
+                    <li class="menu-item ">
+                      <a href="/members?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fa-users"></span> <span class="menu-text">Members</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/welcome?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fas fa-handshake"></span> <span class="menu-text">Welcome</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/reactionroles?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fa-server"></span> <span class="menu-text">Reaction Roles</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="/automod?guildId=<%=guild.id%>" class="menu-link">
+                        <span class="menu-icon fas fa-hammer"></span> <span class="menu-text">Auto Moderation</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             </nav>
           </div>
@@ -88,141 +136,48 @@
                           <h4 class="alert-heading"> Success! </h4>
                           <p class="mb-0"><%=success%></p>
                         </div>
-                    <% } %>
-                    <% if(error != ''){ %>
-                      <div class="alert alert-warning has-icon alert-dismissible fade show">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <div class="alert-icon">
-                          <span class="fa fa-bullhorn"></span>
-                        </div>
-                        <h4 class="alert-heading"> Warning! </h4>
-                        <p class="mb-0"><%=error%></p>
-                      </div>
-                  <% } %> 
-                    <h4>Plugins</h4>
-                    <p class="text-muted"> Configure and enable plugins that you would like to use!</p>
-                    <p class="text-muted"><strong>NOTE: When importing/removing or enabling/disabling plugins you will require to restart Discord BOT Dashboard for changes to take effect!</strong></p>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#upload">Import</button>
-                    </div>
-                    <div class="row g-4">
-                        <% commands.forEach(function(commandName) { %>
-                        <div class="col-lg-4">
+                    <% } %> 
+                    <h4>Guilds</h4>
+                    <p class="text-muted"> See all the Guilds (Servers) that your BOT is in, returns information about each guild and the option to leave!</p>
+                    <div class="row">
+                        <% if (guild) { %>
+                        <div class="col-lg-12">
                           <div class="card">
-                            <% if (commandName.description?.icon) { %>
-                                <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="<%=commandName.description?.icon%>" alt=""></figure> <%=commandName.description?.name%></div>
-                                <% } %>
-                            <% if (!commandName.description?.icon) { %>
-                                    <div class="card-header"><figure class="user-avatar user-avatar-lg"><img src="https://www.online-tech-tips.com/wp-content/uploads/2019/09/discord.jpg.optimal.jpg" alt=""></figure> <%=commandName.description?.name%></div>
-                            <% } %>
+                            <div class="card-header">
+                                <figure class="user-avatar user-avatar-lg">
+                                  <% const iconURL = guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : 'default_icon.png'; %>
+                                    <img src="<%= iconURL %>" alt="Guild Icon">
+                                </figure>
+                                <%=guild.name%>
+                            </div>
                             <div class="card-body">
-                              <p class="card-text"><strong>Developer:</strong> <%=commandName.description?.author %> </p>
-                              <p class="card-text"><strong>Description:</strong> <%=commandName.description?.description %> </p>
-                              <p class="card-text"><strong>Usage:</strong> <%=commandName.description?.usage %></p>
-                              <% if (commandsToggle.includes(commandName.name)) { %>
-                              <div class="blocktext">
-                                <form id="myForm" action="/plugins/toggle" method="post">
-                                  <input type="hidden" name="toggle" value="true">
-                                  <input type="hidden" name='commandName' value=<%=commandName.name%>>
-                                  <label class="switch">
-                                    <input type="checkbox" value="false" name="toggles" onclick="submit()" id="toggles">
-                                    <span class="slider round"></span>
-                                  </label>
-                                </form>
-                              </div>
-                              <% } %>
-                              <% if (!commandsToggle.includes(commandName.name)) { %>
-                                <div class="blocktext">
-                                  <form id="myForm" action="/plugins/toggle" method="post">
-                                    <input type="hidden" name="toggle" value="false">
-                                    <input type="hidden" name='commandName' value=<%=commandName.name%>>
-                                    <label class="switch">
-                                      <input type="checkbox" value="true" name="toggles" onclick="submit()" id="toggles" checked>
-                                      <span class="slider round"></span>
-                                    </label>
-                                  </form>
-                                </div>
-                                <% } %>
-                            </div>
-                              <div class="card-footer-item"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#<%=commandName.name%>">Remove</a></div>
-                          </div>
-                        </div>
-                        <!-- Remove Modal -->
-                        <div class="modal modal-alert fade" id="<%=commandName.name%>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="<%=commandName.name%>Label" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 id="<%=commandName.name%>Label" class="modal-title">
-                                  <i class="far fa-trash-alt text-warning mr-1"></i> Remove Plugin</h5>
-                              </div>
-                              <div class="modal-body">
-                                <p> Are you sure you want to remove the plugin <strong><%=commandName.name%></strong>? This cannot be undone!</p>
-                              <div class="modal-footer">
-                                <% if (commandsToggle.includes(commandName.name)) { %>
-                                  <div class="form-check mt-2">
-                                    <form id="myForm" action="/plugins/toggle" method="post">
-                                      <input type="hidden" name="toggle" value="true">
-                                      <input type="hidden" name='commandName' value=<%=commandName.name%>>
-                                      <label class="switch">
-                                        <input type="checkbox" value="false" name="toggles" onclick="submit()" id="toggles">
-                                        <span class="slider round"></span>
-                                      </label>
-                                    </form>
-                                  </div>
-                                  <% } %>
-                                  <% if (!commandsToggle.includes(commandName.name)) { %>
-                                    <div class="blocktext">
-                                      <form id="myForm" action="/plugins/toggle" method="post">
-                                        <input type="hidden" name="toggle" value="false">
-                                        <input type="hidden" name='commandName' value=<%=commandName.name%>>
-                                        <label class="switch">
-                                          <input type="checkbox" value="true" name="toggles" onclick="submit()" id="toggles" checked>
-                                          <span class="slider round"></span>
-                                        </label>
-                                      </form>
-                                    </div>
-                                    <% } %>
-                                <form action="/plugins/remove/<%=commandName%>" method="POST">
-                                  <button type="button" class="btn btn-warning" onclick="submit()">Remove</button>                               
+                              <p class="card-text"><strong>Server ID:</strong> <%=guild.id %> </p>
+                              <div class="d-flex gap-2">
+                              <form method="post" action="/plugins/player/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">Player</button>
                               </form>
-                              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                              </div>
+                              <form method="post" action="/plugins/members/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">Members</button>
+                              </form>
+                              <form method="post" action="/plugins/welcome/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">Welcome Settings</button>
+                              </form>
+                              <form method="post" action="/plugins/history/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">History</button>
+                              </form>
+                              <form method="post" action="/plugins/reactionroles/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">Reaction Roles</button>
+                              </form>
+                              <form method="post" action="/plugins/automod/<%= guild.id %>">
+                                <button type="submit" class="btn-custom">Auto Moderation</button>
+                              </form>
+                            </div>
                             </div>
                           </div>
                         </div>
-                        <!-- Modal End -->
-                      </div>
-                        <% }); %>
-                        <!-- Import Modal -->
-                        <div class="modal modal-alert fade" id="upload" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="uploadLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 id="uploadLabel" class="modal-title">
-                                  <i class="fa fa-file-import text-success mr-1"></i> Plugin Import</h5>
-                              </div>
-                              <div class="modal-body">
-                                <p> Keep in mind after importing the plugin make sure to restart your application for changes to take effect.</p>
-                                <form ref='uploadForm' 
-                                id='uploadForm' 
-                                action='plugins/upload' 
-                                method='post' 
-                                encType="multipart/form-data">
-                                <div class="d-flex justify-content-center">
-                                  <label class="btn btn-warning">
-                                    <input id="file-upload" type="file" name="sampleFile" hidden accept=".js" />
-                                    <span><i class="fas fa-upload"></i> Upload File</span>
-                                  </label>
-                                </div>
-                                <p class="text-center" id="file-name"></p>
-                              </form
-                              </div>
-                              <div class="modal-footer">
-                                  <button id="uploadButton" type="submit" form="uploadForm" value="Submit" class="btn btn-warning" hidden>Upload</button>                               
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <% }else { %>
+                          <p>Guild data not found.</p>
+                          <% } %>
                       </div>
                 </div>
             </div>
@@ -241,29 +196,41 @@
               <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
             </li>
           </ul>
-          <div class="copyright">Discord BOT Dashboard V2 - LachlanDev#8014 </div>
+          <div class="copyright">Dashboard - Vasilew__ </div>
         </footer>
       </main>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-    <script src="../home/assets/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script> 
-    <script src="../home/assets/javascript/theme.min.js"></script> 
-    <script src="../home/assets/javascript/prth.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const toggle = document.querySelector(".dropdown-toggle");
-        const menu = document.querySelector(".dropdown-menu");
-    
-        toggle?.addEventListener("click", () => {
-          menu?.classList.toggle("show");
+    <script src="./home/assets/javascript/theme.min.js"></script> 
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const toggle = document.querySelector(".dropdown-toggle");
+          const menu = document.querySelector(".dropdown-menu");
+      
+          toggle?.addEventListener("click", () => {
+            menu?.classList.toggle("show");
+          });
         });
-      });
-    </script>
-    <script>
-      document.querySelector("#file-upload").onchange = function(){
-        document.querySelector("#file-name").textContent = this.files[0].name + " is ready for upload!";
-        document.getElementById("uploadButton").hidden = false;
-      }
-    </script>
+      </script>
+      <script>
+        document.querySelectorAll('.dropdown-toggle').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const dropdownMenu = this.parentElement.querySelector('.dropdown-menu');
+            if (dropdownMenu.style.display === "block") {
+              dropdownMenu.style.display = "none";
+            } else {
+              dropdownMenu.style.display = "block";
+            }
+          });
+        });
+        </script>
+        <style>
+        .assd {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        </style>
+    </body>
 </html>

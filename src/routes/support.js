@@ -6,12 +6,13 @@ const themes = "./configs/theme.json"
 const jsonfile = require('jsonfile')
 const limiter = require('../index')
 
-router.get('/support', ensureAuthenticated,async (req, res) => {
+router.get('/support', ensureAuthenticated,async (req, res, next) => {
     try {
+        const client = discord.getClient();
     var theme = jsonfile.readFileSync(themes);
     res.render('home/support',{
         profile:req.user,
-        client:discord.client,
+        client:client,
         theme:theme
     })
 } catch (error) {

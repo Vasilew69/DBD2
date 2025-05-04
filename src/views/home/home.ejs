@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Dashboard | <%=client.user.username%> </title>
+    <title> Dashboard | <%= client && client.user ? client.user.username : 'Bot Offline' %> </title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@0ac23ca/css/all.css" rel="stylesheet" type="text/css" />
@@ -51,7 +51,7 @@
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
                 <li class="menu-item">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
+                  <a href="/commands" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                 </li>
                 <li class="menu-item">
                   <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -61,12 +61,6 @@
                 </li>
                 <li class="menu-item">
                     <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
-                </li>
-                <li class="menu-item">
-                    <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
-                </li>
-                <li class="menu-item">
-                  <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
                 </li>
               </ul>
             </nav>
@@ -90,7 +84,7 @@
                 <% } %>
                 <div class="d-flex flex-column flex-md-row">
                   <p class="lead">
-                    <span class="font-weight-bold">Welcome, <%= profile.username %></span> <span class="d-block text-muted">Here’s what’s happening with <strong><%=client.user.username%></strong> today.</span>
+                    <span class="font-weight-bold">Welcome, <%= profile.username %></span> <span class="d-block text-muted">Here’s what’s happening with <strong><%=client && client.user ? client.user.username : 'Offline'%></strong> today.</span>
                   </p>
                   <div class="ml-auto">
                   </div>
@@ -106,7 +100,7 @@
                           <div class="metric metric-bordered align-items-center">
                             <h2 class="metric-label"> Server Count (Guilds) </h2>
                             <p class="metric-value h3">
-                              <sub><i class="fas fa-server"></i></sub> <span class="value"><%=number.formatNumber(client.guilds.cache.size)%></span>
+                              <sub><i class="fas fa-server"></i></sub> <span class="value"><%=number.formatNumber(client && client.user ? client.guilds.cache.size : '0')%></span>
                             </p>
                         </div> 
                         </div>
@@ -114,7 +108,7 @@
                           <div class="metric metric-bordered align-items-center">
                             <h2 class="metric-label"> User Count (All Guilds) </h2>
                             <p class="metric-value h3">
-                              <sub><i class="oi oi-people"></i></sub> <span class="value"><%=number.formatNumber(client.guilds.cache.reduce((a, g) => a + g.memberCount, 0))%></span>
+                              <sub><i class="oi oi-people"></i></sub> <span class="value"><%=number.formatNumber(client && client.user ? client.guilds.cache.reduce((a, g) => a + g.memberCount, 0) : 0)%></span>
                             </p>
                         </div> 
                         </div>
@@ -122,7 +116,7 @@
                           <div class="metric metric-bordered align-items-center">
                             <h2 class="metric-label"> API Latency </h2>
                             <p class="metric-value h3">
-                              <sub><i class="fa fa-broadcast-tower"></i></sub> <span class="value"><%=Math.round(client.ws.ping)%>ms</span> 
+                              <sub><i class="fa fa-broadcast-tower"></i></sub> <span class="value"><%=Math.round(client && client.user ? client.ws.ping : '0')%>ms</span> 
                             </p>
                         </div> 
                         </div>
@@ -134,12 +128,13 @@
                               </p>
                           </div>
                           </div>
+                        
                       </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="metric metric-bordered">
                         <div class="metric-badge">
-                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> Uptime</span>
+                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> Dashbard Uptime</span>
                         </div>
                         <p class="metric-value h3">
                           <sub><i class="oi oi-timer"></i></sub> <span class="value" id="uptime"></span>
@@ -148,9 +143,23 @@
                     </div>
                   </div>
                 </div>
+                <div class="section-block">
+                  <h4> Power Options</h4>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="card bg-secondary">
+                        <div class="card-body"> 
+                          <button onclick="botShutdown()" class="btn btn-danger">Shutdown Bot</button>
+                          <button onclick="botRestart()" class="btn btn-warning">Restart Bot</button>
+                          <button onclick="botStart()" class="btn btn-info">Start Bot</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                   <div class="section-block">
                     <h4> Dashboard</h4>
-                    <p class="text-muted"> Find the latest news with the Dashboard and information about "<%=client.user.username%>"</p> 
+                    <p class="text-muted"> Find the latest news with the Dashboard and information about "<%= client && client.user ? client.user.username : 'Bot Offline' %>"</p> 
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="card bg-secondary">
@@ -165,12 +174,12 @@
                       </div>
                       <div class="col-lg-4">
                         <div class="card bg-secondary">
-                          <div class="card-header"> 🔎 <%=client.user.username%> - Details</div>
+                          <div class="card-header"> 🔎 <%= client && client.user ? client.user.username : 'Bot Offline' %> - Details</div>
                           <div class="card-body">
                             <ul>
-                              <li><strong>Username:</strong> <%=client.user.username%>#<%=client.user.discriminator%></li>
-                              <li><strong>Client ID:</strong> <%=client.user.id%></li>
-                              <li><strong>Joined:</strong> <%=joinedDate%></li>
+                              <li><strong>Username:</strong> <%= client && client.user ? client.user.username : 'Bot Offline' %>#<%=client && client.user ?client.user.discriminator : 'Unavailable'%></li>
+                              <li><strong>Client ID:</strong> <%= client && client.user ? client.user.id : 'Unavailable' %></li>
+                              <li><strong>Joined:</strong> <%=client && client.user ? joinedDate : 'Unavailable'%></li>
                             </ul>
                             </p>
                           </div>
@@ -228,4 +237,27 @@
         $('#uptime').html(data.uptime);
       });
     </script>
+    <script>
+      async function botShutdown() {
+        if (!confirm("Are you sure you want to shut down the bot?")) return;
+        const res = await fetch('/api/power/shutdown', { method: 'POST' });
+        const data = await res.json();
+        alert(data.message);
+      }
+    
+      async function botRestart() {
+        if (!confirm("Restart the bot?")) return;
+        const res = await fetch('/api/power/restart', { method: 'POST' });
+        const data = await res.json();
+        alert(data.message);
+      }
+
+      async function botStart() {
+        if (!confirm("Start the bot?")) return;
+        const res = await fetch('/api/power/start', { method: 'POST' });
+        const data = await res.json();
+        alert(data.message);
+      }
+    </script>
+    
 </html>

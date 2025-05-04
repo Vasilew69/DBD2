@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>History | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
+    <title>Guilds | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
     <link
       href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600"
       rel="stylesheet"
@@ -85,43 +85,43 @@
               </li>
         
               <!-- Dropdown starts here -->
-              <li class="menu-item dropdown has-active">
+              <li class="menu-item dropdown  has-active">
                 <button class="menu-link dropdown-toggle" data-toggle="dropdown" style="width: 100%; text-align: left; background: none; border: none;">
                   <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Server Plugins</span>
                 </button>
                 <ul class="dropdown-menu" style="display: none; list-style: none; padding-left: 20px;">
                   <li class="menu-item">
-                    <a href="/plugins?guildId=<%=guild%>" class="menu-link">
+                    <a href="/plugins?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Plugins</span>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="/player?guildId=<%=guild%> " class="menu-link">
+                    <a href="/player?guildId=<%=guildId%> " class="menu-link">
                       <span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span>
                     </a>
                   </li>
-                  <li class="menu-item has-active">
-                    <a href="/history?guildId=<%=guild%>" class="menu-link">
+                  <li class="menu-item">
+                    <a href="/history?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-history"></span> <span class="menu-text">History</span>
                     </a>
                   </li>
-                  <li class="menu-item">
-                    <a href="/members?guildId=<%=guild%>" class="menu-link">
+                  <li class="menu-item has-active">
+                    <a href="/members?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-users"></span> <span class="menu-text">Members</span>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="/welcome?guildId=<%=guild%>" class="menu-link">
+                    <a href="/welcome?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fas fa-handshake"></span> <span class="menu-text">Welcome</span>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="/reactionroles?guildId=<%=guild%>" class="menu-link">
+                    <a href="/reactionroles?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-server"></span> <span class="menu-text">Reaction Roles</span>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="/automod?guildId=<%=guild%>" class="menu-link">
+                    <a href="/automod?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-hammer"></span> <span class="menu-text">Auto Moderation</span>
                     </a>
                   </li>
@@ -174,94 +174,41 @@
               </div>
             </div>          </div>
         </header>
-        <h2 class="mb-4">Chat & Command History</h2>
+        <h2 class="mb-4">Members</h2>
         <table id="logTable" class="table table-dark table-bordered">
           <div class="mb-4">
-            <button class="btn-custom" onclick="sortTableByGuild()">
-              Filter by server
-            </button>
-            <button class="btn-custom" onclick="filterType('command')">
-              Commands
-            </button>
-            <button class="btn-custom" onclick="filterType('chat')">
-              Chats
-            </button>
-            <button class="btn-custom" onclick="filterType('all')">
-              Show All
-            </button>
-          </div>
-          <form
-            action="/clear/<%= guild %>"
-            method="POST"
-            onsubmit="return confirm('Clear all logs?')"
-            class="mb-3"
-          >
-            <button class="btn-custom btn-clear">Clear All Logs</button>
-          </form>
-          <form action="/add/<%= guild %>" method="POST" class="form-inline mb-3">
-            <input
-              name="username"
-              class="form-control mr-2 mb-2"
-              placeholder="Username"
-              required
-            />
-            <input
-              name="userId"
-              class="form-control mr-2 mb-2"
-              placeholder="User ID"
-              required
-            />
-            <input
-              name="content"
-              class="form-control mr-2 mb-2"
-              placeholder="Content"
-              required
-            />
-            <select name="type" class="form-control mr-2 mb-2">
-              <option value="message">Chat</option>
-              <option value="command">Command</option>
-            </select>
-            <input
-              name="guildname"
-              class="form-control mr-2 mb-2"
-              placeholder="Guild name"
-              required
-            />
-            <button class="btn-custom btn-add mb-2">Add Log</button>
-          </form>
-          <% if (logs.length === 0) { %>
-            <p>No logs found.</p>
+          <% if (members.length === 0) { %>
+            <p>No members found.</p>
           <% } else { %>
-            <% logs.forEach(log => { %>
+            <% members.forEach(members => { %>
               <div class="log-entry mb-3 p-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="log-type badge <%= log.type === 'command' ? 'badge-info' : 'badge-secondary' %> text-uppercase">
-                    <%= log.type %>
+                  <span class="log-type badge badge-secondary text-uppercase">
+                    <%= guildId %>
                   </span>
-                  <span class="log-guild badge <%= log.Guild %> badge-guilds text-uppercase">
-                    <%= log.guildname %>
+                  <span class="log-guild badge badge-guilds text-uppercase">
+                    <%= members.avatar || 'NO ICON' %>
                   </span>
-                  <small class="log-timestamp badge badge-timestamp"><%= new Date(log.timestamp).toLocaleString('en-GB') %></small>
+                  <small class="log-timestamp badge badge-timestamp"><%= joinedat %></small>
                 </div>
-                <div class="log-user font-weight-bold mb-1"><%= log.username %> (<%= log.userId %>)</div>
-                <div class="log-content"><%= log.content %></div>
+                <div class="log-user font-weight-bold mb-1"><%= members.username %> (<%= members.id %>)</div>
+                <div class="log-content"><%= members.guildname %></div>
               </div>
             <% }) %>
           <% } %>
           <div class="pagination">
             <% if (currentPage > 1) { %>
-              <a href="?type=<%= selectedType %>&page=<%= currentPage - 1 %>">Prev</a>
+              <a href="&page=<%= currentPage - 1 %>">Prev</a>
             <% } %>
           
             <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="?type=<%= selectedType %>&page=<%= i %>" 
-                 class="<%= currentPage === i ? 'active' : '' %>">
+              <a href="&page=<%= currentPage - 1 %>" class=<%= currentPage === i ? 'active' : '' %>">
                 <%= i %>
               </a>
             <% } %>>
           
             <% if (currentPage < totalPages) { %>
-              <a href="?type=<%= selectedType %>&page=<%= currentPage + 1 %>">Next</a>
+              <a href="page=<%= currentPage + 1 %>">Next</a>
             <% } %>
           </div>
         </div>
