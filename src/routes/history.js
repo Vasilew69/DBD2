@@ -5,9 +5,6 @@ const themes = "../src/configs/theme.json";
 const jsonfile = require('jsonfile');
 const { getClient } = require('../bot');
 const { ensureAuthenticated } = require('../auth/auth');
-const limiter = require('../index');
-const passport = require('../auth/passport');
-const { deserializeUser } = require('passport');
 
 router.get('/history', ensureAuthenticated, async (req, res, next) => {
   try {

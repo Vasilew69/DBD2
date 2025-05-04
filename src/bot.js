@@ -12,7 +12,6 @@ const { Player } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
 
-
 dotenv.config({ path: './configs/.env' });
 const token = process.env['token'];
 
