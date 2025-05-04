@@ -128,7 +128,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
 app.use(function (req, res) {
   res.status(404).render('error_pages/404', {
     url: req.originalUrl,
