@@ -13,3 +13,4 @@ secret.js
 .github/workflows/static.yml
 .github/workflows/node.js.yml
 .stfolder
+ssl
