@@ -145,7 +145,14 @@ router.post('/commands/upload', ensureAuthenticated, function (req, res) {
     }
 
     // Check if the file already exists in the chosen category
-    const uploadPath = path.join(categoryPath, sampleFile.name);
+    const sanitizedFileName = sanitize(sampleFile.name);
+    if (!sanitizedFileName) {
+        req.flash('error', 'Invalid file name!');
+        return res.redirect('/commands');
+    }
+    const sanitizedFileNameA = sanitize(sampleFile.name);
+    console.log('Sanitized file name:', sanitizedFileNameA);  // Debug: Log the sanitized file name
+    const uploadPath = path.join(categoryPath, sanitizedFileNameA);
     if (fs.existsSync(uploadPath)) {
         req.flash('error', 'A plugin with that name already exists!');
         return res.redirect('/commands');

@@ -18,7 +18,7 @@ async function getBotGuild(guildId) {
 
         return guild;
     } catch (error) {
-        console.error(`Failed to get guild ${guildId}:`, error);
+        console.error("Failed to get guild %s:", guildId, error);
         return null;
     }
 }
