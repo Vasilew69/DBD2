@@ -3,6 +3,7 @@ const router = express.Router();
 const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const fs = require("fs");
+const sanitize = require('sanitize-filename');
 const jsonfile = require('jsonfile');
 const themes = "./configs/theme.json"
 const prth = "./configs/prth.json";
@@ -127,13 +128,20 @@ router.post('/commands/upload', ensureAuthenticated, function (req, res) {
     console.log('Category from request:', req.body.category);
 
     // Check the category value
-    const category = req.body.category?.trim() || 'misc';
-    console.log('Final category chosen:', category);  // Log final category
+    const sanitize = require('sanitize-filename');
+    const category = sanitize(req.body.category?.trim() || 'misc');
+    console.log('Final sanitized category chosen:', category);  // Log final category
 
     // Ensure the category folder exists
-    const categoryPath = path.join(__dirname, 'commands', category);
-    if (!fs.existsSync(categoryPath)) {
-        fs.mkdirSync(categoryPath, { recursive: true });
+    const baseDir = path.join(__dirname, 'commands');
+    const categoryPath = path.join(baseDir, category);
+    const resolvedPath = path.resolve(categoryPath);
+    if (!resolvedPath.startsWith(baseDir)) {
+        req.flash('error', 'Invalid category name!');
+        return res.redirect('/commands');
+    }
+    if (!fs.existsSync(resolvedPath)) {
+        fs.mkdirSync(resolvedPath, { recursive: true });
     }
 
     // Check if the file already exists in the chosen category

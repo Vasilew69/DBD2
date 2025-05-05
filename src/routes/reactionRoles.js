@@ -126,7 +126,7 @@ router.post('/reactionroles/save', ensureAuthenticated, async (req, res, next) =
       try {
         await sentMessage.react(e);
       } catch (err) {
-        console.warn(`⚠️ Could not react with emoji %s"${e}":`, err.message);
+        console.warn(`⚠️ Could not react with emoji "%s":`, String(e).replace(/%/g, '%%'), err.message);
       }
     }
 

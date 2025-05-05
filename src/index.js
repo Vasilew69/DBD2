@@ -16,6 +16,13 @@ dotenv.config({ path: './configs/.env' });
 const client = getClient();
 const app = express();
 
+app.use((req, res, next) => {
+  if (!req.secure) {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
 // 🔒 Load SSL certificates
 const sslOptions = {
   key: fs.readFileSync('./ssl/key.pem'),

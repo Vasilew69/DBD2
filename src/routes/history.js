@@ -16,13 +16,9 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
     const offset = (page - 1) * limit;
     const type = req.query.type || 'all';
   
-    var baseQuery = "SELECT * FROM logs WHERE guildid = " +
-    req.query.guildId +
-    "";
-    var countQuery = "SELECT COUNT(*) as count FROM logs WHERE guildid =" +
-    req.query.guildId +
-    "";
-    const params = [];
+    var baseQuery = "SELECT * FROM logs WHERE guildid = ?";
+    var countQuery = "SELECT COUNT(*) as count FROM logs WHERE guildid = ?";
+    const params = [guildId];
   
     if (type !== 'all') {
       baseQuery += ' WHERE type = ?';
@@ -33,7 +29,7 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
     baseQuery += ' ORDER BY timestamp DESC LIMIT ? OFFSET ?';
     params.push(limit, offset);
   
-    const [results] = await db.query(baseQuery, [params], function(err, result, next) {
+    const [results] = await db.query(baseQuery, params, function(err, result, next) {
       if(err){
         console.error("❌ Route error:", err.message);
         err.status = 500;
@@ -41,7 +37,7 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
       }
       return result;
     });
-    const [[{ count }]] = await db.query(countQuery, [type !== 'all' ? [type] : []], function(err, result, next) {
+    const [[{ count }]] = await db.query(countQuery, [guildId], function(err, result, next) {
       if(err){
         console.error("❌ Route error:", err.message);
         err.status = 500;
@@ -76,8 +72,8 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
 router.post('/clear/:id', ensureAuthenticated, async (req, res, next) => {
   try {
   const guildId = req.params.id;
-  var delquery = "DELETE FROM logs WHERE guildId = " + req.params.id + "";
-  await db.query(delquery, [], function(err, result, next) {
+  var delquery = "DELETE FROM logs WHERE guildId = ?";
+  await db.query(delquery, [guildId], function(err, result, next) {
     if(err){
       console.error("❌ Route error:", err.message);
       err.status = 500;

@@ -33,12 +33,9 @@ router.get('/automod', ensureAuthenticated, async (req, res, next) => {
     name: role.name,
   }));
 
-  var query1 =
-    "SELECT * FROM automod_config WHERE guild_id =" +
-    req.query.guildId +
-    "";
+  var query1 = "SELECT * FROM automod_config WHERE guild_id = ?";
 
-  const [settings] = await db.query(query1, [], function(err, results, next) {
+  const [settings] = await db.query(query1, [req.query.guildId], function(err, results, next) {
     if (err) {
       if(err){
         console.error("❌ Route error:", err.message);

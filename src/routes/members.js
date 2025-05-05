@@ -15,18 +15,16 @@ router.get("/members", ensureAuthenticated, async (req, res, next) => {
     const limit = 25;
     const offset = (page - 1) * limit;
 
-    var baseQuery = `SELECT * FROM members WHERE guild_id = ${guild_id}`;
-    var countQuery = `SELECT COUNT(*) as count FROM members WHERE guild_id = ${guild_id}`;
-    const params = [];
-
-    baseQuery += " ORDER BY joined_at DESC LIMIT ? OFFSET ?";
-    params.push(limit, offset);
+    var baseQuery = `SELECT * FROM members WHERE guild_id = ? ORDER BY joined_at DESC LIMIT ? OFFSET ?`;
+    var countQuery = `SELECT COUNT(*) as count FROM members WHERE guild_id = ?`;
+    const params = [guild_id, limit, offset];
+    const countParams = [guild_id];
 
     if (!guild_id) {
       throw new Error("Guild id is required");
     }
 
-    const [results] = await db.query(baseQuery, [], function(err, result, next) {
+    const [results] = await db.query(baseQuery, [params], function(err, result, next) {
       if(err) {
         console.error("❌ DB error:", err.message);
         err.status = 500;
@@ -34,7 +32,7 @@ router.get("/members", ensureAuthenticated, async (req, res, next) => {
       }
       return result;
     });
-    const [[{ count }]] = await db.query(countQuery, [], function(err, result, next) {
+    const [[{ count }]] = await db.query(countQuery, [countParams], function(err, result, next) {
       if(err) {
         console.error("❌ DB error:", err.message);
         err.status = 500;
