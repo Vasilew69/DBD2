@@ -7,6 +7,7 @@ const number = require('easy-number-formatter')
 const themes = "./configs/theme.json"
 const jsonfile = require('jsonfile');
 const db = require('../database/db');
+const limiter = require('../index')
 
 router.get('/guilds',ensureAuthenticated,async (req,res, next) =>{
     try {
