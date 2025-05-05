@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../auth/auth');
-const { client } = require('../bot');
+const { getClient} = require('../bot');
 const jsonfile = require('jsonfile');
 const themes = "../src/configs/theme.json";
 const { useQueue } = require("discord-player");
@@ -9,16 +9,9 @@ const { Player, useTimeline } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
 const limiter = require('../index');
+const client = getClient();
 
 // Initialize the client.player
-client.player = new Player(client, {
-    ytdlOptions: {
-        quality: 'highestaudio',
-        highWaterMark: 1 << 25
-    }
-});
-client.player.extractors.loadMulti(DefaultExtractors)
-client.player.extractors.register(YoutubeiExtractor, {})
 router.get('/player', ensureAuthenticated, async (req, res, next) => {
     try {
         const guildId = req.query.guildId;
@@ -71,7 +64,7 @@ router.get('/player', ensureAuthenticated, async (req, res, next) => {
     }
 });
 
-router.post('/player/pause', ensureAuthenticated, async (req, res) => {
+router.post('/player/pause', ensureAuthenticated, async (req, res, next) => {
     try {
     const guildId = req.body.guildId;
 
@@ -103,7 +96,7 @@ router.post('/player/pause', ensureAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/player/play', ensureAuthenticated, async (req, res) => {
+router.post('/player/play', ensureAuthenticated, async (req, res, next) => {
     try {
     const guildId = req.body.guildId;
 

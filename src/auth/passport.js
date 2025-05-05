@@ -8,7 +8,7 @@ module.exports = function(passport) {
     passport.use(new DiscordStrategy({
         clientID: process.env.clientId,
         clientSecret: process.env.clientSecret,
-        callbackURL: process.env.callbackURL,
+        callbackURL: process.env.callbackURLlocal,
         scope: scopes
     },
     function(accessToken, refreshToken, profile, cb) {

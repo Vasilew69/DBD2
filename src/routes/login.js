@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const discord = require('../bot')
+const { getClient } = require('../bot');
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const passport = require('passport');
+const { get } = require('request');
 
 router.get('/', forwardAuthenticated, (req, res) => {
+    const client = getClient();
     res.render('login/login',{
-        user:discord.client.user.username,
-        avatar:discord.client.user.avatarURL()
+        user:client.user.username,
+        avatar:client.user.avatarURL()
     })
 })
 

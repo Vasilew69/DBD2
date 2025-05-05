@@ -13,14 +13,15 @@ const limiter = require('../index')
 
 const fs = require("fs");
 
-router.get('/settings', ensureAuthenticated, async(req, res) => {
+router.get('/settings', ensureAuthenticated, async(req, res, next) => {
   try {
+    const client = discord.getClient();
     var config = process.loadEnvFile
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
     res.render('home/settings',{
         profile:req.user,
-        client:discord.client,
+        client:client,
         config:config,
         version:version,
         themeName:files,

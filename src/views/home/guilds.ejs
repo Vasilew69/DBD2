@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Guilds | <%=client.user.username%> </title>
+    <title> Guilds | <%= client && client.user ? client.user.username : 'Bot Offline' %> </title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -51,7 +51,7 @@
                   <a href="/" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                 </li>
                 <li class="menu-item">
-                  <a href="/plugins" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
+                  <a href="/commands" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span></a>
                 </li>
                 <li class="menu-item has-active">
                   <a href="/guilds" class="menu-link"><span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span></a>
@@ -62,12 +62,6 @@
                 <li class="menu-item">
                     <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
                 </li>
-                <li class="menu-item">
-                  <a href="/player" class="menu-link"><span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span></a>
-              </li>
-              <li class="menu-item">
-                <a href="/history" class="menu-link"><span class="menu-icon fas fa-bars"></span> <span class="menu-text">History</span></a>
-              </li>
               </ul>
             </nav>
           </div>
@@ -107,11 +101,11 @@
                               <p class="card-text"><strong>Server ID:</strong> <%=guilds.id %> </p>
                               <p class="card-text"><strong>Created:</strong> <%=dateformat(`${guilds.created_at}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
                               <p class="card-text"><strong>Joined:</strong> <%=dateformat(`${guilds.joined_at}`, 'dddd, mmmm dS, yyyy, h:MM TT') %> </p>
-			      <form action="/guilds/player/<%=guilds.id%>" method="post">
-                                <button class="btn btn-secondary" type="submit">
-                                  Select Guild
+			                          <form action="/guilds/plugins/<%=guilds.id%>" method="post">
+                                <button class="btn" type="submit">
+                                  Go
                                 </button>
-
+                                </form>
                             </div>
                               <div class="card-footer-item"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalAlertDanger<%=guilds.id%>">Leave Guild</a></div>
                           </div>
