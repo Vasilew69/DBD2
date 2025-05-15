@@ -53,6 +53,7 @@ app.use(function (req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 
 const RateLimit = require('express-rate-limit');
+const checkForUpdates = require('./modules/updateChecker.js');
 const limiter = RateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -151,5 +152,26 @@ createDbAndTables()
   .catch((err) => {
     console.error("❌ Error setting up database:", err);
   });
+
+global.updateStatus = {
+  Latestversion: null,
+  Currentversion: null,
+  updateAvailable: false,
+  updateType: null,
+  isBetaTester: false
+};
+
+async function runUpdateCheck() {
+  try {
+    const result = await checkForUpdates();
+    global.updateStatus = result;
+  } catch (err) {
+    console.error("❌ Update check failed:", err);
+  }
+}
+
+// Run on startup and every 10 mins
+runUpdateCheck();
+setInterval(runUpdateCheck, 24 * 60 * 60 * 1000);
 
 exports = limiter;

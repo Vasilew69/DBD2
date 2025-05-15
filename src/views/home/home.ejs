@@ -82,7 +82,7 @@
     <% if (updateType === 'major') { %>alert-danger<% } %>
     <% if (updateType === 'minor') { %>alert-warning<% } %>
     <% if (updateType === 'patch') { %>alert-info<% } %>">
-    New <%= updateType %> update available! Current: <%= Currentversion %>, Latest: <%= Latestversion %>.
+    New <%= updateType %> update available! Current: <%= Currentversion %>, Latest: <%=Latestversion %>.
     <a href="https://github.com/Vasilew69/DBD2" target="_blank" class="btn btn-sm btn-primary ml-2">Update Now</a>
   </div>
 <% } %>
