@@ -21,8 +21,6 @@ const update = global.updateStatus || {
     isBetaTester: false
   };
 
-  console.log(update)
-
 router.get('/', ensureAuthenticated,(req,res) =>{
     res.redirect('/home')
 })
@@ -37,7 +35,6 @@ router.get('/home', ensureAuthenticated, async (req, res) => {
   }
 
   var theme = jsonfile.readFileSync(themes);
-  console.log("Rendering home with updateStatus:", global.updateStatus);
 
   res.render('home/home', {
     profile: profile,
