@@ -2,6 +2,8 @@ var dateFormat = require('dateformat');
 const dotenv = require('dotenv');
 const express = require('express');
 const router = express.Router();
+const semver = require('semver');  // <-- added
+const chalk = require('chalk');    // optional, for logging color
 const {getClient, shutdownClient, restartClient, createClient} = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const ver = require('../configs/version.json')
@@ -10,54 +12,69 @@ var request = require("request");
 const jsonfile = require('jsonfile')
 var now = new Date()
 dotenv.config({ path: './configs/.env'})
-const limiter = require('../index')
 const themes = "./configs/theme.json"
 
 router.get('/', ensureAuthenticated,(req,res) =>{
     res.redirect('/home')
 })
 
-router.get('/home', ensureAuthenticated,(req, res) => {
-  let client = getClient() || {};
+router.get('/home', ensureAuthenticated, async (req, res) => {
+  let client = await getClient() || {};
   let username = client.user?.username || "Bot Offline";
-
-  const profile = req.user; // Assuming the user profile is stored in req.user after successful authentication
+  const profile = req.user;
 
   if (!profile) {
     return res.render('error', { message: 'Profile is not available.' });
   }
+
   var theme = jsonfile.readFileSync(themes);
-    var options = {
-        method: 'GET',
-        url: `https://raw.githubusercontent.com/Vasilew69/DBD2/main/src/configs/version.json`,
-        headers: {
-          'User-Agent': 'Discord-Bot-Dashboard',
-          useQueryString: true
-        }
+
+  var options = {
+      method: 'GET',
+      url: `https://raw.githubusercontent.com/Vasilew69/DBD2/main/src/configs/version.json`,
+      headers: {
+        'User-Agent': 'Discord-Bot-Dashboard',
+        useQueryString: true
       }
-      // Prase update request data to JSON.
-      request(options, function (error, response, body) {
-        try 
-        {
-          jsonprased = JSON.parse(body)
-          verL = jsonprased.ver
-        } 
-        catch (e) 
-        {
-          console.log(chalk.red("Failed to check for updates you may continue using this version, please try again or contact Vasilew__"))
-          verL = ver.ver
-        }
-    res.render('home/home',{
-        profile:profile,
-        client:client,
-        joinedDate:dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
-        prefix:"/",
-        number:number,
-        Latestversion:verL,
-        Currentversion:ver.ver,
-        theme:theme
-    })
-    })
+    }
+
+  request(options, function (error, response, body) {
+  let verL = ver.ver;
+  let updateAvailable = false;
+  let updateType = null;   // 'major' | 'minor' | 'patch'
+  const isBetaTester = semver.prerelease(ver.ver) !== null;
+
+  try {
+    const jsonparsed = JSON.parse(body)
+    verL = jsonparsed.ver;
+
+    if (semver.valid(verL) && semver.valid(ver.ver) && semver.gt(verL, ver.ver)) {
+      updateAvailable = true;
+      updateType = semver.diff(ver.ver, verL); 
+    }
+
+    // Check if current version is a pre-release (beta/rc etc)
+    if (semver.prerelease(ver.ver)) {
+      isBetaTester = true;
+    }
+  } catch (e) {
+    console.log(chalk.red("Failed to check for updates. You may continue using this version, please try again or contact Vasilew__"))
+  }
+
+  res.render('home/home', {
+    profile: profile,
+    client: client,
+    joinedDate: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
+    prefix: "/",
+    number: number,
+    Latestversion: verL,
+    Currentversion: ver.ver,
+    theme: theme,
+    updateAvailable: updateAvailable,
+    updateType: updateType,
+    isBetaTester: isBetaTester  // NEW FLAG sent to template
+  })
+})  
 })
 
 // Logout

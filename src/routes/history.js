@@ -5,10 +5,12 @@ const themes = "../src/configs/theme.json";
 const jsonfile = require('jsonfile');
 const { getClient } = require('../bot');
 const { ensureAuthenticated } = require('../auth/auth');
+const { getBotGuild } = require('../utils/getBotGuilds');
+const { ChannelType } = require('discord.js');
 
 router.get('/history', ensureAuthenticated, async (req, res, next) => {
   try {
-    const client = getClient();
+    const client = await getClient();
     const guildId = req.query.guildId;
     const theme = jsonfile.readFileSync(themes);
     const page = parseInt(req.query.page) || 1;
@@ -28,6 +30,15 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
   
     baseQuery += ' ORDER BY timestamp DESC LIMIT ? OFFSET ?';
     params.push(limit, offset);
+    const guild = await getBotGuild(guildId);
+
+    await guild.channels.fetch();
+    const textChannels = guild.channels.cache
+          .filter(channel => channel.type === ChannelType.GuildText)
+          .map(channel => ({
+            id: channel.id,
+            name: channel.name
+          }));
   
     const [results] = await db.query(baseQuery, params, function(err, result, next) {
       if(err){
@@ -60,7 +71,8 @@ router.get('/history', ensureAuthenticated, async (req, res, next) => {
                 currentPage: page,
                 totalPages,
                 selectedType: type.Date,
-                guild: guildId
+                guild: guildId,
+                channels: textChannels
     });
     } catch (error) {
       console.error("❌ Route error:", error.message);

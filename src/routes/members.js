@@ -24,7 +24,7 @@ router.get("/members", ensureAuthenticated, async (req, res, next) => {
       throw new Error("Guild id is required");
     }
 
-    const [results] = await db.query(baseQuery, [params], function(err, result, next) {
+    const [results] = await db.query(baseQuery, params, function(err, result, next) {
       if(err) {
         console.error("❌ DB error:", err.message);
         err.status = 500;

@@ -8,11 +8,10 @@ const { useQueue } = require("discord-player");
 const { Player, useTimeline } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
-const limiter = require('../index');
-const client = getClient();
 
 // Initialize the client.player
 router.get('/player', ensureAuthenticated, async (req, res, next) => {
+    const client = await getClient();
     try {
         const guildId = req.query.guildId;
         const theme = jsonfile.readFileSync(themes);

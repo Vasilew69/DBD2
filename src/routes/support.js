@@ -4,7 +4,6 @@ const discord = require('../bot')
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const themes = "./configs/theme.json"
 const jsonfile = require('jsonfile')
-const limiter = require('../index')
 
 router.get('/support', ensureAuthenticated,async (req, res, next) => {
     try {

@@ -11,7 +11,7 @@ const themes = "./configs/theme.json";
 
 router.get('/reactionroles', ensureAuthenticated, async (req, res, next) => {
   try {
-    const client = getClient();
+    const client = await getClient();
     const guildId = req.query.guildId;
     const theme = jsonfile.readFileSync(themes);
     const success = req.query.success ? "✅ Reaction roles saved!" : null;

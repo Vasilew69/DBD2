@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Reaction Roles Settings | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js" integrity="sha512-+ruHlyki4CepPr07VklkX/KM5NXdD16K1xVwSva5VqOVbsotyCQVKEwdQ1tAeo3UkHCXfSMtKU/mZpKjYqkxZA==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../<%= theme.theme %>" data-skin="default" />
+  </head>
+  <body>
+    <header class="app-header app-header-dark">
+      <div class="top-bar">
+        <div class="top-bar-brand">
+          <h5>Dashboard</h5>
+        </div>
+        <div class="top-bar-list">
+          <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+            <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+          </div>
+          <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+            <div class="dropdown d-none d-md-flex">
+              <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button>
+              <div class="dropdown-menu">
+                <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                <h6 class="dropdown-header d-none d-md-block d-lg-none"> <%= profile.username %> </h6><a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <aside class="app-aside app-aside-expand-md app-aside-light">
+      <div class="aside-content">
+        <header class="aside-header d-block d-md-none">
+          <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img src="https://cdn.discordapp.com/avatars/<%= profile.id %>/<%= profile.avatar %>" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name"><%= profile.username %></span> <span class="account-description">Admin</span></span></button>
+          <div id="dropdown-aside" class="dropdown-aside collapse">
+            <div class="pb-3">
+              <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+            </div>
+          </div>
+        </header>
+        <div class="aside-menu overflow-hidden">
+            <nav id="stacked-menu" class="stacked-menu">
+                <ul class="menu">
+                  <li class="menu-item">
+                    <a href="/" class="menu-link">
+                      <span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/commands" class="menu-link">
+                      <span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Commands</span>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/guilds" class="menu-link">
+                      <span class="menu-icon fas fa-server"></span> <span class="menu-text">Guilds</span>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/support" class="menu-link">
+                      <span class="menu-icon fas fa-question-circle"></span> <span class="menu-text">Support</span>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/settings" class="menu-link">
+                      <span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/activity" class="menu-link">
+                      <span class="menu-icon fas fa-trophy"></span> <span class="menu-text">Activity</span>
+                    </a>
+                  </li>
+                  <li class="menu-item dropdown has-active">
+                    <button class="menu-link dropdown-toggle" data-toggle="dropdown" style="width: 100%; text-align: left; background: none; border: none;">
+                      <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Server Plugins</span>
+                    </button>
+                    <ul class="dropdown-menu" style="display: none; list-style: none; padding-left: 20px;">
+                      <li class="menu-item">
+                        <a href="/plugins?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Plugins</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/player?guildId=<%=guildId%> " class="menu-link">
+                          <span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/history?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-history"></span> <span class="menu-text">History</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/members?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-users"></span> <span class="menu-text">Members</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/welcome?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fas fa-handshake"></span> <span class="menu-text">Welcome</span>
+                        </a>
+                      </li>
+                      <li class="menu-item has-active">
+                        <a href="/reactionroles?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-server"></span> <span class="menu-text">Reaction Roles</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="/automod?guildId=<%=guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-hammer"></span> <span class="menu-text">Auto Moderation</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+            </nav>
+        </div>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <div class="container-fluid p-4">
+        <h2 class="mb-4">Send Message</h2>
+
+        <% if (success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (successe) { %>
+          <div class="alert alert-success"><%= successe %></div>
+        <% } %>
+        <% if (successd) { %>
+          <div class="alert alert-success"><%= successd %></div>
+        <% } %>
+
+        <form method="POST" action="/sendmessage/save">
+  <input type="hidden" name="guildId" value="<%= guildId %>">
+
+  <div class="form-check form-switch mb-2">
+    <input 
+      class="form-check-input" 
+      type="checkbox" 
+      id="isEmbed" 
+      name="isEmbed" 
+      value="1"
+      <%= (typeof req !== 'undefined' && req.body && req.body.isEmbed) ? 'checked' : '' %>> 
+    <label class="form-check-label" for="isEmbed">Embed</label>
+  </div>
+
+  <div class="form-group">
+    <label for="channel">Select Channel</label>
+    <select name="channel" class="form-control">
+      <option value="">Select Channel</option>
+      <% channels.forEach(channel => { %>
+        <option value="<%= channel.id %>" <%= sMessage.channel_id === channel.id ? 'selected' : '' %>><%= channel.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="messageContent">Message</label>
+    <textarea class="form-control" id="messageContent" name="messageContent" rows="4" required><%= sMessage.message || '' %></textarea>
+  </div>
+
+  <div id="embedOptions" style="display: none;">
+    <div class="mb-3">
+      <label for="embedTitle">Embed Title</label>
+      <input type="text" class="form-control" id="embedTitle" name="embedTitle"
+        value="<%= sMessage.embedTitle || '' %>">
+    </div>
+    <div class="mb-3">
+      <label for="embedDescription">Embed Description</label>
+      <input type="text" class="form-control" id="embedDescription" name="embedDescription"
+        value="<%= sMessage.embedDescription || '' %>">
+    </div>
+    <div class="mb-3">
+      <label for="embedColor">Embed Color (Hex)</label>
+      <input type="text" class="form-control" id="embedColor" name="embedColor"
+        value="<%= sMessage.embedColor || '#5865F2' %>">
+    </div>
+    <div class="mb-3">
+      <label for="embedFooter">Embed Footer</label>
+      <input type="text" class="form-control" id="embedFooter" name="embedFooter"
+        value="<%= sMessage.embedFooter || '' %>">
+    </div>
+    <div class="mb-3">
+      <label for="embedAuthor">Embed Author</label>
+      <input type="text" class="form-control" id="embedAuthor" name="embedAuthor"
+        value="<%= sMessage.embedAuthor || '' %>">
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form><br>
+
+        <h4>Message History for <%= guild.name %></h4>
+  <% history.forEach(msg => { %>
+  </div>
+    <div class="log-entry mb-3 p-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="log-type badge <%= msg.isEmbed ? 'badge-info' : 'badge-secondary' %> text-uppercase">
+            <%= msg.isEmbed ? 'Embed' : 'Message' %>
+        </span>
+        <span class="log-guild badge badge-guilds text-uppercase">
+            <%= msg.guild_id %>
+        </span>
+        <small class="log-timestamp badge badge-timestamp">
+            <%= new Date(msg.sent_at).toLocaleString('en-GB') %>
+        </small>
+    </div>
+    <div class="log-content">
+        <strong>Message Content:</strong>
+        <p><strong>Id:</strong><%= msg.messageId %></p>
+        <p><%= msg.message %></p>
+        </div>
+        <% if (msg.isEmbed) { %>
+            <div class="embed-log">
+                <% if (msg.embed_title) { %>
+                    <strong>Embed Title:</strong> <%= msg.embed_title %><br>
+                <% } %>
+                <% if (msg.embed_description) { %>
+                    <strong>Embed Description:</strong> <%= msg.embed_description %><br>
+                <% } %>
+                <% if (msg.embed_footer) { %>
+                    <strong>Footer:</strong> <%= msg.embed_footer %><br>
+                <% } %>
+                <% if (msg.embed_author) { %>
+                    <strong>Author:</strong> <%= msg.embed_author %><br>
+                <% } %>
+                <% if (msg.embed_color) { %>
+                    <strong>Color:</strong> <%= msg.embed_color %><br>
+                <% } %>
+            </div>
+        <% } %>
+        <div class="card-footer-item"><button type="button" class="btn btn-warning me-2" data-toggle="modal"
+            data-target="#messageEditModal<%=msg.messageId%>">Edit Message</a>
+          <button type="button" class="btn btn-warning" data-toggle="modal"
+            data-target="#messageDeleteModal<%=msg.messageId%>">Delete Message</a></div>
+        </div>
+    </div>
+    <% if (msg.isEmbed===1) { %>
+      <form action="/sendmessage/edit/<%=msg.messageId%>" method="POST">
+        <input type="hidden" name="isEmbed" value="<%= msg.isEmbed %>">
+       <input type="hidden" name="guildId" value="<%= guildId %>">
+       <input type="hidden" name="channelId" value="<%= msg.channel_id %>">
+       <input type="hidden" name="messageId" value="<%= msg.messageId %>">
+      <div class="modal modal-alert fade" id="messageEditModal<%=msg.messageId%>" data-backdrop="static" tabindex="-1"
+        role="dialog" aria-labelledby="messageEditModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="messageEditModal" class="modal-title">
+                <i class="fa fa-pen text-blue mr-1"></i> Editor!
+              </h5>
+            </div>
+            <div class="modal-body">
+              <p> You are editing a message with Id: <strong>"<%=msg.messageId%>"?</strong><br></p>
+              <div class="mb-3">
+      <label for="embedTitle">Embed Title</label>
+      <input type="text" class="form-control" id="embedTitle" name="embedTitle"
+        value="<%= msg.embed_title || '' %>">
+    </div>
+              <div class="mb-3">
+            <label for="emebedDescription">Embed Description</label>
+              <input type="text" class="form-control" id="embedDescription" name="embedDescription"
+              value="<%= msg.embed_description || '' %>">
+          </div>
+          <div class="mb-3">
+            <label for="embedColor">Embed Color (Hex)</label>
+              <input type="text" class="form-control" id="embedColor" name="embedColor"
+              value="<%= msg.embed_color || '#5865F2' %>">
+          </div>
+          <div class="mb-3">
+            <label for="embedFooter">Embed Footer</label>
+            <input type="text" class="form-control" id="embedFooter" name="embedFooter" value="<%= msg.embed_footer || '' %>">
+          </div>
+          <div class="mb-3">
+            <label for="embedAuthor">Embed Author</label>
+            <input type="text" class="form-control" id="embedAuthor" name="embedAuthor" value="<%= msg.embed_author || '' %>">
+          </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="submit()">Edit</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+      <% } else {%>
+        <form action="/sendMessage/edit/<%=msg.messageId%>" method="POST">
+       <input type="hidden" name="guildId" value="<%= guildId %>">
+       <input type="hidden" name="channelId" value="<%= msg.channel_id %>">
+       <input type="hidden" name="messageId" value="<%= msg.messageId %>">
+        <div class="modal modal-alert fade" id="messageEditModal<%=msg.messageId%>" data-backdrop="static" tabindex="-1"
+          role="dialog" aria-labelledby="exampleModalAlertDangerLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="messageEditModal" class="modal-title">
+                  <i class="fa fa-pen text-blue mr-1"></i> Editor!
+                </h5>
+              </div>
+              <div class="modal-body">
+                <p> You are editing a message with Id: <strong>"<%=msg.messageId%>"?</strong><br></p>
+                <div class="mb-3">
+            <label for="messageContent">Message</label>
+            <textarea class="form-control" id="messageContent" name="messageContent" rows="4" required><%= msg.message || '' %></textarea>
+          </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" onclick="submit()">Save</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        <% } %>
+        <form action="/sendmessage/del/<%= msg.messageId %>" method="POST">
+          <div class="modal modal-alert fade" id="messageDeleteModal<%=msg.messageId%>" data-backdrop="static" tabindex="-1"
+            role="dialog" aria-labelledby="exampleModalAlertDangerLabel" aria-hidden="true">
+            <input type="hidden" name="isEmbed" value="<%= msg.isEmbed %>">
+            <input type="hidden" name="guildId" value="<%= guildId %>">
+            <input type="hidden" name="channelId" value="<%= msg.channel_id %>">
+            <input type="hidden" name="messageId" value="<%= msg.messageId %>">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 id="messageDeleteModal" class="modal-title">
+                    <i class="fa fa-exclamation-triangle text-red mr-1"></i> Warning!
+                  </h5>
+                </div>
+                <div class="modal-body">
+                  <p> Are you sure you want to delete a message with Id: <strong>"<%=msg.messageId%>"?</strong><br></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-warning">Delete</button>
+                  <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+</div>
+  <% }) %>  
+      </div>
+
+      <footer class="app-footer">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="https://github.com/Vasilew69" target="_blank">GitHub</a></li>
+          <li class="list-inline-item"><a class="text-muted" href="https://discord.gg/2WhmVYwzNA" target="_blank">Discord Server</a></li>
+        </ul>
+        <div class="copyright">Dashboard - Vasilew__</div>
+      </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+  <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>
+  <script src="./home/assets/javascript/theme.min.js"></script>
+  <script>
+    document.querySelectorAll('.dropdown-toggle').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const dropdownMenu = this.parentElement.querySelector('.dropdown-menu');
+        if (dropdownMenu.style.display === "block") {
+          dropdownMenu.style.display = "none";
+        } else {
+          dropdownMenu.style.display = "block";
+        }
+      });
+    });
+    </script>
+    <script>
+  const isEmbedCheckbox = document.getElementById('isEmbed');
+  const embedOptions = document.getElementById('embedOptions');
+
+  function toggleEmbedOptions() {
+    embedOptions.style.display = isEmbedCheckbox.checked ? 'block' : 'none';
+  }
+
+  // Initial load
+  toggleEmbedOptions();
+
+  // On change
+  isEmbedCheckbox.addEventListener('change', toggleEmbedOptions);
+</script>
+  </body>
+</html>

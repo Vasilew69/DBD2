@@ -12,8 +12,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const favicon = require('serve-favicon');
 dotenv.config({ path: './configs/.env' });
+var partials = require('express-partials')
 
-const client = getClient();
 const app = express();
 
 app.use((req, res, next) => {
@@ -63,6 +63,7 @@ const port = process.env.port || 443;
 app.use(limiter);
 app.use(express.static('./public'));
 app.use(express.static('./themes'));
+app.use(partials());
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(fileUpload());
@@ -116,6 +117,8 @@ app.use("/", require("./routes/welcome.js"));
 app.use("/", require("./routes/plugins.js"));
 app.use("/", require("./routes/reactionRoles.js"));
 app.use("/", require("./routes/automod.js"));
+app.use("/", require("./routes/activity.js"));
+app.use("/", require("./routes/sendMessage.js"));
 app.use('/login', require('./routes/login.js'));
 
 // Error handling

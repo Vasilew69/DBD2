@@ -9,7 +9,6 @@ const jsonfile = require('jsonfile')
 const themes = "./configs/theme.json"
 const dotenv = require('dotenv')
 dotenv.config({ path: './configs/.env' })
-const limiter = require('../index')
 
 const fs = require("fs");
 

@@ -62,6 +62,11 @@
                 <li class="menu-item">
                     <a href="/settings" class="menu-link"><span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span></a>
                 </li>
+                <li class="menu-item">
+                  <a href="/activity" class="menu-link">
+                    <span class="menu-icon fas fa-trophy"></span> <span class="menu-text">Activity</span>
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>
@@ -72,16 +77,20 @@
           <div class="page">
             <div class="page-inner">
               <header class="page-title-bar">
-                <% if(Currentversion != Latestversion){ %>
-                  <div class="alert alert-warning has-icon alert-dismissible fade show">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <div class="alert-icon">
-                      <span class="oi oi-flag"></span>
-                    </div>
-                    <h4 class="alert-heading"> Update Available! </h4>
-                    <p class="mb-0">You currently don't have the latest version of the Dashbaord installed, please consider updating.</p>
-                  </div>
-                <% } %>
+                <% if (updateAvailable) { %>
+  <div class="alert 
+    <% if (updateType === 'major') { %>alert-danger<% } %>
+    <% if (updateType === 'minor') { %>alert-warning<% } %>
+    <% if (updateType === 'patch') { %>alert-info<% } %>">
+    New <%= updateType %> update available! Current: <%= Currentversion %>, Latest: <%= Latestversion %>.
+    <a href="https://github.com/Vasilew69/DBD2" target="_blank" class="btn btn-sm btn-primary ml-2">Update Now</a>
+  </div>
+<% } %>
+<% if (isBetaTester) { %>
+  <div class="alert alert-info">
+    You are running a <strong>beta testing</strong> version of the bot. Some features may be unstable.
+  </div>
+<% } %>
                 <div class="d-flex flex-column flex-md-row">
                   <p class="lead">
                     <span class="font-weight-bold">Welcome, <%= profile.username %></span> <span class="d-block text-muted">Here’s what’s happening with <strong><%=client && client.user ? client.user.username : 'Offline'%></strong> today.</span>
@@ -200,16 +209,10 @@
         <footer class="app-footer">
           <ul class="list-inline">
             <li class="list-inline-item">
-              <a class="text-muted" href="https://twitter.com/LachlanDev" target="_blank">Twitter</a>
+              <a class="text-muted" href="https://github.com/Vasilew69" target="_blank">GitHub</a>
             </li>
             <li class="list-inline-item">
-              <a class="text-muted" href="https://github.com/LachlanDev" target="_blank">GitHub</a>
-            </li>
-            <li class="list-inline-item">
-              <a class="text-muted" href="https://www.instagram.com/lachlanDev/" target="_blank">Instagram</a>
-            </li>
-            <li class="list-inline-item">
-              <a class="text-muted" href="https://discord.com/invite/w7B5nKB" target="_blank">Discord Server</a>
+              <a class="text-muted" href="https://discord.gg/2WhmVYwzNA" target="_blank">Discord Server</a>
             </li>
           </ul>
           <div class="copyright">Dashboard - Vasilew__ </div>

@@ -7,10 +7,10 @@ const morgan = require('morgan');
 const Enmap = require('enmap');
 const { logEvent } = require('./modules/logger.js');
 const syncHandler = require('./handlers/guildHandler.js');
-const db = require('./database/db.js');
 const { Player } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
+const setStatus = require('./handlers/statusHandler.js')
 
 dotenv.config({ path: './configs/.env' });
 const token = process.env['token'];
@@ -80,13 +80,12 @@ function createClient() {
   require('./handlers/reactionHandler')(client);
   require('./handlers/AuditLogger')(client);
   require('./handlers/autoModHandler.js')(client);
-  require("./handlers/AuditLogger.js")(client);
 
   client.once('ready', async () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
-    require('./handlers/statusesHandler.js')(client);
     require('./events/ready.js')(client);
     require('./events/guildMember.js')(client);
+    setStatus(client);
   });
 
   client.on(Events.InteractionCreate, async interaction => {
@@ -116,7 +115,8 @@ function createClient() {
       content: input,
       type: 'command',  
       guildname: interaction.guild.name,
-      guildid: interaction.guild.id
+      guildid: interaction.guild.id,
+      channelId: interaction.channel.id
     });
   });
 
@@ -154,7 +154,7 @@ async function restartClient() {
   await createClient();
 }
 
-function getClient() {
+async function getClient() {
   return client;
 }
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Auto Moderation Settings | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
+    <title>Activity Settings | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
@@ -73,53 +73,10 @@
                 <span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item has-active">
               <a href="/activity" class="menu-link">
                 <span class="menu-icon fas fa-trophy"></span> <span class="menu-text">Activity</span>
               </a>
-            </li>
-      
-            <li class="menu-item dropdown has-active">
-              <button class="menu-link dropdown-toggle" data-toggle="dropdown" style="width: 100%; text-align: left; background: none; border: none;">
-                <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Server Plugins</span>
-              </button>
-              <ul class="dropdown-menu" style="display: none; list-style: none; padding-left: 20px;">
-                <li class="menu-item">
-                  <a href="/plugins?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Plugins</span>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/player?guildId=<%=guildId%> " class="menu-link">
-                    <span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/history?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fa-history"></span> <span class="menu-text">History</span>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/members?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fa-users"></span> <span class="menu-text">Members</span>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/welcome?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fas fa-handshake"></span> <span class="menu-text">Welcome</span>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/reactionroles?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fa-server"></span> <span class="menu-text">Reaction Roles</span>
-                  </a>
-                </li>
-                <li class="menu-item has-active">
-                  <a href="/automod?guildId=<%=guildId%>" class="menu-link">
-                    <span class="menu-icon fas fa-hammer"></span> <span class="menu-text">Auto Moderation</span>
-                  </a>
-                </li>
-              </ul>
             </li>
           </ul>
         </nav>
@@ -128,90 +85,35 @@
   </aside>
   <main class="app-main">
     <div class="container-fluid p-4">
-    <h2 class="mb-4">Auto Moderation Settings</h2>
+    <h2 class="mb-4">Activity Settings</h2>
 
     <% if (success) { %>
       <div class="alert alert-success"><%= success %></div>
     <% } %>
 
-    <form method="POST" action="/automod/save">
-      <input type="hidden" name="guildId" value="<%= guildId %>">
+    <form method="POST" action="/activity/save">
+        <input type="hidden" name="clientId" value="<%= clientId %>">
 
       <div class="form-check form-switch mb-2">
-        <input class="form-check-input" type="checkbox" id="autoModEnabled" name="autoModEnabled" value="1" <%= settings.autoModEnabled == 1 ? 'checked' : '' %>>
-        <label class="form-check-label" for=autoModEnabled">
-          Enable AutoMod System
+        <input class="form-check-input" type="checkbox" id="activityEnabled" name="activityEnabled" value="1" <%= activity.enabled == 1 ? 'checked' : '' %>>
+        <label class="form-check-label" for=activityEnabled">
+          Enable Activity
         </label>
       </div>
-
-      <h5>AutoMod Rules</h5>
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="antiSpam" id="antiSpam" value="1" <%= settings.antiSpam ? 'checked' : '' %>>
-        <label class="form-check-label" for="antiSpam">Anti-Spam</label>
-      </div>
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="badWords" id="badWords" value="1" <%= settings.badWords ? 'checked' : '' %>>
-        <label class="form-check-label" for="badWords">Bad Words Filter</label>
-      </div>
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="delete_invites" id="delete_invites" value="1" <%= settings.delete_invites ? 'checked' : '' %>>
-        <label class="form-check-label" for="delete_invites">Block Invite Links</label>
-      </div>
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="excessiveMentions" id="excessiveMentions" value="1" <%= settings.excessiveMentions ? 'checked' : '' %>>
-        <label class="form-check-label" for="excessiveMentions">Excessive Mentions</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="delete_ips" id="delete_ips" value="1" <%= settings.delete_ips ? 'checked' : '' %>>
-        <label class="form-check-label" for="delete_ips">Blocked IPs</label>
+    
+      <div class="form-group">
+        <label for="activity_type"><h5>Activity Type</h5></label><br>
+        <select class="form-control" id="aactivity_type" name="activity_type">
+            <option value="WATCHING" <%= activity.type === 'WATCHING' ? 'selected' : '' %>>Watching</option>
+            <option value="PLAYING" <%= activity.type === 'PLAYING' ? 'selected' : '' %>>Playing</option>
+            <option value="STREMING" <%= activity.type === 'STREMING' ? 'selected' : '' %>>Streaming</option>
+            <option value="LISTENING" <%= activity.type === 'LISTENING' ? 'selected' : '' %>>Listening</option>
+          </select>
       </div>
     
       <div class="form-group">
-        <label for="spam_limit">Spam Message Limit</label>
-        <input type="number" class="form-control" id="spam_limit" name="spam_limit" value="<%= settings.spam_limit || '' %>">
-      </div>
-    
-      <div class="form-group">
-        <label for="spam_interval">Spam Interval (in ms)</label>
-        <input type="number" class="form-control" id="spam_interval" name="spam_interval" value="<%= settings.spam_interval || '' %>">
-      </div>
-
-      <div class="form-group">
-        <label for="spam_interval">Log Channel</label>
-        <select name="log_channel_id" class="form-control">
-          <option value="">Disabled</option>
-          <% channels.forEach(channel => { %>
-            <option value="<%= channel.id %>" <%= settings.log_channel_id === channel.id ? 'selected' : '' %>><%= channel.name %></option>
-          <% }) %>
-        </select>
-      </div>
-    
-      <div class="form-group">
-        <label for="action_on_trigger">Action on Triggering</label>
-        <select class="form-control" id="action_on_trigger" name="action_on_trigger">
-          <option value="warn" <%= settings.action_on_trigger === 'warn' ? 'selected' : '' %>>Warn</option>
-          <option value="mute" <%= settings.action_on_trigger === 'mute' ? 'selected' : '' %>>Mute</option>
-          <option value="kick" <%= settings.action_on_trigger === 'kick' ? 'selected' : '' %>>Kick</option>
-          <option value="ban" <%= settings.action_on_trigger === 'ban' ? 'selected' : '' %>>Ban</option>
-        </select>
-      </div>  
-
-      <div class="mb-3">
-        <label for="excluded_roles">Excluded Roles</label>
-        <select name="excluded_roles" class="form-control" multiple>
-          <% roles.forEach(role => { %>
-            <option value="<%= role.id %>" <%= settings.excluded_roles?.includes(role.id) ? 'selected' : '' %>><%= role.name %></option>
-          <% }) %>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label for="customWords">Custom Blocked Words (comma-separated)</label>
-        <input type="text" class="form-control" id="customWords" name="customWords" value="<%=settings.customWords || '' %>">
+        <label for="activity_name"><h5>Activity Name</h5></label>
+        <textarea name="activity_name" rows="1" class="form-control"><%= activity.name || '' %></textarea>
       </div>
 
       <button type="submit" class="btn btn-primary">Save Settings</button>

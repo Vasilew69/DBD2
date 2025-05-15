@@ -38,6 +38,7 @@ module.exports = (client) => {
       type: "message",
       guildname: message.guild.name,
       guildid: message.guild.id,
+      channelId: message.channel.id,
     });
     const embed = new EmbedBuilder()
       .setColor(0x3498db)
