@@ -12,7 +12,16 @@ var request = require("request");
 const jsonfile = require('jsonfile')
 var now = new Date()
 dotenv.config({ path: './configs/.env'})
-const themes = "./configs/theme.json"
+const themes = "./configs/theme.json";
+const update = global.updateStatus || {
+    Latestversion: null,
+    Currentversion: null,
+    updateAvailable: false,
+    updateType: null,
+    isBetaTester: false
+  };
+
+  console.log(update)
 
 router.get('/', ensureAuthenticated,(req,res) =>{
     res.redirect('/home')
@@ -28,38 +37,7 @@ router.get('/home', ensureAuthenticated, async (req, res) => {
   }
 
   var theme = jsonfile.readFileSync(themes);
-
-  var options = {
-      method: 'GET',
-      url: `https://raw.githubusercontent.com/Vasilew69/DBD2/main/src/configs/version.json`,
-      headers: {
-        'User-Agent': 'Discord-Bot-Dashboard',
-        useQueryString: true
-      }
-    }
-
-  request(options, function (error, response, body) {
-  let verL = ver.ver;
-  let updateAvailable = false;
-  let updateType = null;   // 'major' | 'minor' | 'patch'
-  const isBetaTester = semver.prerelease(ver.ver) !== null;
-
-  try {
-    const jsonparsed = JSON.parse(body)
-    verL = jsonparsed.ver;
-
-    if (semver.valid(verL) && semver.valid(ver.ver) && semver.gt(verL, ver.ver)) {
-      updateAvailable = true;
-      updateType = semver.diff(ver.ver, verL); 
-    }
-
-    // Check if current version is a pre-release (beta/rc etc)
-    if (semver.prerelease(ver.ver)) {
-      isBetaTester = true;
-    }
-  } catch (e) {
-    console.log(chalk.red("Failed to check for updates. You may continue using this version, please try again or contact Vasilew__"))
-  }
+  console.log("Rendering home with updateStatus:", global.updateStatus);
 
   res.render('home/home', {
     profile: profile,
@@ -67,15 +45,14 @@ router.get('/home', ensureAuthenticated, async (req, res) => {
     joinedDate: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
     prefix: "/",
     number: number,
-    Latestversion: verL,
-    Currentversion: ver.ver,
     theme: theme,
-    updateAvailable: updateAvailable,
-    updateType: updateType,
-    isBetaTester: isBetaTester  // NEW FLAG sent to template
+    Latestversion: global.updateStatus.Latestversion,
+  Currentversion: global.updateStatus.Currentversion,
+  updateAvailable: global.updateStatus.updateAvailable,
+  updateType: global.updateStatus.updateType,
+  isBetaTester: global.updateStatus.isBetaTester
   })
 })  
-})
 
 // Logout
 router.get('/logout', (req, res, next) => {

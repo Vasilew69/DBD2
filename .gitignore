@@ -14,3 +14,4 @@ secret.js
 .github/workflows/node.js.yml
 .stfolder
 ssl
+testing
