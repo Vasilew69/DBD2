@@ -3,14 +3,19 @@ const router = express.Router();
 const { getClient } = require('../bot');
 const { ensureAuthenticated, forwardAuthenticated } = require('../auth/auth');
 const passport = require('passport');
-const { get } = require('request');
 
-router.get('/', forwardAuthenticated, (req, res) => {
-    const client = getClient();
+router.get('/', forwardAuthenticated, async(req, res, next) => {
+    try{
+    const client = await getClient();
     res.render('login/login',{
         user:client.user.username,
         avatar:client.user.avatarURL()
     })
+} catch (error) {
+    console.error(error)
+    error.status =500
+    next(error)
+}
 })
 
 router.get('/api', forwardAuthenticated,(req,res, next)=>{

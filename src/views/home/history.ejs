@@ -83,6 +83,11 @@
                   <span class="menu-icon fas fa-cog"></span> <span class="menu-text">Settings</span>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="/activity" class="menu-link">
+                  <span class="menu-icon fas fa-trophy"></span> <span class="menu-text">Activity</span>
+                </a>
+              </li>
         
               <!-- Dropdown starts here -->
               <li class="menu-item dropdown has-active">
@@ -176,20 +181,6 @@
         </header>
         <h2 class="mb-4">Chat & Command History</h2>
         <table id="logTable" class="table table-dark table-bordered">
-          <div class="mb-4">
-            <button class="btn-custom" onclick="sortTableByGuild()">
-              Filter by server
-            </button>
-            <button class="btn-custom" onclick="filterType('command')">
-              Commands
-            </button>
-            <button class="btn-custom" onclick="filterType('chat')">
-              Chats
-            </button>
-            <button class="btn-custom" onclick="filterType('all')">
-              Show All
-            </button>
-          </div>
           <form
             action="/clear/<%= guild %>"
             method="POST"
@@ -197,37 +188,6 @@
             class="mb-3"
           >
             <button class="btn-custom btn-clear">Clear All Logs</button>
-          </form>
-          <form action="/add/<%= guild %>" method="POST" class="form-inline mb-3">
-            <input
-              name="username"
-              class="form-control mr-2 mb-2"
-              placeholder="Username"
-              required
-            />
-            <input
-              name="userId"
-              class="form-control mr-2 mb-2"
-              placeholder="User ID"
-              required
-            />
-            <input
-              name="content"
-              class="form-control mr-2 mb-2"
-              placeholder="Content"
-              required
-            />
-            <select name="type" class="form-control mr-2 mb-2">
-              <option value="message">Chat</option>
-              <option value="command">Command</option>
-            </select>
-            <input
-              name="guildname"
-              class="form-control mr-2 mb-2"
-              placeholder="Guild name"
-              required
-            />
-            <button class="btn-custom btn-add mb-2">Add Log</button>
           </form>
           <% if (logs.length === 0) { %>
             <p>No logs found.</p>
@@ -258,7 +218,7 @@
                  class="<%= currentPage === i ? 'active' : '' %>">
                 <%= i %>
               </a>
-            <% } %>>
+            <% } %>
           
             <% if (currentPage < totalPages) { %>
               <a href="?type=<%= selectedType %>&page=<%= currentPage + 1 %>">Next</a>
@@ -273,15 +233,7 @@
           <li class="list-inline-item">
             <a
               class="text-muted"
-              href="https://twitter.com/LachlanDev"
-              target="_blank"
-              >Twitter</a
-            >
-          </li>
-          <li class="list-inline-item">
-            <a
-              class="text-muted"
-              href="https://github.com/LachlanDev"
+              href="https://github.com/Vasilew69"
               target="_blank"
               >GitHub</a
             >
@@ -289,15 +241,7 @@
           <li class="list-inline-item">
             <a
               class="text-muted"
-              href="https://www.instagram.com/lachlanDev/"
-              target="_blank"
-              >Instagram</a
-            >
-          </li>
-          <li class="list-inline-item">
-            <a
-              class="text-muted"
-              href="https://discord.com/invite/w7B5nKB"
+              href="https://discord.gg/2WhmVYwzNA"
               target="_blank"
               >Discord Server</a
             >
@@ -307,37 +251,6 @@
       </footer>
     </main>
   </body>
-  <script>
-    function filterType(type) {
-      const rows = document.querySelectorAll("table tbody tr");
-      rows.forEach((row) => {
-        const cell = row.children[3].textContent.trim().toLowerCase();
-        row.style.display = type === "all" || cell === type ? "" : "none";
-      });
-    }
-    function sortTableByGuild() {
-      const table = document.getElementById("logTable");
-      const rows = Array.from(table.rows).slice(1); // exclude header
-      const sortedRows = rows.sort((a, b) => {
-        const nameA = a.cells[4].textContent.toLowerCase();
-        const nameB = b.cells[4].textContent.toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-
-      const tbody = table.querySelector("tbody");
-      sortedRows.forEach((row) => tbody.appendChild(row)); // re-append in sorted order
-    }
-    function copyToClipboard(text) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          alert("Copied!");
-        })
-        .catch((err) => {
-          alert("Failed to copy.");
-        });
-    }
-  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
   <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>

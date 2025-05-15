@@ -11,7 +11,7 @@ var escape = require("escape-html");
 
 router.get("/welcome", ensureAuthenticated, async (req, res, next) => {
   try {
-    const client = getClient();
+    const client = await getClient();
     const success = req.query.success ? "✅ Welcome settings saved!" : null;
     const guildId = req.query.guildId;
     const theme = jsonfile.readFileSync(themes);

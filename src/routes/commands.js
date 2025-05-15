@@ -9,7 +9,6 @@ const themes = "./configs/theme.json"
 const prth = "./configs/prth.json";
 const commandsJsonFile = "./configs/commands.json";
 const path = require('path');
-const limiter = require('../index');
 const { console } = require('inspector');
 
 router.get('/commands', ensureAuthenticated, async (req, res, next) => {

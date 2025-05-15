@@ -11,7 +11,7 @@ const { ChannelType } = require('discord.js');
 
 router.get('/automod', ensureAuthenticated, async (req, res, next) => {
   try {
-    const client = getClient();
+  const client = await getClient();
   const success = req.query.success ? "✅ AutoMod saved!" : null;
   const guildId = req.query.guildId;
   const theme = await jsonfile.readFileSync(themes)

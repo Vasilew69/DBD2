@@ -8,7 +8,7 @@ const dateformat = require('dateformat')
 
 router.get('/plugins', ensureAuthenticated, async (req, res, next) => {
     try {
-      const client = getClient();
+      const client = await getClient();
       const guildId = req.query.guildId;
       const theme = jsonfile.readFileSync(themes);
   
@@ -100,5 +100,16 @@ router.post('/plugins/automod/:id', ensureAuthenticated, async (req, res, next) 
     next(error);
   }
 });
+
+router.post('/plugins/sendmessage/:id', ensureAuthenticated, async(req,res,next) => {
+  try {
+    const guildId = req.params.id;
+    res.redirect(`/sendmessage?guildId=${guildId}`)
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
+})
 
 module.exports = router;

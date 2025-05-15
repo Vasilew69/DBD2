@@ -10,7 +10,7 @@ const db = require('../database/db');
 
 router.get('/guilds',ensureAuthenticated,async (req,res, next) =>{
     try {
-        const client = discord.getClient();
+        const client = await discord.getClient();
     var theme = jsonfile.readFileSync(themes);
     const name = client && client.user ? client.user.username : 'Bot Offline'
     const [guilds] = await db.execute(`SELECT * FROM guilds WHERE bybot = '${name}'`)

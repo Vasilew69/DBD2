@@ -1,5 +1,4 @@
 const discord = require("../bot");
-const client = discord.getClient();
 
 /**
  * Retrieves the guild object from cache or fetches if not cached.
@@ -7,6 +6,7 @@ const client = discord.getClient();
  * @returns {Promise<Guild|null>}
  */
 async function getBotGuild(guildId) {
+    const client = await discord.getClient();
     try {
         // First check the cache
         let guild = client.guilds.cache.get(guildId);
