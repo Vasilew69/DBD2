@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Guilds | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
+    <title>History | <%= client && client.user ? client.user.username : 'Bot Offline' %></title>
     <link
       href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600"
       rel="stylesheet"
@@ -90,7 +90,7 @@
               </li>
         
               <!-- Dropdown starts here -->
-              <li class="menu-item dropdown  has-active">
+              <li class="menu-item dropdown has-active">
                 <button class="menu-link dropdown-toggle" data-toggle="dropdown" style="width: 100%; text-align: left; background: none; border: none;">
                   <span class="menu-icon fas fa-plug"></span> <span class="menu-text">Server Plugins</span>
                 </button>
@@ -105,12 +105,12 @@
                       <span class="menu-icon fas fa-file-alt"></span> <span class="menu-text">Player</span>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item has-active">
                     <a href="/history?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-history"></span> <span class="menu-text">History</span>
                     </a>
                   </li>
-                  <li class="menu-item has-active">
+                  <li class="menu-item">
                     <a href="/members?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-users"></span> <span class="menu-text">Members</span>
                     </a>
@@ -134,8 +134,8 @@
                         <a href="/sendmessage?guildId=<%guildId%>" class="menu-link">
                           <span class="menu-icon fas fa-message"></span> <span class="menu-text">Send Message</span>
                         </a>
-                    </li>
-                    <li class="menu-item">
+                  </li>
+                  <li class="menu-item has-active">
                     <a href="/levels?guildId=<%=guildId%>" class="menu-link">
                       <span class="menu-icon fas fa-level"></span> <span class="menu-text">Levels</span>
                     </a>
@@ -189,41 +189,42 @@
               </div>
             </div>          </div>
         </header>
-        <h2 class="mb-4">Members</h2>
+        <h2 class="mb-4">Levels Dashboard</h2>
+        <form action="/levels/settings?guildId=<%=guildId%>" method="post" class="mb-3">
+          <button class="btn btn-primary">Settings</button>
+        </form>
         <table id="logTable" class="table table-dark table-bordered">
-          <div class="mb-4">
-          <% if (members.length === 0) { %>
-            <p>No members found.</p>
+          <% if (levels.length === 0) { %>
+            <p>No logs found.</p>
           <% } else { %>
-            <% members.forEach(members => { %>
+            <% levels.forEach(level => { %>
               <div class="log-entry mb-3 p-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="log-type badge badge-secondary text-uppercase">
-                    <%= guildId %>
+                    <%= level.username %>
                   </span>
-                  <span class="log-guild badge badge-guilds text-uppercase">
-                    <%= members.avatar || 'NO ICON' %>
+                  <span class="log-guild badge <%= level.timestamp %> badge-guilds text-uppercase">
+                    Level: <%= level.level %>
                   </span>
-                  <small class="log-timestamp badge badge-timestamp"><%= joinedat %></small>
                 </div>
-                <div class="log-user font-weight-bold mb-1"><%= members.username %> (<%= members.id %>)</div>
-                <div class="log-content"><%= members.guildname %></div>
+                <div class="log-user font-weight-bold mb-1">XP: <%= level.xp %></div>
               </div>
             <% }) %>
           <% } %>
           <div class="pagination">
             <% if (currentPage > 1) { %>
-              <a href="&page=<%= currentPage - 1 %>">Prev</a>
+              <a href="?page=<%= currentPage - 1 %>">Prev</a>
             <% } %>
           
             <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="&page=<%= currentPage - 1 %>" class=<%= currentPage === i ? 'active' : '' %>">
+              <a href="?page=<%= i %>" 
+                 class="<%= currentPage === i ? 'active' : '' %>">
                 <%= i %>
               </a>
-            <% } %>>
+            <% } %>
           
             <% if (currentPage < totalPages) { %>
-              <a href="page=<%= currentPage + 1 %>">Next</a>
+              <a href="?&page=<%= currentPage + 1 %>">Next</a>
             <% } %>
           </div>
         </div>
@@ -253,37 +254,6 @@
       </footer>
     </main>
   </body>
-  <script>
-    function filterType(type) {
-      const rows = document.querySelectorAll("table tbody tr");
-      rows.forEach((row) => {
-        const cell = row.children[3].textContent.trim().toLowerCase();
-        row.style.display = type === "all" || cell === type ? "" : "none";
-      });
-    }
-    function sortTableByGuild() {
-      const table = document.getElementById("logTable");
-      const rows = Array.from(table.rows).slice(1); // exclude header
-      const sortedRows = rows.sort((a, b) => {
-        const nameA = a.cells[4].textContent.toLowerCase();
-        const nameB = b.cells[4].textContent.toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-
-      const tbody = table.querySelector("tbody");
-      sortedRows.forEach((row) => tbody.appendChild(row)); // re-append in sorted order
-    }
-    function copyToClipboard(text) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          alert("Copied!");
-        })
-        .catch((err) => {
-          alert("Failed to copy.");
-        });
-    }
-  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
   <script src="./home/assets/vendor/popper-js/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-XKa9Hemdy1Ui3KSGgJdgMyYlUg1gM+QhL6cnlyTe2qzMCYm4nAZ1PsVerQzTTXzonUR+dmswHqgJPuwCq1MaAg==" crossorigin="anonymous"></script>

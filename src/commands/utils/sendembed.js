@@ -19,7 +19,7 @@
             .setTitle("Permission Denied")
             .setDescription("You don't have permissions.")
             .setColor(0xFF0000);
-        return interaction.reply({ embeds: [permEmbed], ephemeral: true });
+        return interaction.reply({ embeds: [permEmbed]});
         }
 
         const channel = interaction.options.getChannel("channel");
@@ -42,7 +42,7 @@
         if (embedAuthor) embed.setAuthor({ name: embedAuthor });
 
         sentMessage =await channel.send({ embeds: [embed] });
-        await interaction.reply({ content: "Embed message sent successfully!", ephemeral: true });
+        await interaction.reply({ content: "Embed message sent successfully!"});
 
         const messageId = sentMessage.id;
         const channelId = channel.id;

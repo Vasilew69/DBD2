@@ -47,7 +47,7 @@ function checkForUpdates() {
         });
 
       } catch (e) {
-        console.log(chalk.red("Failed to check for updates. You may continue using this version."), e);
+        console.log(chalk.red("Failed to check for updates. You may continue using this version."));
         resolve({
           Latestversion: localVersion.ver,
           Currentversion: localVersion.ver,

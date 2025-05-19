@@ -7,7 +7,7 @@ const jsonfile = require('jsonfile')
 
 router.get('/support', ensureAuthenticated,async (req, res, next) => {
     try {
-        const client = discord.getClient();
+        const client = await discord.getClient();
     var theme = jsonfile.readFileSync(themes);
     res.render('home/support',{
         profile:req.user,

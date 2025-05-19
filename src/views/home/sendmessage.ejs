@@ -109,7 +109,7 @@
                           <span class="menu-icon fas fas fa-handshake"></span> <span class="menu-text">Welcome</span>
                         </a>
                       </li>
-                      <li class="menu-item has-active">
+                      <li class="menu-item">
                         <a href="/reactionroles?guildId=<%=guildId%>" class="menu-link">
                           <span class="menu-icon fas fa-server"></span> <span class="menu-text">Reaction Roles</span>
                         </a>
@@ -119,6 +119,16 @@
                           <span class="menu-icon fas fa-hammer"></span> <span class="menu-text">Auto Moderation</span>
                         </a>
                       </li>
+                      <li class="menu-item has-active">
+                        <a href="/sendmessage?guildId=<%guildId%>" class="menu-link">
+                          <span class="menu-icon fas fa-message"></span> <span class="menu-text">Send Message</span>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                    <a href="/levels?guildId=<%=guildId%>" class="menu-link">
+                      <span class="menu-icon fas fa-level"></span> <span class="menu-text">Levels</span>
+                    </a>
+                  </li>
                     </ul>
                   </li>
                 </ul>
@@ -167,7 +177,7 @@
 
   <div class="mb-3">
     <label for="messageContent">Message</label>
-    <textarea class="form-control" id="messageContent" name="messageContent" rows="4" required><%= sMessage.message || '' %></textarea>
+    <textarea class="form-control" id="messageContent" name="messageContent" rows="4"><%= sMessage.message || '' %></textarea>
   </div>
 
   <div id="embedOptions" style="display: none;">

@@ -120,6 +120,7 @@ app.use("/", require("./routes/reactionRoles.js"));
 app.use("/", require("./routes/automod.js"));
 app.use("/", require("./routes/activity.js"));
 app.use("/", require("./routes/sendMessage.js"));
+app.use("/", require("./routes/levels.js"));
 app.use('/login', require('./routes/login.js'));
 
 // Error handling

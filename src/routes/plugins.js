@@ -110,6 +110,17 @@ router.post('/plugins/sendmessage/:id', ensureAuthenticated, async(req,res,next)
     error.status = 500;
     next(error);
   }
+});
+
+router.post('/plugins/levels/:id', ensureAuthenticated, async(req,res,next) => {
+  try {
+    const guildId = req.params.id;
+    res.redirect(`/levels?guildId=${guildId}`)
+  } catch (error) {
+    console.error("❌ Route error:", error.message);
+    error.status = 500;
+    next(error);
+  }
 })
 
 module.exports = router;

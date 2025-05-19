@@ -13,7 +13,7 @@ const { console } = require('inspector');
 
 router.get('/commands', ensureAuthenticated, async (req, res, next) => {
     try{
-        const client = discord.getClient();
+        const client = await discord.getClient();
     const commands = jsonfile.readFileSync(commandsJsonFile);  // Read commands from JSON file  // Log the commands to check the format
     console.log(commands)
 

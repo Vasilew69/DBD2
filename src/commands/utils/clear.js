@@ -6,7 +6,7 @@ module.exports = {
         .setDescription('Clears messages')
         .addIntegerOption(option =>
             option.setName('amount')
-                .setDescription('How many messages to remove (1-100)')
+                .setDescription('How many messages to remove (1-10000)')
                 .setMinValue(1)
                 .setMaxValue(10000)
                 .setRequired(true)

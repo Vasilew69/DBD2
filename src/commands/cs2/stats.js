@@ -49,7 +49,6 @@ module.exports = {
                     .setDescription("Could not find player stats.");
                     interaction.reply({ embeds: [nfstatsEmbed]});
             }
-            console.log(steamName)
 
             const stats = data.playerstats.stats;
 

@@ -8,7 +8,7 @@ const db = require("../database/db");
 
 router.get("/members", ensureAuthenticated, async (req, res, next) => {
   try {
-    const client = discord.getClient();
+    const client = await discord.getClient();
     const guild_id = req.query.guildId;
     const theme = jsonfile.readFileSync(themes);
     const page = parseInt(req.query.page) || 1;

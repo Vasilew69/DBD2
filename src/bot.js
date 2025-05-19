@@ -11,6 +11,7 @@ const { Player } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YoutubeiExtractor } = require('discord-player-youtubei');
 const setStatus = require('./handlers/statusHandler.js')
+const levelSystem = require('./events/messageXp.js')
 
 dotenv.config({ path: './configs/.env' });
 const token = process.env['token'];
@@ -86,6 +87,7 @@ function createClient() {
     require('./events/ready.js')(client);
     require('./events/guildMember.js')(client);
     setStatus(client);
+    levelSystem(client);
   });
 
   client.on(Events.InteractionCreate, async interaction => {

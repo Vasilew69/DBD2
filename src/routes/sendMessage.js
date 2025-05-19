@@ -85,11 +85,7 @@ router.post("/sendmessage/save", ensureAuthenticated, async (req, res, next) => 
         if (!schannel) {
             throw new Error('CHANNEL_ID is required!');
         }
-
-        if (!message) {
-            throw new Error('MESSAGE_CONTENT is required!');
-        }
-                
+                 
         const guild = await getBotGuild(guildId);
         const channel = await guild.channels.fetch(schannel);
 
@@ -132,7 +128,6 @@ router.post("/sendmessage/save", ensureAuthenticated, async (req, res, next) => 
             [
     guildId,
     schannel,
-    message,
     clientId,
     isEmbed,
     embedTitle || null,
@@ -216,7 +211,7 @@ router.post("/sendmessage/edit/:id", ensureAuthenticated, async (req, res, next)
             [
     guildId,
     channelId,
-    message,
+    message || null,
     clientId,
     isEmbed,
     embedTitle || null,
@@ -242,7 +237,7 @@ router.post("/sendmessage/edit/:id", ensureAuthenticated, async (req, res, next)
             [
     guildId,
     channelId,
-    message,
+    message || null,
     clientId,
     isEmbed,
     embedTitle || null,
@@ -259,7 +254,7 @@ router.post("/sendmessage/edit/:id", ensureAuthenticated, async (req, res, next)
             [
     guildId,
     channelId,
-    message,
+    message  || null,
     clientId,
     isEmbed,
     embedTitle || null,

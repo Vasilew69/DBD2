@@ -14,7 +14,7 @@ const fs = require("fs");
 
 router.get('/settings', ensureAuthenticated, async(req, res, next) => {
   try {
-    const client = discord.getClient();
+    const client = await discord.getClient();
     var config = process.loadEnvFile
     var theme = jsonfile.readFileSync(themes);
     fs.readdir("./themes/", (err, files) => {
