@@ -14,6 +14,7 @@ module.exports = function(passport) {
     function(accessToken, refreshToken, profile, cb) {
         if(process.env['Admin'].includes(profile.id)){
             return cb(null, profile);
+            console.log(profile)
         }else{
             return cb(null, false, { message: 'Unauthorised! Please add your client ID to the config!' })
         }
