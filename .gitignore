@@ -15,4 +15,5 @@ secret.js
 .stfolder
 ssl
 testing
-build
+src/build
+src/configs/version.json
