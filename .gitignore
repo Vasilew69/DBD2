@@ -16,4 +16,6 @@ secret.js
 ssl
 testing
 src/build
+build/dev/server.dev.js
 src/configs/version.json
+build/dev/bot.dev.js
