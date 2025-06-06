@@ -1,7 +1,7 @@
 {
     "restartable": "rs",
     "verbose": true,
-    "ignore": ["*.test.js", "**/configs/**", "*.json"],
+    "ignore": ["*.test.js", "**/configs/**", "app_startup.log"],
     "execMap": {
     "js": "node index.js"},
     "ext": "js"
