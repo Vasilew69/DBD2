@@ -141,9 +141,17 @@
       <div class="container-fluid p-4">
         <h2 class="mb-4">Send Message</h2>
 
-        <% if (success) { %>
-          <div class="alert alert-success"><%= success %></div>
-        <% } %>
+        <% if(!success != ''){ %>
+                    <% } else {%>
+                      <div class="alert alert-success has-icon alert-dismissible fade show">
+                          <button type="button" class="close" data-dismiss="alert">×</button>
+                          <div class="alert-icon">
+                            <span class="oi oi-flag"></span>
+                          </div>
+                          <h4 class="alert-heading"> Success! </h4>
+                          <p class="mb-0"><%=success%></p>
+                        </div>
+                      <% } %>
         <% if (successe) { %>
           <div class="alert alert-success"><%= successe %></div>
         <% } %>

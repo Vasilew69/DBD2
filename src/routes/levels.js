@@ -51,7 +51,7 @@ router.get("/levels", ensureAuthenticated, async (req, res) => {
 router.post("/levels/settings/:id", ensureAuthenticated, async(req, res, next) => {
 const guildId = req.params.id
 try{
-res.redirect(`/levels-settings?guildId=${guildId}&success=true`);
+res.redirect(`/levels-settings?guildId=${guildId}`);
 } catch (error) {
   console.error("❌ Route error:", error.message);
   error.status = 500;

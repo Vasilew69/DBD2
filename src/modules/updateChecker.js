@@ -7,7 +7,7 @@ function checkForUpdates() {
     return new Promise((resolve, reject) => {
         const options = {
             method: 'GET',
-            url: 'http://dbdbotss.ddns.net:3001//version', // Changed URL
+            url: 'http://dbdbotss.ddns.net:3001/version', // Changed URL
             headers: {
                 'User-Agent': 'Discord-Bot-Dashboard',
                 useQueryString: true
@@ -62,7 +62,7 @@ function checkForUpdates() {
                 });
 
             } catch (e) {
-                console.log(chalk.red("Failed to check for updates. You may continue using this version."));
+                console.log(chalk.red("❌ Failed to check for updates. You may continue using this version."));
                 resolve({
                     Latestversion: localVersion.ver,
                     Currentversion: localVersion.ver,

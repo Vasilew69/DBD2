@@ -15,7 +15,8 @@ await db.query(query, [clientId], function(err, result) {
   return result;
 })
 
-const result = results?.[0];
+const result = results?.[0] || {}; // If results?.[0] is undefined, default to an empty object
+
 const name = result.name || 'your status here';
 const rawType = result.type?.trim().toUpperCase() || 'PLAYING';
 
@@ -30,7 +31,7 @@ const validTypes = {
 const activityType = validTypes[rawType];
 
 if (!activityType) {
-  console.warn(`Invalid activity type "${result.type}". Defaulting to PLAYING.`);
+  console.warn(`⚠️ Invalid activity type "${result.type}". Defaulting to PLAYING.`);
   client.user.setActivity(name, { type: ActivityType.Playing });
 } else {
   client.user.setActivity(name, { type: activityType });

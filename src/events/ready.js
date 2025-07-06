@@ -30,6 +30,6 @@ module.exports = (client) => {
         console.error(chalk.red('Error: Client user is undefined.'));
     }
 
-    console.log(chalk.green(chalk.bold(`Dashboard:`), `http://localhost:` + process.env['port']));
+    console.log(chalk.green(chalk.bold(`Dashboard:`), `https://localhost:` + process.env['port']));
     console.log(chalk.green(chalk.bold("✅ Commands saved with categories!")));
 }
