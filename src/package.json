@@ -20,7 +20,7 @@
     "@noble/ciphers": "^1.2.1",
     "axios": "^1.8.3",
     "bcrypt": "^5.1.1",
-    "better-sqlite3": "^11.9.1",
+    "better-sqlite3": "^12.4.1",
     "bgutils": "^1.0.5",
     "bgutils-js": "^3.2.0",
     "connect-flash": "^0.1.1",
