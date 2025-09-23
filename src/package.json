@@ -36,7 +36,7 @@
     "easy-number-formatter": "^1.0.3",
     "ejs": ">=3.1.10",
     "ejs-locals": "^1.0.2",
-    "enmap": "^5.8.7",
+    "enmap": "^6.1.3",
     "escape-html": "^1.0.3",
     "eslint": "^9.26.0",
     "express": "^5.1.0",
