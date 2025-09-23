@@ -33,6 +33,28 @@ router.get("/levels-settings", ensureAuthenticated, async (req, res, next) => {
             id: role.id,
             name: role.name
         }));
+    // Взимаме основните настройки
+    const [settingsResult] = await db.execute(
+      "SELECT * FROM levels_settings WHERE guild_id = ?",
+      [guildId]
+    );
+
+    const settings = settingsResult[0] || {
+      guild_id: guildId,
+      levelsEnabled: false,
+      xp_per_message: 10,
+      xp_per_level: 100,
+      level_up_channel: null,
+      custom_level_message: "Congratulations {user}, you reached level {level}!",
+    };
+
+    // Взимаме level_roles като масив от обекти
+    const [levelRoles] = await db.execute(
+      "SELECT level, role_id, required_xp FROM level_roles WHERE guild_id = ? ORDER BY level ASC",
+      [guildId]
+    );
+
+        settings.level_roles = levelRoles;
 
         const savedSettings = rows[0] || {};
 
@@ -55,7 +77,7 @@ router.get("/levels-settings", ensureAuthenticated, async (req, res, next) => {
             settings: savedSettings,
             guildId: guildId,
             roles: roles,
-            success
+            success,
         });
     } catch (error) {
         console.error(error);
@@ -67,7 +89,9 @@ router.get("/levels-settings", ensureAuthenticated, async (req, res, next) => {
 router.post("/levels-settings/save/:id", ensureAuthenticated, async (req, res, next) => {
     const levelsEnabled = req.body.levelsEnabled ? 1 : 0;
     const LevelUpMessage = req.body.levelUpMessage;
-    const { guildId, xpPerMessage, xpPerLevel, levelUpChannel, levelRoles } = req.body;
+    const { guildId, xpPerMessage, levelUpChannel } = req.body;
+    const { levels, roles, xps } = req.body;
+    console.log()
 
     try {
         const [existingSettings] = await db.execute(
@@ -75,38 +99,49 @@ router.post("/levels-settings/save/:id", ensureAuthenticated, async (req, res, n
             [guildId]
         );
 
-        const levelRolesJSON = JSON.stringify(levelRoles || {}); // Stringify the levelRoles object
-
-        console.log(levelRolesJSON);
         if (existingSettings.length > 0) {
-            // Update existing settings
             await db.execute(
-                "UPDATE levels_settings SET levelsEnabled = ?, xp_per_message = ?, xp_per_level = ?, level_up_channel = ?, custom_level_message = ?, level_roles = ? WHERE guild_id = ?",
+                "UPDATE levels_settings SET levelsEnabled = ?, xp_per_message = ?, level_up_channel = ?, custom_level_message = ? WHERE guild_id = ?",
                 [
                     levelsEnabled,
                     xpPerMessage,
-                    xpPerLevel,
                     levelUpChannel || null,
                     LevelUpMessage || 'Congratulations {user}, you reached level {level}!',
-                    levelRolesJSON,
                     guildId,
                 ]
             );
         } else {
-            // Insert new settings
             await db.execute(
-                "INSERT INTO levels_settings (guild_id, levelsEnabled, xp_per_message, xp_per_level, level_up_channel, custom_level_message, level_roles) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO levels_settings (guild_id, levelsEnabled, xp_per_message, level_up_channel, custom_level_message) VALUES (?, ?, ?, ?, ?, )",
                 [
                     guildId,
                     levelsEnabled,
                     xpPerMessage,
-                    xpPerLevel,
                     levelUpChannel || null,
                     LevelUpMessage || 'Congratulations {user}, you reached level {level}!',
-                    levelRolesJSON,
                 ]
             );
         }
+
+        // Изчистване на старите level_roles
+        await db.execute("DELETE FROM level_roles WHERE guild_id = ?", [guildId]);
+
+        // Добавяне на новите
+        if (Array.isArray(levels) && Array.isArray(roles) && Array.isArray(xps)) {
+            for (let i = 0; i < levels.length; i++) {
+                const level = parseInt(levels[i]);
+                const role = roles[i];
+                const xp = xps[i]
+
+                if (!isNaN(level) && role && xp) {
+                    await db.execute(
+                        "INSERT INTO level_roles (guild_id, level, role_id, required_xp) VALUES (?, ?, ?, ?)",
+                        [guildId, level, role, xp]
+                    );
+                }
+            }
+        }
+
         res.redirect(`/levels-settings?guildId=${guildId}&success=true`);
     } catch (error) {
         console.error(error);

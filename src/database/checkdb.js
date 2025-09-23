@@ -28,6 +28,7 @@ async function checkAndCreateDB() {
             content text DEFAULT NULL,
             arget_id varchar(20) DEFAULT NULL,
             timestamp datetime DEFAULT current_timestamp(),
+            AuditInDiscordEnabled int(11) DEFAULT NULL,
             PRIMARY KEY (id)
         )ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 ;`);
   }
@@ -196,9 +197,21 @@ const levelsDataTableExists = tables.some(
   xp_per_message int(11) DEFAULT 10,
   level_up_channel varchar(255) DEFAULT NULL,
   custom_level_message text DEFAULT NULL,
-  last_updated timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (guild_id) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;`)
+  }
+
+  const levelRolesTableExists = tables.some(
+    (table) => table["Tables_in_" + process.env.database] === "level_roles"
+  );
+  if(!levelRolesTableExists) {
+    console.log(`🔄 table level_roles does not exist, creating...`);
+    await db.query(`CREATE TABLE level_roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    guild_id VARCHAR(32) NOT NULL,
+    level INT NOT NULL,
+    role_id VARCHAR(32) NOT NULL
+);`)
   }
 }
 
