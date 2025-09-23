@@ -34,7 +34,7 @@
     "distube": "^5.0.6",
     "dotenv": "^16.4.7",
     "easy-number-formatter": "^1.0.3",
-    "ejs": "^3.1.10",
+    "ejs": ">=3.1.10",
     "ejs-locals": "^1.0.2",
     "enmap": "^5.8.7",
     "escape-html": "^1.0.3",
