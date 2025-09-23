@@ -32,7 +32,7 @@
     "discord-rpc": "^4.0.1",
     "discord.js": "^14.18.0",
     "distube": "^5.0.6",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.2.2",
     "easy-number-formatter": "^1.0.3",
     "ejs": ">=3.1.10",
     "ejs-locals": "^1.0.2",
