@@ -72,7 +72,7 @@ module.exports = async function(client) {
       await db.query(`DELETE FROM members WHERE id = ? AND guild_id = ?`, [member.id, member.guild.id]);
     });
   
-    client.once("ready", async () => {
+    client.once("clientReady", async () => {
       console.log(chalk.blue(chalk.bold("🔄 Running full sync...")));
       await syncGuildsAndMembers();
     });

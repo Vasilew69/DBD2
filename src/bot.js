@@ -82,7 +82,7 @@ function createClient() {
   require('./handlers/AuditLogger')(client);
   require('./handlers/autoModHandler.js')(client);
 
-  client.once('ready', async () => {
+  client.once('clientReady', async () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
     require('./events/ready.js')(client);
     require('./events/guildMember.js')(client);
